@@ -45,6 +45,10 @@ PASTA_RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ARQUIVO_ENTRADA = None
 
 # Onde salvar a saida
+# Base consolidada vinda da planilha das colegas (gerada pelo 06-ler-planilha-controle.py).
+# E o retrato completo dos contratos da obra; os e-mails sao o que aconteceu depois dele.
+ARQUIVO_BASE_PLANILHA = os.path.join(PASTA_RAIZ, "01-dados-brutos", "base-planilha.json")
+
 ARQUIVO_TRATADO = os.path.join(PASTA_RAIZ, "02-dados-tratados", "contratos-clicksign.json")
 ARQUIVO_PAINEL = os.path.join(PASTA_RAIZ, "03-painel", "painel-contratos.html")
 PASTA_HISTORICO = os.path.join(PASTA_RAIZ, "03-painel", "historico")
@@ -260,7 +264,83 @@ def dias_entre(inicio, fim):
     return (fim.date() - inicio.date()).days
 
 
+
+
+def chave_do_contrato(nome_documento):
+    """
+    Etiqueta que liga um documento da Clicksign a uma linha da planilha.
+
+    Mesma regra do 06-ler-planilha-controle.py: o que importa e ser aditivo ou
+    nao, e o numero do contrato. Assim "63.CT-LSF-G200-063-26 - INOSERVICE.pdf"
+    (nome do e-mail) e "CT-LSF-G200-063.26" (planilha) viram os dois "CT-063".
+    """
+    texto = sem_acento(str(nome_documento)).upper()
+    aditivo = re.search(r"ADIT\.?\s*V?\.?\s*(\d{1,2})", texto)
+    numero = re.search(r"G200[-\s.]*(\d{2,3})", texto)
+    if not numero:
+        return None
+    if aditivo:
+        return "ADIT%s-%s" % (aditivo.group(1).zfill(2), numero.group(1).zfill(3))
+    return "CT-%s" % numero.group(1).zfill(3)
+
+
+def carregar_base_planilha():
+    """Le a base consolidada gerada a partir da planilha das suas colegas."""
+    if not os.path.exists(ARQUIVO_BASE_PLANILHA):
+        return None
+    with open(ARQUIVO_BASE_PLANILHA, encoding="utf-8") as arquivo:
+        return json.load(arquivo)
+
+
 def processar():
+    agora = (
+        datetime.fromisoformat(DATA_REFERENCIA).astimezone(FUSO_LOCAL)
+        if DATA_REFERENCIA
+        else datetime.now(FUSO_LOCAL)
+    )
+
+    # =========================================================================
+    # FONTE 1 - a planilha de controle (o retrato completo)
+    # =========================================================================
+    base = carregar_base_planilha()
+    if not base:
+        erro(
+            "Nao achei a base consolidada em 01-dados-brutos/base-planilha.json.\n"
+            "Rode antes: python 05-scripts/06-ler-planilha-controle.py"
+        )
+
+    data_planilha = datetime.strptime(base["data_do_retrato"], "%Y-%m-%d").replace(tzinfo=FUSO_LOCAL)
+    registros = {}
+    for item in base["contratos"]:
+        assinados = [s for s in item["signatarios"] if s["assinou"]]
+        registros[item["chave"]] = {
+            "fonte": "planilha",
+            "data_fonte": data_planilha,
+            "chave": item["chave"],
+            "identificacao": item["identificacao"],
+            "razao_social": item["razao_social"],
+            "servico": item["servico"],
+            "cnpj": item["cnpj"],
+            "aditivo": item["aditivo"],
+            "tipo": item["tipo"],
+            "status": "Finalizado" if item["concluido"] else "Em andamento",
+            "signatarios": item["signatarios"],
+            "assinaturas_ok": len(assinados),
+            "assinaturas_total": len(item["signatarios"]),
+            "dias_parado": item["dias_sem_assinatura"],
+            "data_cadastro": item["data_cadastro"],
+            "data_limite": None,
+            "finalizado_em": None,
+            "cancelado_em": None,
+            "link_email": "",
+            "link_clicksign": "",
+            "qtd_eventos": 0,
+            "historico": [],
+        }
+
+    # =========================================================================
+    # FONTE 2 - os e-mails da Clicksign (o que aconteceu depois do retrato)
+    # =========================================================================
     caminho_entrada = achar_arquivo_entrada()
     with open(caminho_entrada, encoding="utf-8") as arquivo:
         bruto = json.load(arquivo)
@@ -268,11 +348,13 @@ def processar():
     if "emails" not in bruto:
         erro("O arquivo %s nao tem a chave 'emails'. Formato inesperado." % caminho_entrada)
 
-    agora = (
-        datetime.fromisoformat(DATA_REFERENCIA).astimezone(FUSO_LOCAL)
-        if DATA_REFERENCIA
-        else datetime.now(FUSO_LOCAL)
-    )
+    if not bruto["emails"]:
+        erro(
+            "O dump nao tem NENHUM e-mail. Isso nao e um painel vazio - e uma busca que falhou.\n"
+            "Causa mais provavel: a busca no Outlook usou o parametro 'order'.\n"
+            "Sem 'folderName', o 'order' restringe a busca a Caixa de Entrada, e os e-mails\n"
+            "da Clicksign nao estao nela. Refaca a busca SEM 'order'. NAO publique."
+        )
 
     documentos = {}
     descartados = {"sandbox": 0, "nao_e_contrato_de_obra": 0}
@@ -287,47 +369,34 @@ def processar():
             descartados["nao_e_contrato_de_obra"] += 1
             continue
 
-        chave = chave_documento(nome)
+        chave_arquivo = chave_documento(nome)
         evento = identificar_evento(email.get("assunto", ""), email.get("corpo", ""))
         recebido = ler_data(email["recebido_em"])
 
-        doc = documentos.setdefault(
-            chave,
-            {
-                "nome": nome,
-                "numero": extrair_numero_contrato(nome),
-                "tipo": classificar_tipo(nome),
-                "eventos": [],
-                "signatarios": [],
-                "data_signatarios": None,
-                "data_limite": None,
-                "ultima_movimentacao": recebido,
-                "link_email": email.get("web_link") or "",
-                "link_clicksign": "",
-                "finalizado_em": None,
-                "cancelado_em": None,
-            },
-        )
+        doc = documentos.setdefault(chave_arquivo, {
+            "nome": nome, "eventos": [], "signatarios": [], "data_signatarios": None,
+            "data_limite": None, "ultima_movimentacao": recebido,
+            "link_email": email.get("web_link") or "", "link_clicksign": "",
+            "finalizado_em": None, "cancelado_em": None,
+        })
 
         doc["eventos"].append({"tipo": evento, "em": recebido})
-
-        # A movimentacao mais recente define a data de referencia do contrato.
         if recebido > doc["ultima_movimentacao"]:
             doc["ultima_movimentacao"] = recebido
             if email.get("web_link"):
                 doc["link_email"] = email["web_link"]
 
-        # Lista de signatarios: sempre a do comprovante MAIS RECENTE.
-        # Comprovantes antigos mostram um retrato desatualizado das assinaturas.
         if evento == "comprovante":
             lista = parsear_signatarios(email.get("corpo", ""))
             if lista and (doc["data_signatarios"] is None or recebido > doc["data_signatarios"]):
-                doc["signatarios"] = lista
+                doc["signatarios"] = [
+                    {"quem": s["quem"], "papel": s["papel"], "assinou": s["assinou"], "data": None}
+                    for s in lista
+                ]
                 doc["data_signatarios"] = recebido
 
-        if evento == "finalizado":
-            if doc["finalizado_em"] is None or recebido < doc["finalizado_em"]:
-                doc["finalizado_em"] = recebido
+        if evento == "finalizado" and (doc["finalizado_em"] is None or recebido < doc["finalizado_em"]):
+            doc["finalizado_em"] = recebido
         if evento == "cancelado":
             doc["cancelado_em"] = recebido
 
@@ -339,123 +408,183 @@ def processar():
         if achado_link and not doc["link_clicksign"]:
             doc["link_clicksign"] = achado_link.group(0)
 
-    # ---- Guarda-corpo 1: dump vazio nao e painel vazio, e busca furada -------
-    # Falha silenciosa e o pior tipo: o painel sai zerado com cara de correto e
-    # voce vai procurar o problema na Clicksign, no lugar errado.
-    if not bruto["emails"]:
-        erro(
-            "O dump nao tem NENHUM e-mail. Isso nao e um painel vazio - e uma busca que falhou.\n"
-            "Causa mais provavel: a busca no Outlook usou o parametro 'order'.\n"
-            "Sem 'folderName', o 'order' restringe a busca a Caixa de Entrada, e os e-mails\n"
-            "da Clicksign nao estao nela. Refaca a busca SEM 'order'. NAO publique."
-        )
+    # ---- Um contrato pode ter varios documentos na Clicksign -----------------
+    # Foi o caso do 065 (cancelado como "Limpeza Vicinal" e reemitido como
+    # "Limpeza") e do 063 (expirou e foi reenviado). Vale o documento MAIS
+    # RECENTE de cada contrato; os anteriores viram anotacao no historico, para
+    # o cancelamento nao sumir sem deixar rastro.
+    por_contrato = {}
+    for doc in documentos.values():
+        chave = chave_do_contrato(doc["nome"])
+        if not chave:
+            continue
+        por_contrato.setdefault(chave, []).append(doc)
 
-    if not documentos:
-        erro(
-            "Foram lidos %d e-mails, mas nenhum e contrato de obra da G200.\n"
-            "Confira se o dump em 01-dados-brutos/ e do remetente e do periodo certos.\n"
-            "NAO vou gerar painel vazio." % len(bruto["emails"])
-        )
+    for chave, docs in por_contrato.items():
+        docs.sort(key=lambda d: d["ultima_movimentacao"], reverse=True)
+        atual, anteriores = docs[0], docs[1:]
 
-    # ---- Guarda-corpo 2: queda brusca no numero de contratos ------------------
-    # Contrato so sai do painel se for renomeado na Clicksign. Uma queda grande
-    # de uma rodada para outra e sintoma de coleta furada, nao de realidade.
+        assinados = [s for s in atual["signatarios"] if s["assinou"]]
+        pendentes = [s for s in atual["signatarios"] if not s["assinou"]]
+
+        # A DESCOBERTA DO VALTER EM 19/08/2026:
+        # "Finalizado" na Clicksign NAO quer dizer "todo mundo assinou". Quando o
+        # prazo vence, a Clicksign encerra o documento e manda o mesmo e-mail de
+        # "foi finalizado" - foi assim que o contrato 063 apareceu como fechado
+        # tendo 1 de 10 assinaturas. Entao: finalizado COM pendencia na lista e
+        # prazo expirado, nao contrato assinado.
+        if atual["cancelado_em"]:
+            status = "Cancelado"
+        elif any(e["tipo"] == "recusado" for e in atual["eventos"]):
+            status = "Recusado"
+        elif atual["finalizado_em"] and pendentes:
+            status = "Expirado"
+        elif atual["finalizado_em"]:
+            status = "Finalizado"
+        else:
+            status = "Em andamento"
+
+        if status == "Finalizado" and atual["signatarios"]:
+            for s in atual["signatarios"]:
+                s["assinou"] = True
+            assinados = atual["signatarios"]
+
+        historico = [
+            "documento anterior %s em %s" % (
+                "cancelado" if d["cancelado_em"] else "encerrado",
+                (d["cancelado_em"] or d["ultima_movimentacao"]).strftime("%d/%m/%Y"))
+            for d in anteriores
+        ]
+
+        vindo_do_email = {
+            "fonte": "e-mail",
+            "data_fonte": atual["ultima_movimentacao"],
+            "chave": chave,
+            "identificacao": atual["nome"].replace(".pdf", ""),
+            "aditivo": chave.startswith("ADIT"),
+            "status": status,
+            "signatarios": atual["signatarios"],
+            "assinaturas_ok": len(assinados),
+            "assinaturas_total": len(atual["signatarios"]),
+            "dias_parado": dias_entre(atual["ultima_movimentacao"], agora),
+            "data_limite": atual["data_limite"],
+            "finalizado_em": atual["finalizado_em"].strftime("%d/%m/%Y") if atual["finalizado_em"] else None,
+            "cancelado_em": atual["cancelado_em"].strftime("%d/%m/%Y") if atual["cancelado_em"] else None,
+            "link_email": atual["link_email"],
+            "link_clicksign": atual["link_clicksign"],
+            "qtd_eventos": len(atual["eventos"]),
+            "signatarios_em": atual["data_signatarios"].strftime("%d/%m/%Y") if atual["data_signatarios"] else None,
+            "historico": historico,
+        }
+
+        # ---- Quem manda: o mais recente ------------------------------------
+        # Decisao do Valter em 19/08/2026. A planilha e um retrato de uma data;
+        # o e-mail e um evento de outra. Vence quem viu o contrato por ultimo.
+        antigo = registros.get(chave)
+        if antigo is None:
+            registros[chave] = vindo_do_email
+            registros[chave].setdefault("razao_social", None)
+            registros[chave].setdefault("servico", None)
+            registros[chave].setdefault("cnpj", None)
+            registros[chave].setdefault("tipo", classificar_tipo(atual["nome"]))
+            registros[chave].setdefault("data_cadastro", None)
+        elif vindo_do_email["data_fonte"] > antigo["data_fonte"]:
+            # O e-mail e mais novo: ele manda no status e nas assinaturas.
+            # Os dados cadastrais continuam vindo da planilha, que e melhor neles.
+            for campo in ("razao_social", "servico", "cnpj", "tipo", "identificacao", "data_cadastro"):
+                vindo_do_email[campo] = antigo.get(campo) or vindo_do_email.get(campo)
+            registros[chave] = vindo_do_email
+        else:
+            # A planilha e mais nova: ela manda. Do e-mail aproveitamos apenas o
+            # que ela nao tem - prazo limite e os links de origem.
+            antigo["data_limite"] = antigo.get("data_limite") or vindo_do_email["data_limite"]
+            antigo["link_email"] = antigo.get("link_email") or vindo_do_email["link_email"]
+            antigo["link_clicksign"] = antigo.get("link_clicksign") or vindo_do_email["link_clicksign"]
+            antigo["qtd_eventos"] = vindo_do_email["qtd_eventos"]
+            antigo["historico"] = antigo.get("historico", []) + historico
+
+    if not registros:
+        erro("Nem a planilha nem os e-mails renderam contrato nenhum.")
+
+    # ---- Guarda-corpo: queda brusca vs a rodada anterior ---------------------
     if os.path.exists(ARQUIVO_TRATADO):
         try:
             with open(ARQUIVO_TRATADO, encoding="utf-8") as anterior:
                 antes = len(json.load(anterior).get("contratos", []))
         except Exception:
             antes = 0
-        if antes and len(documentos) < antes * 0.7:
+        if antes and len(registros) < antes * 0.7:
             erro(
                 "A rodada anterior tinha %d contratos e esta tem so %d - queda de %.0f%%.\n"
                 "Contrato nao some sozinho do painel. Isso e sintoma de coleta incompleta.\n"
-                "Confira a busca no Outlook antes de publicar. NAO vou sobrescrever o painel."
-                % (antes, len(documentos), 100 * (1 - len(documentos) / antes))
+                "NAO vou sobrescrever o painel." % (antes, len(registros), 100 * (1 - len(registros) / antes))
             )
 
-    # ---- Fecha o status de cada contrato e monta a saida ----------------------
+    # =========================================================================
+    # MONTAGEM FINAL
+    # =========================================================================
     contratos = []
-    for doc in documentos.values():
-        if doc["cancelado_em"]:
-            status = "Cancelado"
-        elif any(e["tipo"] == "recusado" for e in doc["eventos"]):
-            status = "Recusado"
-        elif doc["finalizado_em"]:
-            status = "Finalizado"
-        else:
-            status = "Em andamento"
-
-        total_assinaturas = len(doc["signatarios"])
-        ja_assinaram = sum(1 for s in doc["signatarios"] if s["assinou"])
-
-        # Contrato finalizado tem, por definicao, todas as assinaturas colhidas -
-        # mesmo que o ultimo comprovante que chegou por e-mail ainda mostre pendencia.
-        if status == "Finalizado" and total_assinaturas:
-            for s in doc["signatarios"]:
-                s["assinou"] = True
-            ja_assinaram = total_assinaturas
-
-        dias_parado = dias_entre(doc["ultima_movimentacao"], agora)
-
+    for reg in registros.values():
         dias_para_limite = None
-        if doc["data_limite"]:
-            limite = datetime.strptime(doc["data_limite"], "%d/%m/%Y").replace(tzinfo=FUSO_LOCAL)
+        if reg.get("data_limite"):
+            limite = datetime.strptime(reg["data_limite"], "%d/%m/%Y").replace(tzinfo=FUSO_LOCAL)
             dias_para_limite = dias_entre(agora, limite)
 
-        contratos.append(
-            {
-                "nome": doc["nome"].replace(".pdf", ""),
-                "numero": doc["numero"],
-                "tipo": doc["tipo"],
-                "status": status,
-                "atualizado": doc["ultima_movimentacao"].strftime("%Y-%m-%dT%H:%M"),
-                "atualizado_em_texto": doc["ultima_movimentacao"].strftime("%d/%m/%Y"),
-                "dias_parado": dias_parado,
-                "data_limite": doc["data_limite"],
-                "dias_para_limite": dias_para_limite,
-                "finalizado_em": doc["finalizado_em"].strftime("%d/%m/%Y") if doc["finalizado_em"] else None,
-                "cancelado_em": doc["cancelado_em"].strftime("%d/%m/%Y") if doc["cancelado_em"] else None,
-                "assinaturas_total": total_assinaturas,
-                "assinaturas_ok": ja_assinaram,
-                "signatarios": doc["signatarios"],
-                "signatarios_em": doc["data_signatarios"].strftime("%d/%m/%Y") if doc["data_signatarios"] else None,
-                "link_email": doc["link_email"],
-                "link_clicksign": doc["link_clicksign"],
-                "qtd_eventos": len(doc["eventos"]),
-            }
-        )
+        rotulo = reg["identificacao"]
+        if reg.get("razao_social"):
+            rotulo = "%s — %s" % (reg["identificacao"], reg["razao_social"])
 
-    contratos.sort(key=lambda c: c["atualizado"], reverse=True)  # mais recente primeiro, com hora para desempatar
+        contratos.append({
+            "nome": rotulo,
+            "numero": reg["chave"],
+            "tipo": reg.get("tipo") or "LYON",
+            "aditivo": reg.get("aditivo", False),
+            "fonte": reg["fonte"],
+            "servico": reg.get("servico"),
+            "cnpj": reg.get("cnpj"),
+            "status": reg["status"],
+            "atualizado": reg["data_fonte"].strftime("%Y-%m-%dT%H:%M"),
+            "atualizado_em_texto": reg["data_fonte"].strftime("%d/%m/%Y"),
+            "dias_parado": reg["dias_parado"] if reg["dias_parado"] is not None else 0,
+            "data_limite": reg.get("data_limite"),
+            "dias_para_limite": dias_para_limite,
+            "finalizado_em": reg.get("finalizado_em"),
+            "cancelado_em": reg.get("cancelado_em"),
+            "assinaturas_total": reg["assinaturas_total"],
+            "assinaturas_ok": reg["assinaturas_ok"],
+            "signatarios": reg["signatarios"],
+            "signatarios_em": reg.get("signatarios_em"),
+            "link_email": reg.get("link_email", ""),
+            "link_clicksign": reg.get("link_clicksign", ""),
+            "qtd_eventos": reg.get("qtd_eventos", 0),
+            "historico": reg.get("historico", []),
+        })
+
+    contratos.sort(key=lambda c: (c["status"] == "Finalizado", c["atualizado"]), reverse=False)
+    contratos.sort(key=lambda c: (c["status"] != "Em andamento", -(c["dias_parado"] or 0)))
 
     saida = {
         "gerado_em": agora.strftime("%d/%m/%Y %H:%M"),
-        "fonte": os.path.basename(caminho_entrada),
+        "fonte": "%s (retrato de %s) + %s"
+                 % (base["fonte"], base["data_do_retrato_texto"], os.path.basename(caminho_entrada)),
         "regras": {
-            "tipo": "tem AFE no nome \u2192 AFE; n\u00e3o tem AFE mas tem LSF \u2192 LYON; n\u00e3o tem nenhum dos dois \u2192 QPC",
-            "sandbox": "excluido" if not INCLUIR_SANDBOX else "incluido",
-            "parado": "contrato Em andamento sem movimenta\u00e7\u00e3o h\u00e1 mais de %d dias" % DIAS_PARA_CONSIDERAR_PARADO,
+            "tipo": "esta planilha cobre apenas contratos LYON; AFE e QPC tem outro controle",
+            "conflito": "quando planilha e e-mail discordam, vence a fonte que viu o contrato por ultimo",
+            "nao_se_aplica": "signatario marcado N.A ou - sai da conta: nao aparece como pendente",
+            "parado": "contrato Em andamento sem movimentação há mais de %d dias" % DIAS_PARA_CONSIDERAR_PARADO,
         },
         "descartados": descartados,
         "emails_lidos": len(bruto["emails"]),
+        "da_planilha": sum(1 for c in contratos if c["fonte"] == "planilha"),
+        "do_email": sum(1 for c in contratos if c["fonte"] == "e-mail"),
+        "retrato_planilha": base["data_do_retrato_texto"],
         "contratos": contratos,
     }
-
-    # ---- Conferencia obrigatoria: os totais tem que fechar --------------------
-    soma_status = sum(
-        1 for c in contratos if c["status"] in ORDEM_STATUS
-    )
-    if soma_status != len(contratos):
-        erro(
-            "A soma dos contratos por status (%d) nao bate com o total de contratos (%d). "
-            "Nao vou gerar o painel com numero errado." % (soma_status, len(contratos))
-        )
 
     os.makedirs(os.path.dirname(ARQUIVO_TRATADO), exist_ok=True)
     with open(ARQUIVO_TRATADO, "w", encoding="utf-8") as arquivo:
         json.dump(saida, arquivo, ensure_ascii=False, indent=2)
 
-    # ---- Guarda o painel anterior antes de sobrescrever -----------------------
     if os.path.exists(ARQUIVO_PAINEL):
         os.makedirs(PASTA_HISTORICO, exist_ok=True)
         carimbo = datetime.fromtimestamp(os.path.getmtime(ARQUIVO_PAINEL)).strftime("%Y-%m-%d")
@@ -468,45 +597,44 @@ def processar():
     with open(modelo, encoding="utf-8") as arquivo:
         html = arquivo.read()
 
-    html = html.replace(
-        "/*DADOS_AQUI*/", json.dumps(saida, ensure_ascii=False)
-    ).replace("/*PARADO_AQUI*/", str(DIAS_PARA_CONSIDERAR_PARADO)).replace(
-        "/*ALERTA_PRAZO_AQUI*/", str(DIAS_ALERTA_PRAZO)
-    ).replace("/*QTD_CONTRATOS*/", str(len(contratos)))
-
+    html = (
+        html.replace("/*DADOS_AQUI*/", json.dumps(saida, ensure_ascii=False))
+        .replace("/*PARADO_AQUI*/", str(DIAS_PARA_CONSIDERAR_PARADO))
+        .replace("/*ALERTA_PRAZO_AQUI*/", str(DIAS_ALERTA_PRAZO))
+        .replace("/*QTD_CONTRATOS*/", str(len(contratos)))
+    )
     with open(ARQUIVO_PAINEL, "w", encoding="utf-8") as arquivo:
         arquivo.write(html)
 
-    # ---- Mostra a conta na tela, como manda a regra do projeto ---------------
-    print("=" * 68)
+    # ---- Mostra a conta -----------------------------------------------------
+    print("=" * 70)
     print("PAINEL DE CONTRATOS - CONFERENCIA")
-    print("=" * 68)
-    print("Fonte:                    %s" % os.path.basename(caminho_entrada))
-    print("E-mails lidos:            %d" % len(bruto["emails"]))
+    print("=" * 70)
+    print("Planilha:                 %s (retrato de %s)" % (base["fonte"], base["data_do_retrato_texto"]))
+    print("E-mails:                  %s" % os.path.basename(caminho_entrada))
+    print("  lidos:                  %d" % len(bruto["emails"]))
     print("  descartados (sandbox):  %d" % descartados["sandbox"])
     print("  descartados (nao obra): %d" % descartados["nao_e_contrato_de_obra"])
-    print("Contratos identificados:  %d" % len(contratos))
-    print("-" * 68)
-    for status in ORDEM_STATUS:
+    print("-" * 70)
+    print("Contratos no painel:      %d" % len(contratos))
+    print("  vindos da planilha:     %d" % saida["da_planilha"])
+    print("  vindos do e-mail:       %d  (mais recentes que o retrato)" % saida["do_email"])
+    print("  sendo aditivos:         %d" % sum(1 for c in contratos if c["aditivo"]))
+    print("-" * 70)
+    for status in ORDEM_STATUS + ["Expirado"]:
         quantidade = sum(1 for c in contratos if c["status"] == status)
-        print("  %-14s %d" % (status + ":", quantidade))
-    print("-" * 68)
-    for tipo in ("AFE", "LYON", "QPC"):
-        quantidade = sum(1 for c in contratos if c["tipo"] == tipo)
-        print("  %-14s %d" % (tipo + ":", quantidade))
-    print("-" * 68)
+        if quantidade:
+            print("  %-16s %d" % (status + ":", quantidade))
+    print("-" * 70)
     pendentes = sum(
         c["assinaturas_total"] - c["assinaturas_ok"]
-        for c in contratos
-        if c["status"] == "Em andamento"
+        for c in contratos if c["status"] == "Em andamento"
     )
     finalizados = sum(1 for c in contratos if c["status"] == "Finalizado")
     print("Assinaturas pendentes:    %d" % pendentes)
-    print(
-        "%% concluido:              %d / %d = %.1f%%"
-        % (finalizados, len(contratos), finalizados / len(contratos) * 100)
-    )
-    print("=" * 68)
+    print("%% concluido:              %d / %d = %.1f%%"
+          % (finalizados, len(contratos), finalizados / len(contratos) * 100))
+    print("=" * 70)
     print("Dados tratados: %s" % ARQUIVO_TRATADO)
     print("Painel gerado:  %s" % ARQUIVO_PAINEL)
 
