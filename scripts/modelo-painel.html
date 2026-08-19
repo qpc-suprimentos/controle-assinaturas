@@ -43,6 +43,7 @@
     --good:#0ca30c; --good-soft:#e8f6e8; --good-ink:#0a7a0a;
     --warn:#fab219; --warn-soft:#fdf3e0; --warn-ink:#8a5a00;
     --neutral:#898781; --neutral-soft:#f0f0ee; --neutral-ink:#5f5e5b;
+    --exp:#ec835a; --exp-soft:#fdeee7; --exp-ink:#a54a22;
     --crit:#d03b3b; --crit-soft:#fbeaea; --crit-ink:#b02f2f;
 
     --shadow:0 1px 2px rgba(6,10,16,.20),0 6px 20px rgba(6,10,16,.16);
@@ -103,10 +104,13 @@
   .kpi .sub{font-size:11.5px;color:var(--ink-3);margin-top:7px}
   .dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none}
   .d-good{background:var(--good)}.d-warn{background:var(--warn)}.d-crit{background:var(--crit)}
-  .d-neutral{background:var(--neutral)}.d-brand{background:var(--brand)}
+  .d-neutral{background:var(--neutral)}.d-brand{background:var(--brand)}.d-exp{background:var(--exp)}
 
   .grid{display:grid;grid-template-columns:268px 1fr;gap:16px;align-items:start}
-  .col-esq{display:flex;flex-direction:column;gap:16px}
+  .col-esq > .card{flex:none}
+  .col-esq{display:flex;flex-direction:column;gap:16px;position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto}
+  .col-esq::-webkit-scrollbar{width:6px}
+  .col-esq::-webkit-scrollbar-thumb{background:#2a3546;border-radius:3px}
   .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
   .card h3{font-size:13px;margin:0;padding:16px 16px 0;font-weight:650;color:var(--ink);text-transform:uppercase;letter-spacing:.05em}
   .card h3 small{display:block;font-weight:500;color:var(--ink-3);font-size:11px;text-transform:none;letter-spacing:0;margin-top:3px}
@@ -155,7 +159,7 @@
 
   .tabela-rola{overflow-x:auto}
   table.main{width:100%;border-collapse:collapse;min-width:640px}
-  thead th{font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3);text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);white-space:nowrap;font-weight:650}
+  thead th{font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3);text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);white-space:nowrap;font-weight:650;position:sticky;top:0;background:var(--card);z-index:2}
   thead th.sortable{cursor:pointer}
   thead th.sortable:hover{color:var(--ink)}
   tbody tr.main{border-bottom:1px solid var(--line);cursor:pointer}
@@ -164,11 +168,15 @@
   .cnome{font-weight:600;letter-spacing:-.005em}
   .cmeta{font-size:11.5px;margin-top:4px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
   .tag-tipo{font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;background:var(--brand-soft);color:var(--brand);letter-spacing:.04em}
+  .tag-adit{font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;background:#efeafa;color:#5b3fa8;letter-spacing:.04em}
+  .tag-fonte{font-size:10px;font-weight:600;padding:3px 7px;border-radius:5px;background:var(--card-2);color:var(--ink-3);letter-spacing:.03em}
+  .cservico{font-size:11.5px;color:var(--ink-3);margin-top:3px}
   .badge{font-size:11.5px;font-weight:650;padding:4px 9px;border-radius:999px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
   .b-good{background:var(--good-soft);color:var(--good-ink)}
   .b-warn{background:var(--warn-soft);color:var(--warn-ink)}
   .b-crit{background:var(--crit-soft);color:var(--crit-ink)}
   .b-neutral{background:var(--neutral-soft);color:var(--neutral-ink)}
+  .b-exp{background:var(--exp-soft);color:var(--exp-ink)}
   .prog{display:flex;align-items:center;gap:9px}
   .barra{width:48px;height:6px;border-radius:4px;background:var(--line);overflow:hidden}
   .barra > i{display:block;height:100%;background:var(--brand);border-radius:4px}
@@ -299,6 +307,7 @@ const TIPOS = ['AFE','LYON','QPC'];
 const STATUS = {
   'Finalizado':   {dot:'d-good',    badge:'b-good',    cor:'#0ca30c', icone:'✓'},
   'Em andamento': {dot:'d-warn',    badge:'b-warn',    cor:'#fab219', icone:'◷'},
+  'Expirado':     {dot:'d-exp',     badge:'b-exp',     cor:'#ec835a', icone:'⏰'},
   'Cancelado':    {dot:'d-neutral', badge:'b-neutral', cor:'#898781', icone:'✕'},
   'Recusado':     {dot:'d-crit',    badge:'b-crit',    cor:'#d03b3b', icone:'!'}
 };
@@ -408,7 +417,7 @@ function renderPendentes(){
 }
 
 function renderChips(){
-  const opts=['Todos','Em andamento','Finalizado','Cancelado','Recusado'];
+  const opts=['Todos','Em andamento','Finalizado','Expirado','Cancelado','Recusado'];
   document.getElementById('chips').innerHTML=opts.map(o=>`<span class="chip ${filtro===o?'active':''}" data-f="${o}">${o}</span>`).join('');
   document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{filtro=c.dataset.f;renderAll();});
 }
@@ -417,7 +426,7 @@ function dadosFiltrados(){
   let arr=porTipo().filter(c=>filtro==='Todos'||c.status===filtro);
   if(pessoaFiltro) arr=arr.filter(c=>c.signatarios.some(s=>!s.assinou&&s.quem===pessoaFiltro));
   if(busca){const q=busca.toLowerCase();
-    arr=arr.filter(c=>c.nome.toLowerCase().includes(q)||c.signatarios.some(s=>s.quem.toLowerCase().includes(q)));}
+    arr=arr.filter(c=>c.nome.toLowerCase().includes(q)||(c.servico||'').toLowerCase().includes(q)||c.signatarios.some(s=>s.quem.toLowerCase().includes(q)));}
   if(soParados) arr=arr.filter(estaParado);
   arr.sort((a,b)=>{
     if(ordem==='stale') return b.dias_parado-a.dias_parado;
@@ -461,8 +470,11 @@ function renderTabela(){
         ${c.signatarios.length?bloco('Faltam assinar',faltam,false)+bloco('Já assinaram',assinaram,true)
           :'<div class="vazio">Os e-mails deste contrato não trazem a lista de signatários. Consulte direto na Clicksign.</div>'}
         <div class="fonte">
-          ${c.signatarios_em?`<span>Retrato das assinaturas em <b>${c.signatarios_em}</b></span>`:''}
-          <span>${c.qtd_eventos} e-mail(s) na origem</span>
+          <span class="tag-fonte">fonte: ${c.fonte}</span>
+          <span>situação de <b>${c.atualizado_em_texto}</b></span>
+          ${c.cnpj?`<span>CNPJ ${c.cnpj}</span>`:''}
+          ${c.qtd_eventos?`<span>${c.qtd_eventos} e-mail(s) na origem</span>`:''}
+          ${(c.historico||[]).map(h=>`<span style="color:var(--exp-ink)">⚠ ${h}</span>`).join('')}
           ${c.link_email?`<a href="${c.link_email}" target="_blank" rel="noopener">abrir e-mail de origem ↗</a>`:''}
           ${c.link_clicksign?`<a href="${c.link_clicksign}" target="_blank" rel="noopener">abrir na Clicksign ↗</a>`:''}
         </div>
@@ -470,7 +482,8 @@ function renderTabela(){
 
     return `<tr class="main ${isOpen?'open':''}" data-key="${c.nome.replace(/"/g,'&quot;')}">
         <td><div class="cnome">${c.nome}</div>
-            <div class="cmeta"><span class="tag-tipo">${c.tipo}</span>${marco||''}</div></td>
+            ${c.servico?`<div class="cservico">${c.servico}</div>`:''}
+            <div class="cmeta"><span class="tag-tipo">${c.tipo}</span>${c.aditivo?'<span class="tag-adit">ADITIVO</span>':''}${marco||''}</div></td>
         <td><span class="badge ${STATUS[c.status].badge}"><span class="dot ${STATUS[c.status].dot}"></span>${c.status}</span></td>
         <td><div class="prog"><div class="barra"><i class="${pct===100?'cheio':''}" style="width:${pct}%"></i></div>
             <span>${c.assinaturas_ok}/${c.assinaturas_total||'?'}</span></div></td>
@@ -488,12 +501,14 @@ function renderTabela(){
 function renderRodape(){
   const d=DADOS;
   document.getElementById('rodape').innerHTML=
-    `<b>De onde vem cada número:</b> ${d.emails_lidos} e-mails da Clicksign lidos no Outlook (${d.fonte}). `+
-    `Descartados: ${d.descartados.sandbox} do ambiente de teste (SANDBOX, sem valor legal) e `+
-    `${d.descartados.nao_e_contrato_de_obra} que não são contrato de obra. Sobraram <b>${d.contratos.length} contratos</b>.<br>`+
-    `<b>Regra de tipo:</b> ${d.regras.tipo}. <b>Parado:</b> ${d.regras.parado}. `+
-    `O status de cada contrato vem do e-mail mais recente dele; a lista de signatários vem do último "Comprovante de assinatura" recebido. `+
-    `Nenhum valor foi estimado — o que não veio por e-mail aparece como "—".`;
+    `<b>De onde vem cada número:</b> o painel junta duas fontes. `+
+    `A <b>planilha de controle</b> das suas colegas (retrato de ${d.retrato_planilha}) traz ${d.da_planilha} contratos; `+
+    `os <b>e-mails da Clicksign</b> no Outlook trazem ${d.do_email} que são mais recentes que esse retrato. `+
+    `Foram lidos ${d.emails_lidos} e-mails, descartando ${d.descartados.sandbox} do ambiente de teste e ${d.descartados.nao_e_contrato_de_obra} que não são contrato de obra.<br>`+
+    `<b>Quando as duas discordam:</b> ${d.regras.conflito}. <b>Signatário N.A ou "-":</b> ${d.regras.nao_se_aplica}. `+
+    `<b>Parado:</b> ${d.regras.parado}. <b>Tipo:</b> ${d.regras.tipo}.<br>`+
+    `<b>Expirado</b> quer dizer que a Clicksign encerrou o documento porque o prazo venceu, e não que todos assinaram. `+
+    `Nenhum valor foi estimado — o que não veio de nenhuma das fontes aparece como "—".`;
 }
 
 function renderAll(){renderSeg();renderKPIs();renderDonut();renderPendentes();renderChips();renderTabela();}
