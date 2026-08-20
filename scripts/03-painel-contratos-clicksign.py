@@ -10,9 +10,27 @@ disso, a Clicksign te manda um e-mail a cada movimentacao do documento. Esses
 e-mails, juntos, contam a historia completa de cada contrato: quem ja assinou,
 quem falta, se foi finalizado, se foi cancelado.
 
+DE ONDE VEM CADA COISA - LEIA ISTO ANTES DE MEXER EM QUALQUER LINHA:
+
+  FONTE VIVA (a unica que muda):  os e-mails da Clicksign no Outlook.
+      Voce esta como observador em TODO contrato que ainda esta rodando, entao
+      qualquer movimentacao a partir de agora chega por e-mail. Uma regra do
+      Outlook joga esses e-mails na pasta "Clicksign". E daqui que sai 100% da
+      informacao nova, todos os dias, para sempre.
+
+  HISTORICO CONGELADO (nunca mais muda):  02-dados-tratados/historico-congelado.json.
+      E o retrato do passado, tirado UMA VEZ SO da planilha F.SUP.G200.002 em
+      17/08/2026, so para o painel nao comecar em branco. A planilha nunca mais
+      sera carregada. Este arquivo e so ponto de partida: contrato que ja estava
+      fechado antes de 17/08/2026 continua aparecendo por causa dele.
+
+  Isto tudo e um paliativo ate a API da Clicksign existir. Quando ela chegar,
+  a API substitui a FONTE VIVA e o historico congelado continua exatamente como
+  esta, sem precisar ser refeito.
+
 Este script pega o "dump" desses e-mails (um arquivo JSON gerado pelo comando
-/painel-contratos, que le o Outlook), aplica as regras de negocio que voce
-definiu, e gera dois arquivos:
+/painel-contratos, que le o Outlook), junta com o historico congelado, aplica as
+regras de negocio que voce definiu, e gera dois arquivos:
 
   1. 02-dados-tratados/contratos-clicksign.json  -> os dados limpos, auditaveis
   2. 03-painel/painel-contratos.html             -> o painel para abrir no navegador
@@ -45,9 +63,10 @@ PASTA_RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ARQUIVO_ENTRADA = None
 
 # Onde salvar a saida
-# Base consolidada vinda da planilha das colegas (gerada pelo 06-ler-planilha-controle.py).
-# E o retrato completo dos contratos da obra; os e-mails sao o que aconteceu depois dele.
-ARQUIVO_BASE_PLANILHA = os.path.join(PASTA_RAIZ, "01-dados-brutos", "base-planilha.json")
+# HISTORICO CONGELADO - retrato do passado, tirado da planilha em 17/08/2026.
+# NAO E ATUALIZAVEL e nao deve ser regerado: a planilha nao volta mais. Serve so
+# para o painel ja nascer com os contratos antigos dentro.
+ARQUIVO_HISTORICO = os.path.join(PASTA_RAIZ, "02-dados-tratados", "historico-congelado.json")
 
 ARQUIVO_TRATADO = os.path.join(PASTA_RAIZ, "02-dados-tratados", "contratos-clicksign.json")
 ARQUIVO_PAINEL = os.path.join(PASTA_RAIZ, "03-painel", "painel-contratos.html")
@@ -266,13 +285,117 @@ def dias_entre(inicio, fim):
 
 
 
+# =============================================================================
+# QUEM E QUEM - unificacao de identidade dos signatarios
+# =============================================================================
+#
+# O PROBLEMA que isto resolve: a mesma pessoa chega com dois nomes diferentes.
+# O historico escreve "Nilton LYON"; a Clicksign manda "nilt***********@lyoncapital.com.br".
+# Sem unificar, o painel mostrava os dois e o ranking de quem trava saia errado:
+# Nilton aparecia com 13 numa linha e 2 em outra, quando o real e 15.
+#
+# COMO CASAMOS: pelo pedaco do e-mail que a Clicksign NAO mascara (o comeco) mais
+# o dominio. "nilt***********@lyoncapital.com.br" vira a etiqueta
+# "nilt@lyoncapital.com.br". Isso e estavel mesmo se a Clicksign mudar a
+# quantidade de asteriscos.
+#
+# Decisao do Valter em 19/08/2026: uma identidade so por pessoa. O painel mostra
+# o nome (que se le) com o e-mail embaixo (que e o identificador de verdade).
+PESSOAS = [
+    {"nome": "Nilton LYON",   "email": "nilt@lyoncapital.com.br",      "apelidos": ["Nilton Bertuchi"]},
+    {"nome": "Luiz LYON",     "email": "luiz@lyoncapital.com.br",      "apelidos": ["Luiz Guilherme"]},
+    {"nome": "Fábio LYON",    "email": "fabi@lyoncapital.com.br",      "apelidos": ["Fabio Matheus"]},
+    {"nome": "Flávia LYON",   "email": "flav@lyoncapital.com.br",      "apelidos": ["Flavia Lina Doi Utiyama"]},
+    {"nome": "Lucas M. LYON", "email": "luca@lyoncapital.com.br",      "apelidos": ["Lucas Marrucci"]},
+    {"nome": "Hassan QPC",    "email": "hlue@qpc.com.br",              "apelidos": ["Hassan Fair Luedy"]},
+    {"nome": "Felippe QPC",   "email": "fpam@qpc.com.br",              "apelidos": ["Felippe Pamponet Esquivel"]},
+    {"nome": "Emerson ABR",   "email": "emer@abrgerenciamento.com",    "apelidos": ["Emerson Leal"]},
+    {"nome": "Lucas G. QPC",  "email": None,                           "apelidos": ["Lucas Maron Grimaldi"]},
+    {"nome": "Sergio QPC",    "email": None,                           "apelidos": []},
+]
+
+# Quem saiu da obra e nao assina mais nada.
+#
+# O Valter avisou em 19/08/2026 que o Sergio saiu. Cuidado com o que isto faz e
+# com o que NAO faz: ele sai de toda lista de PENDENCIA, porque cobrar dele seria
+# perder tempo. As assinaturas que ele ja deu ficam onde estao - reescrever o
+# passado tiraria a auditoria do painel, e o historico registra assinaturas dele
+# ate 10/08/2026, o que ainda precisa ser esclarecido com as colegas.
+SAIRAM_DA_OBRA = {"Sergio QPC"}
+
+
+def chave_pessoa(quem):
+    """
+    Reduz um signatario a uma etiqueta unica, venha ele do historico ou do e-mail.
+
+    "nilt***********@lyoncapital.com.br" -> "nilt@lyoncapital.com.br"
+    "Nilton Bertuchi"                    -> "nilton bertuchi"
+    """
+    texto = str(quem).strip()
+    if "@" in texto:
+        usuario, _, dominio = texto.partition("@")
+        return (usuario.split("*")[0].strip().lower() + "@" + dominio.strip().lower())
+    return re.sub(r"\s+", " ", sem_acento(texto).lower()).strip()
+
+
+def montar_indice_pessoas():
+    indice = {}
+    for pessoa in PESSOAS:
+        if pessoa["email"]:
+            indice[pessoa["email"].lower()] = pessoa
+        indice[chave_pessoa(pessoa["nome"])] = pessoa
+        for apelido in pessoa["apelidos"]:
+            indice[chave_pessoa(apelido)] = pessoa
+    return indice
+
+
+INDICE_PESSOAS = montar_indice_pessoas()
+
+
+def identificar_pessoa(quem):
+    """Devolve (nome_para_mostrar, email_ou_None). Quem nao esta na tabela passa direto."""
+    pessoa = INDICE_PESSOAS.get(chave_pessoa(quem))
+    if pessoa:
+        return pessoa["nome"], pessoa["email"]
+    # Nao esta na tabela: e um fornecedor ou alguem novo. Mostra como veio.
+    return str(quem).strip(), (str(quem).strip() if "@" in str(quem) else None)
+
+
+def normalizar_signatarios(lista):
+    """
+    Unifica identidade e tira quem saiu da obra das pendencias.
+
+    Se a mesma pessoa aparecer duas vezes no mesmo contrato (um registro vindo da
+    historico e outro do e-mail), vale ASSINADO - porque assinatura nao se desfaz.
+    """
+    por_pessoa = {}
+    for assinatura in lista:
+        nome, email = identificar_pessoa(assinatura["quem"])
+        if nome in SAIRAM_DA_OBRA and not assinatura.get("assinou"):
+            continue
+        atual = por_pessoa.get(nome)
+        if atual is None:
+            por_pessoa[nome] = {
+                "quem": nome,
+                "email": email,
+                "papel": assinatura.get("papel") or "signatario",
+                "assinou": bool(assinatura.get("assinou")),
+                "data": assinatura.get("data"),
+            }
+        else:
+            atual["assinou"] = atual["assinou"] or bool(assinatura.get("assinou"))
+            atual["data"] = atual["data"] or assinatura.get("data")
+            atual["email"] = atual["email"] or email
+    return list(por_pessoa.values())
+
+
 def chave_do_contrato(nome_documento):
     """
-    Etiqueta que liga um documento da Clicksign a uma linha da planilha.
+    Etiqueta que liga um documento da Clicksign a uma linha do historico.
 
-    Mesma regra do 06-ler-planilha-controle.py: o que importa e ser aditivo ou
+    Mesma regra usada para montar o historico: o que importa e ser aditivo ou
     nao, e o numero do contrato. Assim "63.CT-LSF-G200-063-26 - INOSERVICE.pdf"
-    (nome do e-mail) e "CT-LSF-G200-063.26" (planilha) viram os dois "CT-063".
+    (nome do e-mail) e "CT-LSF-G200-063.26" (historico) viram os dois "CT-063".
     """
     texto = sem_acento(str(nome_documento)).upper()
     aditivo = re.search(r"ADIT\.?\s*V?\.?\s*(\d{1,2})", texto)
@@ -284,11 +407,27 @@ def chave_do_contrato(nome_documento):
     return "CT-%s" % numero.group(1).zfill(3)
 
 
-def carregar_base_planilha():
-    """Le a base consolidada gerada a partir da planilha das suas colegas."""
-    if not os.path.exists(ARQUIVO_BASE_PLANILHA):
+def ordem_pelo_numero(chave):
+    """
+    Numero para ordenar a lista do jeito que o Valter le: 001, 002, 003...
+
+    O aditivo cai logo depois do contrato de origem, e nao no fim da lista:
+      CT-046 -> 4600 ; ADIT01-046 -> 4601 ; ADIT02-046 -> 4602
+    """
+    sufixo = re.search(r"#doc(\d+)$", chave)
+    chave = re.sub(r"#doc\d+$", "", chave)
+    achado = re.search(r"(\d{2,3})$", chave)
+    numero = int(achado.group(1)) if achado else 0
+    aditivo = re.match(r"ADIT(\d{2})", chave)
+    base = numero * 1000 + (int(aditivo.group(1)) if aditivo else 0) * 10
+    return base + (int(sufixo.group(1)) if sufixo else 0)
+
+
+def carregar_historico():
+    """Le o retrato congelado do passado. Ele nao muda entre uma rodada e outra."""
+    if not os.path.exists(ARQUIVO_HISTORICO):
         return None
-    with open(ARQUIVO_BASE_PLANILHA, encoding="utf-8") as arquivo:
+    with open(ARQUIVO_HISTORICO, encoding="utf-8") as arquivo:
         return json.load(arquivo)
 
 
@@ -300,22 +439,25 @@ def processar():
     )
 
     # =========================================================================
-    # FONTE 1 - a planilha de controle (o retrato completo)
+    # PONTO DE PARTIDA - o historico congelado (passado, nao muda mais)
     # =========================================================================
-    base = carregar_base_planilha()
+    base = carregar_historico()
     if not base:
         erro(
-            "Nao achei a base consolidada em 01-dados-brutos/base-planilha.json.\n"
-            "Rode antes: python 05-scripts/06-ler-planilha-controle.py"
+            "Nao achei o historico congelado em 02-dados-tratados/historico-congelado.json.\n"
+            "Este arquivo nao se regera sozinho: ele e o retrato de 17/08/2026 e vem\n"
+            "junto com os scripts no repositorio. Baixe-o de novo do GitHub\n"
+            "(dados/historico-congelado.json) - nao tente reconstruir pela planilha."
         )
 
-    data_planilha = datetime.strptime(base["data_do_retrato"], "%Y-%m-%d").replace(tzinfo=FUSO_LOCAL)
+    data_historico = datetime.strptime(base["data_do_retrato"], "%Y-%m-%d").replace(tzinfo=FUSO_LOCAL)
     registros = {}
     for item in base["contratos"]:
+        item["signatarios"] = normalizar_signatarios(item["signatarios"])
         assinados = [s for s in item["signatarios"] if s["assinou"]]
         registros[item["chave"]] = {
-            "fonte": "planilha",
-            "data_fonte": data_planilha,
+            "fonte": "histórico",
+            "data_fonte": data_historico,
             "chave": item["chave"],
             "identificacao": item["identificacao"],
             "razao_social": item["razao_social"],
@@ -389,10 +531,10 @@ def processar():
         if evento == "comprovante":
             lista = parsear_signatarios(email.get("corpo", ""))
             if lista and (doc["data_signatarios"] is None or recebido > doc["data_signatarios"]):
-                doc["signatarios"] = [
+                doc["signatarios"] = normalizar_signatarios([
                     {"quem": s["quem"], "papel": s["papel"], "assinou": s["assinou"], "data": None}
                     for s in lista
-                ]
+                ])
                 doc["data_signatarios"] = recebido
 
         if evento == "finalizado" and (doc["finalizado_em"] is None or recebido < doc["finalizado_em"]):
@@ -408,11 +550,9 @@ def processar():
         if achado_link and not doc["link_clicksign"]:
             doc["link_clicksign"] = achado_link.group(0)
 
-    # ---- Um contrato pode ter varios documentos na Clicksign -----------------
-    # Foi o caso do 065 (cancelado como "Limpeza Vicinal" e reemitido como
-    # "Limpeza") e do 063 (expirou e foi reenviado). Vale o documento MAIS
-    # RECENTE de cada contrato; os anteriores viram anotacao no historico, para
-    # o cancelamento nao sumir sem deixar rastro.
+    # Um contrato pode ter varios documentos na Clicksign: o 065 foi cancelado
+    # como "Limpeza Vicinal" e reemitido como "Limpeza"; o 063 expirou e foi
+    # reenviado. Agrupamos por contrato para depois decidir qual e o vigente.
     por_contrato = {}
     for doc in documentos.values():
         chave = chave_do_contrato(doc["nome"])
@@ -420,91 +560,153 @@ def processar():
             continue
         por_contrato.setdefault(chave, []).append(doc)
 
+    # =========================================================================
+    # FUSAO DAS DUAS FONTES - por PESSOA, nao por lista inteira
+    # =========================================================================
+    #
+    # A versao anterior escolhia uma fonte e jogava a outra fora. Isso quebrou o
+    # contrato 081: o historico tem uma coluna generica "Contratada" e o e-mail
+    # tem as pessoas de verdade (luis***@mandrade.com.br e pinh*@mandrade.com.br).
+    # Como o historico era mais novo, ele vencia e as pessoas reais sumiam.
+    #
+    # Agora juntamos as duas listas pessoa a pessoa. Duas regras cuidam do resto:
+    #
+    #   1. ASSINATURA NAO SE DESFAZ. Se qualquer uma das fontes diz que fulano
+    #      assinou, ele assinou. Isso resolve sozinho o caso do 084, em que o
+    #      e-mail antigo dizia "falta o Nilton" e o historico dizia que nao.
+    #
+    #   2. "Contratada" e um CARGO, nao uma pessoa. Quando o e-mail diz quem e o
+    #      fornecedor, o cargo generico sai de cena. O contrato 050 mostra por que
+    #      isso importa: ele tem DUAS pessoas como contratada (Eliana e Alan), e
+    #      o historico so tem uma coluna.
+    def fundir_signatarios(do_historico, do_email):
+        tem_contratada_real = any(
+            "contratada" in (s.get("papel") or "").lower() for s in do_email
+        )
+        juntos = []
+        for s in do_historico:
+            if tem_contratada_real and s["quem"].strip().lower() == "contratada":
+                continue
+            juntos.append(s)
+        return normalizar_signatarios(juntos + list(do_email))
+
+    def situacao_do_documento(assinaturas, encerrou_em, cancelado, recusado, historico_concluiu):
+        """
+        Decide o status DEPOIS que as duas listas ja foram fundidas.
+
+        Fazer isso antes era o bug: o e-mail de 14/08 do contrato 084 dizia que
+        faltava o Nilton, entao o documento era marcado "Expirado"; o historico
+        completava a assinatura logo em seguida e o rotulo errado ficava.
+        """
+        pendentes = [s for s in assinaturas if not s["assinou"]]
+        if cancelado:
+            return "Cancelado"
+        if recusado:
+            return "Recusado"
+        if assinaturas and not pendentes:
+            return "Finalizado"
+        if historico_concluiu and not pendentes:
+            return "Finalizado"
+        if encerrou_em and pendentes:
+            # A Clicksign encerra por prazo vencido e manda o mesmo e-mail de
+            # "finalizado". Com pendencia na lista, isso e prazo estourado.
+            return "Expirado"
+        if encerrou_em and not assinaturas:
+            # Encerrou e nao temos a lista: nao da para dizer se todos assinaram.
+            return "Finalizado"
+        return "Em andamento"
+
     for chave, docs in por_contrato.items():
         docs.sort(key=lambda d: d["ultima_movimentacao"], reverse=True)
-        atual, anteriores = docs[0], docs[1:]
+        do_historico = registros.get(chave)
 
-        assinados = [s for s in atual["signatarios"] if s["assinou"]]
-        pendentes = [s for s in atual["signatarios"] if not s["assinou"]]
+        for posicao, doc in enumerate(docs):
+            recusado = any(e["tipo"] == "recusado" for e in doc["eventos"])
+            encerrou_em = doc["finalizado_em"] or doc["cancelado_em"]
 
-        # A DESCOBERTA DO VALTER EM 19/08/2026:
-        # "Finalizado" na Clicksign NAO quer dizer "todo mundo assinou". Quando o
-        # prazo vence, a Clicksign encerra o documento e manda o mesmo e-mail de
-        # "foi finalizado" - foi assim que o contrato 063 apareceu como fechado
-        # tendo 1 de 10 assinaturas. Entao: finalizado COM pendencia na lista e
-        # prazo expirado, nao contrato assinado.
-        if atual["cancelado_em"]:
-            status = "Cancelado"
-        elif any(e["tipo"] == "recusado" for e in atual["eventos"]):
-            status = "Recusado"
-        elif atual["finalizado_em"] and pendentes:
-            status = "Expirado"
-        elif atual["finalizado_em"]:
-            status = "Finalizado"
-        else:
-            status = "Em andamento"
+            # ---- Este documento e o mesmo que o historico descreve? ------------
+            # Se o documento do e-mail JA ENCERROU e o historico, DEPOIS dele,
+            # mostra o contrato ainda em andamento, sao documentos DIFERENTES: o
+            # antigo morreu e um novo foi disparado. Foi o 063, que expirou em
+            # 12/07 e foi reenviado. Quando o encerramento e o registro mais
+            # recente, e o mesmo documento que chegou ao fim - caso do 050.
+            documento_diferente = (
+                do_historico is not None
+                and encerrou_em is not None
+                and encerrou_em < do_historico["data_fonte"]
+                and do_historico["status"] == "Em andamento"
+            )
+            e_o_vigente = posicao == 0 and not documento_diferente
 
-        if status == "Finalizado" and atual["signatarios"]:
-            for s in atual["signatarios"]:
-                s["assinou"] = True
-            assinados = atual["signatarios"]
+            assinaturas = list(doc["signatarios"])
+            registro = {
+                "fonte": "e-mail",
+                "data_fonte": doc["ultima_movimentacao"],
+                "chave": chave,
+                "identificacao": doc["nome"].replace(".pdf", ""),
+                "aditivo": chave.startswith("ADIT"),
+                "dias_parado": dias_entre(doc["ultima_movimentacao"], agora),
+                "data_limite": doc["data_limite"],
+                "finalizado_em": doc["finalizado_em"].strftime("%d/%m/%Y") if doc["finalizado_em"] else None,
+                "cancelado_em": doc["cancelado_em"].strftime("%d/%m/%Y") if doc["cancelado_em"] else None,
+                "link_email": doc["link_email"],
+                "link_clicksign": doc["link_clicksign"],
+                "qtd_eventos": len(doc["eventos"]),
+                "signatarios_em": doc["data_signatarios"].strftime("%d/%m/%Y") if doc["data_signatarios"] else None,
+                "tipo": classificar_tipo(doc["nome"]),
+                "historico": [],
+                "encerrado": False,
+            }
 
-        historico = [
-            "documento anterior %s em %s" % (
-                "cancelado" if d["cancelado_em"] else "encerrado",
-                (d["cancelado_em"] or d["ultima_movimentacao"]).strftime("%d/%m/%Y"))
-            for d in anteriores
-        ]
+            if e_o_vigente and do_historico is not None:
+                assinaturas = fundir_signatarios(do_historico["signatarios"], assinaturas)
+                for campo in ("razao_social", "servico", "cnpj", "tipo", "data_cadastro"):
+                    registro[campo] = do_historico.get(campo)
+                registro["identificacao"] = do_historico["identificacao"]
+                # O historico esta parado em 17/08/2026 e o e-mail so anda para a
+                # frente. Enquanto o ultimo e-mail deste contrato for anterior ao
+                # retrato, quem sabe mais sobre ele ainda e o retrato.
+                if do_historico["data_fonte"] > doc["ultima_movimentacao"]:
+                    registro["dias_parado"] = do_historico["dias_parado"]
+                    registro["data_fonte"] = do_historico["data_fonte"]
+                    registro["fonte"] = "histórico + e-mail"
+                else:
+                    registro["fonte"] = "e-mail (sobre o histórico)"
+                historico_concluiu = do_historico["status"] == "Finalizado"
+                do_historico = None
+            else:
+                historico_concluiu = False
+                if do_historico is not None:
+                    for campo in ("razao_social", "servico", "cnpj"):
+                        registro[campo] = do_historico.get(campo)
 
-        vindo_do_email = {
-            "fonte": "e-mail",
-            "data_fonte": atual["ultima_movimentacao"],
-            "chave": chave,
-            "identificacao": atual["nome"].replace(".pdf", ""),
-            "aditivo": chave.startswith("ADIT"),
-            "status": status,
-            "signatarios": atual["signatarios"],
-            "assinaturas_ok": len(assinados),
-            "assinaturas_total": len(atual["signatarios"]),
-            "dias_parado": dias_entre(atual["ultima_movimentacao"], agora),
-            "data_limite": atual["data_limite"],
-            "finalizado_em": atual["finalizado_em"].strftime("%d/%m/%Y") if atual["finalizado_em"] else None,
-            "cancelado_em": atual["cancelado_em"].strftime("%d/%m/%Y") if atual["cancelado_em"] else None,
-            "link_email": atual["link_email"],
-            "link_clicksign": atual["link_clicksign"],
-            "qtd_eventos": len(atual["eventos"]),
-            "signatarios_em": atual["data_signatarios"].strftime("%d/%m/%Y") if atual["data_signatarios"] else None,
-            "historico": historico,
-        }
+            registro["signatarios"] = assinaturas
+            registro["status"] = situacao_do_documento(
+                assinaturas, encerrou_em, doc["cancelado_em"], recusado, historico_concluiu
+            )
+            if registro["status"] == "Finalizado":
+                for s in assinaturas:
+                    s["assinou"] = True
 
-        # ---- Quem manda: o mais recente ------------------------------------
-        # Decisao do Valter em 19/08/2026. A planilha e um retrato de uma data;
-        # o e-mail e um evento de outra. Vence quem viu o contrato por ultimo.
-        antigo = registros.get(chave)
-        if antigo is None:
-            registros[chave] = vindo_do_email
-            registros[chave].setdefault("razao_social", None)
-            registros[chave].setdefault("servico", None)
-            registros[chave].setdefault("cnpj", None)
-            registros[chave].setdefault("tipo", classificar_tipo(atual["nome"]))
-            registros[chave].setdefault("data_cadastro", None)
-        elif vindo_do_email["data_fonte"] > antigo["data_fonte"]:
-            # O e-mail e mais novo: ele manda no status e nas assinaturas.
-            # Os dados cadastrais continuam vindo da planilha, que e melhor neles.
-            for campo in ("razao_social", "servico", "cnpj", "tipo", "identificacao", "data_cadastro"):
-                vindo_do_email[campo] = antigo.get(campo) or vindo_do_email.get(campo)
-            registros[chave] = vindo_do_email
-        else:
-            # A planilha e mais nova: ela manda. Do e-mail aproveitamos apenas o
-            # que ela nao tem - prazo limite e os links de origem.
-            antigo["data_limite"] = antigo.get("data_limite") or vindo_do_email["data_limite"]
-            antigo["link_email"] = antigo.get("link_email") or vindo_do_email["link_email"]
-            antigo["link_clicksign"] = antigo.get("link_clicksign") or vindo_do_email["link_clicksign"]
-            antigo["qtd_eventos"] = vindo_do_email["qtd_eventos"]
-            antigo["historico"] = antigo.get("historico", []) + historico
+            if e_o_vigente:
+                registros[chave] = registro
+            else:
+                # Um documento encerrado que foi SUBSTITUIDO por outro do mesmo
+                # contrato nao foi concluido - se tivesse sido, ninguem teria
+                # disparado um novo. Sem a lista de assinaturas nao da para
+                # provar isso pelo conteudo, mas a existencia do substituto
+                # prova pelo processo. Foi exatamente o caso do 063, que o
+                # painel mostrava como fechado e o Valter corrigiu.
+                if registro["status"] == "Finalizado":
+                    registro["status"] = "Expirado"
+                # Documento que ja encerrou e nao e o vigente: linha propria.
+                # O Valter pediu isso - cancelamento e expiracao sao fatos do
+                # processo e nao podem sumir do painel.
+                registro["encerrado"] = True
+                registros["%s#doc%d" % (chave, posicao + 1)] = registro
 
     if not registros:
-        erro("Nem a planilha nem os e-mails renderam contrato nenhum.")
+        erro("Nem o historico congelado nem os e-mails renderam contrato nenhum.")
 
     # ---- Guarda-corpo: queda brusca vs a rodada anterior ---------------------
     if os.path.exists(ARQUIVO_TRATADO):
@@ -537,6 +739,8 @@ def processar():
         contratos.append({
             "nome": rotulo,
             "numero": reg["chave"],
+            "ordem_numero": ordem_pelo_numero(reg["chave"]),
+            "encerrado": reg.get("encerrado", False),
             "tipo": reg.get("tipo") or "LYON",
             "aditivo": reg.get("aditivo", False),
             "fonte": reg["fonte"],
@@ -550,8 +754,8 @@ def processar():
             "dias_para_limite": dias_para_limite,
             "finalizado_em": reg.get("finalizado_em"),
             "cancelado_em": reg.get("cancelado_em"),
-            "assinaturas_total": reg["assinaturas_total"],
-            "assinaturas_ok": reg["assinaturas_ok"],
+            "assinaturas_total": len(reg["signatarios"]),
+            "assinaturas_ok": sum(1 for s in reg["signatarios"] if s["assinou"]),
             "signatarios": reg["signatarios"],
             "signatarios_em": reg.get("signatarios_em"),
             "link_email": reg.get("link_email", ""),
@@ -565,19 +769,23 @@ def processar():
 
     saida = {
         "gerado_em": agora.strftime("%d/%m/%Y %H:%M"),
-        "fonte": "%s (retrato de %s) + %s"
-                 % (base["fonte"], base["data_do_retrato_texto"], os.path.basename(caminho_entrada)),
+        "fonte_viva": "e-mails da Clicksign no Outlook (pasta Clicksign) - %s"
+                      % os.path.basename(caminho_entrada),
+        "historico_congelado": "%s, retrato unico de %s, nao recebe mais atualizacao"
+                               % (base["fonte_original"], base["data_do_retrato_texto"]),
         "regras": {
-            "tipo": "esta planilha cobre apenas contratos LYON; AFE e QPC tem outro controle",
-            "conflito": "quando planilha e e-mail discordam, vence a fonte que viu o contrato por ultimo",
+            "tipo": "o historico cobre apenas contratos LYON; AFE e QPC so aparecem pelo e-mail",
+            "conflito": "o historico parou em %s; tudo que aconteceu depois vem do e-mail, "
+                        "e assinatura registrada em qualquer uma das duas nao se desfaz"
+                        % base["data_do_retrato_texto"],
             "nao_se_aplica": "signatario marcado N.A ou - sai da conta: nao aparece como pendente",
             "parado": "contrato Em andamento sem movimentação há mais de %d dias" % DIAS_PARA_CONSIDERAR_PARADO,
         },
         "descartados": descartados,
         "emails_lidos": len(bruto["emails"]),
-        "da_planilha": sum(1 for c in contratos if c["fonte"] == "planilha"),
-        "do_email": sum(1 for c in contratos if c["fonte"] == "e-mail"),
-        "retrato_planilha": base["data_do_retrato_texto"],
+        "so_do_historico": sum(1 for c in contratos if c["fonte"] == "histórico"),
+        "com_email": sum(1 for c in contratos if "mail" in c["fonte"]),
+        "retrato_historico": base["data_do_retrato_texto"],
         "contratos": contratos,
     }
 
@@ -610,15 +818,15 @@ def processar():
     print("=" * 70)
     print("PAINEL DE CONTRATOS - CONFERENCIA")
     print("=" * 70)
-    print("Planilha:                 %s (retrato de %s)" % (base["fonte"], base["data_do_retrato_texto"]))
-    print("E-mails:                  %s" % os.path.basename(caminho_entrada))
+    print("Historico congelado:      retrato de %s (nao muda mais)" % base["data_do_retrato_texto"])
+    print("E-mails (fonte viva):     %s" % os.path.basename(caminho_entrada))
     print("  lidos:                  %d" % len(bruto["emails"]))
     print("  descartados (sandbox):  %d" % descartados["sandbox"])
     print("  descartados (nao obra): %d" % descartados["nao_e_contrato_de_obra"])
     print("-" * 70)
     print("Contratos no painel:      %d" % len(contratos))
-    print("  vindos da planilha:     %d" % saida["da_planilha"])
-    print("  vindos do e-mail:       %d  (mais recentes que o retrato)" % saida["do_email"])
+    print("  so no historico:        %d  (sem nenhum e-mail desde o retrato)" % saida["so_do_historico"])
+    print("  com noticia por e-mail: %d" % saida["com_email"])
     print("  sendo aditivos:         %d" % sum(1 for c in contratos if c["aditivo"]))
     print("-" * 70)
     for status in ORDEM_STATUS + ["Expirado"]:
