@@ -691,6 +691,13 @@ def processar():
                 "tipo": classificar_tipo(doc["nome"]),
                 "historico": [],
                 "encerrado": False,
+                # Quantas pessoas a CLICKSIGN declarou no fluxo deste documento.
+                # So existe quando um "Comprovante de assinatura" foi lido - e o
+                # comprovante lista TODO MUNDO do fluxo, tenha assinado ou nao.
+                # E a nossa unica referencia externa para conferir o historico.
+                "clicksign_declarou": (
+                    len(doc["signatarios"]) if doc["data_signatarios"] else None
+                ),
             }
 
             if e_o_vigente and do_historico is not None:
@@ -743,6 +750,61 @@ def processar():
     if not registros:
         erro("Nem o historico congelado nem os e-mails renderam contrato nenhum.")
 
+    # =========================================================================
+    # CONFERENCIA CONTRA A CLICKSIGN - trava criada em 21/08/2026
+    # =========================================================================
+    #
+    # POR QUE ISTO EXISTE, EM PORTUGUES SIMPLES:
+    #
+    # A planilha que virou o historico congelado tinha uma coluna com o nome de
+    # uma pessoa que NAO E SIGNATARIA de nada na Clicksign (o Sergio, que saiu da
+    # obra em maio/2026 e cuja coluna continuou sendo preenchida). Resultado: o
+    # painel mostrava 11 pessoas onde a Clicksign so tem 10, e ninguem percebeu
+    # por dois dias - foi o Valter quem viu.
+    #
+    # A regra que pega esse tipo de erro e simples e barata: o "Comprovante de
+    # assinatura" da Clicksign lista TODAS as pessoas do fluxo, tenham assinado
+    # ou nao. Entao, num contrato em que lemos um comprovante, o painel NUNCA
+    # pode ter mais gente do que a Clicksign declarou. Se tiver, o excesso veio
+    # do historico e e contaminacao.
+    #
+    # Por que isto PARA a rodada em vez de so avisar: um painel que inventa
+    # signatario e pior que painel nenhum, porque as pessoas cobram assinatura de
+    # quem nao tem que assinar. E o conserto e uma linha - acrescentar o nome em
+    # NAO_ESTAO_NA_CLICKSIGN, la em cima, depois de conferir.
+    #
+    # Contar a MENOS e normal e nao para nada: um contrato pode ter ganhado
+    # signatario depois do comprovante que lemos.
+    contaminados = []
+    for chave, reg in registros.items():
+        declarou = reg.get("clicksign_declarou")
+        if not declarou:
+            continue
+        no_painel = len(reg.get("signatarios") or [])
+        if no_painel > declarou:
+            do_email = {s["quem"] for s in reg.get("signatarios") or [] if s.get("quem")}
+            contaminados.append((reg.get("identificacao") or chave, declarou, no_painel, sorted(do_email)))
+
+    if contaminados:
+        linhas = [
+            "O painel tem MAIS signatarios do que a Clicksign declarou. Isso e",
+            "contaminacao vinda do historico congelado - alguem esta na planilha",
+            "e nao esta no fluxo da Clicksign.",
+            "",
+        ]
+        for identificacao, declarou, no_painel, pessoas in contaminados:
+            linhas.append("  %s: Clicksign diz %d, painel diz %d" % (identificacao, declarou, no_painel))
+            linhas.append("     no painel: %s" % ", ".join(pessoas))
+        linhas += [
+            "",
+            "O QUE FAZER: abra o ultimo 'Comprovante de assinatura' desse contrato",
+            "no Outlook, veja quem a Clicksign lista, e descubra quem sobra. Se for",
+            "alguem que nao participa mais do fluxo, acrescente o nome em",
+            "NAO_ESTAO_NA_CLICKSIGN, no topo deste script, com a evidencia ao lado.",
+            "NAO publique um painel que inventa signatario.",
+        ]
+        erro("\n".join(linhas))
+
     # ---- Guarda-corpo: queda brusca vs a rodada anterior ---------------------
     if os.path.exists(ARQUIVO_TRATADO):
         try:
@@ -789,6 +851,7 @@ def processar():
             "dias_para_limite": dias_para_limite,
             "finalizado_em": reg.get("finalizado_em"),
             "cancelado_em": reg.get("cancelado_em"),
+            "clicksign_declarou": reg.get("clicksign_declarou"),
             "assinaturas_total": len(reg["signatarios"]),
             "assinaturas_ok": sum(1 for s in reg["signatarios"] if s["assinou"]),
             "signatarios": reg["signatarios"],
@@ -868,6 +931,8 @@ def processar():
         quantidade = sum(1 for c in contratos if c["status"] == status)
         if quantidade:
             print("  %-16s %d" % (status + ":", quantidade))
+    conferidos = [c for c in contratos if c.get("clicksign_declarou")]
+    print("Conferidos contra a Clicksign: %d contratos, todos batendo" % len(conferidos))
     print("-" * 70)
     pendentes = sum(
         c["assinaturas_total"] - c["assinaturas_ok"]
