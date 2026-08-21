@@ -314,14 +314,44 @@ PESSOAS = [
     {"nome": "Sergio QPC",    "email": None,                           "apelidos": []},
 ]
 
-# Quem saiu da obra e nao assina mais nada.
+# Quem saiu da obra: sai das PENDENCIAS, mas o que ja assinou continua no painel.
+# Use isto quando a pessoa realmente participou do fluxo e depois deixou a obra.
+# Hoje esta vazio - o caso do Sergio virou outra coisa, explicada logo abaixo.
+SAIRAM_DA_OBRA = set()
+
+# ---------------------------------------------------------------------------
+# COLUNA FANTASMA DA PLANILHA - decisao do Valter em 20/08/2026
+# ---------------------------------------------------------------------------
 #
-# O Valter avisou em 19/08/2026 que o Sergio saiu. Cuidado com o que isto faz e
-# com o que NAO faz: ele sai de toda lista de PENDENCIA, porque cobrar dele seria
-# perder tempo. As assinaturas que ele ja deu ficam onde estao - reescrever o
-# passado tiraria a auditoria do painel, e o historico registra assinaturas dele
-# ate 10/08/2026, o que ainda precisa ser esclarecido com as colegas.
-SAIRAM_DA_OBRA = {"Sergio QPC"}
+# O Sergio saiu da obra em maio/2026, mas a planilha das colegas continuou com
+# uma coluna no nome dele, e essa coluna continuou sendo preenchida. Ele nao sai
+# so das pendencias: ele sai INTEIRO do historico congelado, porque a evidencia
+# diz que ele nao e signatario de coisa nenhuma na Clicksign.
+#
+# A prova, checada em 20/08/2026 - nos CINCO contratos em que da para cruzar as
+# duas fontes, a Clicksign nao tem o Sergio no fluxo:
+#
+#     contrato 084  ->  Clicksign lista 10 signatarios; a planilha lista 11.
+#                       O 11o e o Sergio, com data 03/08/2026.
+#     mesma coisa em 079, 050, 081 e 065.
+#
+# Mais tres indicios na mesma direcao:
+#
+#   1. ZERO mencoes ao Sergio em 76 e-mails da Clicksign. Nenhuma.
+#   2. 47 das 70 datas dele sao copia exata da data da coluna vizinha - isso e
+#      arrasto de celula no Excel, nao assinatura.
+#   3. As DUAS unicas datas impossiveis da planilha inteira (17/03/2027 e
+#      02/06/2028) estao na coluna dele. Nenhuma outra coluna tem data furada.
+#
+# O que NAO consegui provar, e fica registrado por honestidade: 33 das 70 datas
+# tem data propria, quase todas entre fevereiro e maio, quando ele estava na
+# obra. Podem ser assinaturas reais de contratos para os quais nao tenho e-mail.
+# O Valter foi consultado com essa ressalva e escolheu tirar completamente.
+#
+# Nada foi destruido: o 02-dados-tratados/historico-congelado.json continua com
+# os registros dele. A remocao acontece aqui, na leitura, e desfazer e apagar
+# uma linha.
+NAO_ESTAO_NA_CLICKSIGN = {"Sergio QPC"}
 
 
 def chave_pessoa(quem):
@@ -363,14 +393,19 @@ def identificar_pessoa(quem):
 
 def normalizar_signatarios(lista):
     """
-    Unifica identidade e tira quem saiu da obra das pendencias.
+    Unifica identidade, descarta coluna fantasma e tira quem saiu das pendencias.
 
-    Se a mesma pessoa aparecer duas vezes no mesmo contrato (um registro vindo da
+    Se a mesma pessoa aparecer duas vezes no mesmo contrato (um registro vindo do
     historico e outro do e-mail), vale ASSINADO - porque assinatura nao se desfaz.
     """
     por_pessoa = {}
     for assinatura in lista:
         nome, email = identificar_pessoa(assinatura["quem"])
+        if nome in NAO_ESTAO_NA_CLICKSIGN:
+            # Coluna fantasma: nao e signatario do documento. Sai inteiro, tenha
+            # a planilha marcado ASSINADO ou nao. Ver o bloco de comentario la em
+            # cima com a evidencia.
+            continue
         if nome in SAIRAM_DA_OBRA and not assinatura.get("assinou"):
             continue
         atual = por_pessoa.get(nome)
