@@ -101,13 +101,94 @@ DATA_REFERENCIA = None
 # REGRAS DE NEGOCIO - definidas pelo Valter, nao alterar sem pedido dele
 # =============================================================================
 
-# Um documento so entra no painel se o nome dele tiver o padrao de contrato de obra:
-# uma sigla (AFE ou CT), a obra G200 e um numero. Isso exclui automaticamente
-# documentos pessoais e de RH (PJ_QPC, F.PES.012) que chegam do mesmo remetente.
+# O QUE E, E O QUE NAO E, DOCUMENTO DA OBRA
+# =========================================
+#
+# A marca da obra e "G200" seguido do numero do contrato. Quem tem isso no nome
+# E documento da obra, ponto. Documentos pessoais e de RH que chegam do mesmo
+# remetente (PJ_QPC, F.PES.012, Termo de Consentimento) nao tem G200 e caem fora
+# sozinhos.
+#
+# ERRO QUE ISTO CONSERTA (24/08/2026): a versao anterior exigia que a sigla fosse
+# exatamente "AFE" ou "CT". Duas consequencias, as duas ruins:
+#
+#   1. NENHUM ADITIVO passava. Nem os bem escritos: "ADIT.V.01-LSF-G200-010-26"
+#      nao tem "AFE" nem "CT", entao era descartado como "nao e contrato de obra".
+#      Os 13 aditivos do painel vinham todos do historico congelado - nenhum
+#      chegou por e-mail em momento nenhum.
+#   2. Um erro de digitacao derrubava o documento inteiro. Foi o que o Valter
+#      pegou: "ADT1-LSF-G200-039-26 - VOC (Contencao).pdf" (o certo seria
+#      "ADIT.V.01") sumiu do painel sem deixar rastro, contado no balde de
+#      "nao e contrato de obra" junto com os documentos de RH.
+#
+# A regra agora e outra: acha o G200 e o numero, e depois OLHA O PREFIXO para
+# decidir a familia. O prefixo pode vir torto - o que nao pode e ser ignorado
+# em silencio. Prefixo que nao se reconhece PARA A RODADA (ver conferencia
+# la embaixo), porque foi exatamente o silencio que escondeu o problema.
 PADRAO_CONTRATO = re.compile(
-    r"(?P<sigla>AFE|CT)[-\s.]*(?P<lsf>LSF)?[-\s.]*G200[-\s.]*(?P<numero>\d{2,3})",
+    r"(?P<prefixo>[A-Z0-9][A-Z0-9.\-/ ]{0,14})?[-\s._]*(?:LSF)[-\s._]*G200[-\s.]*(?P<numero>\d{2,3})"
+    r"|(?P<prefixo2>[A-Z0-9][A-Z0-9.\-/ ]{0,14})?[-\s._]*G200[-\s.]*(?P<numero2>\d{2,3})",
     re.IGNORECASE,
 )
+
+# Como cada familia de documento se escreve na vida real. A chave e o que a
+# pessoa digitou; o valor e o que aquilo significa. Acrescentar variante aqui e
+# a forma OFICIAL de ensinar uma grafia nova ao painel.
+#
+#   ADIT.V.01-LSF-G200-010-26   -> aditivo 01   (grafia padrao da QPC)
+#   ADIT.V.02-LSF-G200-015-26   -> aditivo 02
+#   ADT1-LSF-G200-039-26        -> aditivo 01   (digitacao torta, mesma coisa)
+#   ADITIVO-LSF-G200-044-26     -> aditivo 01   (sem numero = primeiro aditivo)
+#   71. AFE-LSF-G200-071.26     -> AFE
+#   86.CT-LSF-G200-086.26       -> contrato
+FAMILIA_ADITIVO = re.compile(r"^AD(IT|T)", re.IGNORECASE)
+FAMILIA_AFE = re.compile(r"AFE", re.IGNORECASE)
+FAMILIA_CONTRATO = re.compile(r"CT", re.IGNORECASE)
+
+
+def ler_prefixo(nome_documento):
+    """
+    Devolve o pedaco do nome que vem ANTES do "LSF-G200", ja limpo.
+
+    "39. ADT1-LSF-G200-039-26 - VOC (Contencao).pdf"  ->  "ADT1"
+    "86.CT-LSF-G200-086.26 - BLINDADUS.pdf"           ->  "CT"
+    "03. CT-G200-003.26 - CTMED.pdf"                  ->  "CT"
+    """
+    texto = sem_acento(str(nome_documento)).upper()
+    corte = re.split(r"[-\s._]*(?:LSF[-\s._]*)?G200", texto, maxsplit=1)
+    if len(corte) < 2:
+        return None
+    antes = corte[0]
+    # Tira o numero de ordem que a QPC poe na frente ("39. ", "86.")
+    antes = re.sub(r"^\s*\d{1,3}\s*[.\-]?\s*", "", antes)
+    return antes.strip(" .-_/") or None
+
+
+def familia_do_documento(nome_documento):
+    """
+    Diz de que familia e o documento: ("aditivo", 1) / ("afe", None) /
+    ("contrato", None) / ("?", None) quando o prefixo nao se reconhece.
+
+    Nao levanta erro aqui de proposito: quem decide o que fazer com o "?" e a
+    conferencia no fim do processamento, que consegue mostrar tudo de uma vez.
+    """
+    prefixo = ler_prefixo(nome_documento)
+    if prefixo is None:
+        return None, None
+    if FAMILIA_AFE.search(prefixo):
+        return "afe", None
+    if FAMILIA_ADITIVO.search(prefixo):
+        digitos = re.findall(r"\d+", prefixo)
+        # "ADIT.V.01" -> 01 ; "ADT1" -> 1 ; "ADITIVO" -> sem numero, e o primeiro
+        return "aditivo", int(digitos[-1]) if digitos else 1
+    if FAMILIA_CONTRATO.search(prefixo):
+        return "contrato", None
+    return "?", None
+
+
+def e_documento_da_obra(nome_documento):
+    """G200 no nome = documento da obra. Simples assim."""
+    return bool(re.search(r"G200[-\s.]*\d{2,3}", sem_acento(str(nome_documento)), re.IGNORECASE))
 
 # Padrao para achar o nome completo do arquivo do contrato dentro do texto do e-mail.
 #
@@ -116,8 +197,11 @@ PADRAO_CONTRATO = re.compile(
 # junto a organizacao QPC..."). Se o padrao comecar solto, ele engole "O processo de
 # assinatura do documento" junto e o mesmo contrato vira dois no painel.
 # Por isso o padrao comeca obrigatoriamente no numero de ordem ("65.") ou na sigla.
+# A ancora agora e o proprio "G200": voltamos ate 16 caracteres antes dele para
+# pegar a sigla (seja "CT", "AFE", "ADIT.V.01" ou "ADT1") e o numero de ordem,
+# sem voltar tanto a ponto de engolir a frase inteira.
 PADRAO_NOME_ARQUIVO = re.compile(
-    r"((?:\d{1,3}\s*[.\-]\s*)?(?:AFE|CT)[-\s.]*(?:LSF)?[-\s.]*G200[^\n]*?\.pdf)",
+    r"((?:\d{1,3}\s*[.\-]\s*)?[A-Z0-9][A-Z0-9.\-/]{0,14}[-\s._]*(?:LSF)?[-\s._]*G200[^\n]*?\.pdf)",
     re.IGNORECASE,
 )
 
@@ -205,8 +289,8 @@ def classificar_tipo(nome_documento):
 
 def extrair_numero_contrato(nome_documento):
     """Devolve o numero do contrato (ex.: '086') lido do proprio nome do arquivo."""
-    achado = PADRAO_CONTRATO.search(sem_acento(nome_documento))
-    return achado.group("numero").zfill(3) if achado else None
+    achado = re.search(r"G200[-\s.]*(\d{2,3})", sem_acento(str(nome_documento)), re.IGNORECASE)
+    return achado.group(1).zfill(3) if achado else None
 
 
 def extrair_nome_documento(email):
@@ -432,14 +516,18 @@ def chave_do_contrato(nome_documento):
     nao, e o numero do contrato. Assim "63.CT-LSF-G200-063-26 - INOSERVICE.pdf"
     (nome do e-mail) e "CT-LSF-G200-063.26" (historico) viram os dois "CT-063".
     """
-    texto = sem_acento(str(nome_documento)).upper()
-    aditivo = re.search(r"ADIT\.?\s*V?\.?\s*(\d{1,2})", texto)
-    numero = re.search(r"G200[-\s.]*(\d{2,3})", texto)
+    numero = extrair_numero_contrato(nome_documento)
     if not numero:
         return None
-    if aditivo:
-        return "ADIT%s-%s" % (aditivo.group(1).zfill(2), numero.group(1).zfill(3))
-    return "CT-%s" % numero.group(1).zfill(3)
+    familia, versao = familia_do_documento(nome_documento)
+    if familia == "aditivo":
+        return "ADIT%02d-%s" % (versao or 1, numero)
+    if familia == "afe":
+        # AFE nao pode virar CT: sao documentos diferentes que podem ter o mesmo
+        # numero. Antes de 24/08/2026 os dois viravam "CT-nnn" e se fundiriam
+        # num contrato so no dia em que um AFE chegasse por e-mail.
+        return "AFE-%s" % numero
+    return "CT-%s" % numero
 
 
 def ordem_pelo_numero(chave):
@@ -453,7 +541,7 @@ def ordem_pelo_numero(chave):
     chave = re.sub(r"#doc\d+$", "", chave)
     achado = re.search(r"(\d{2,3})$", chave)
     numero = int(achado.group(1)) if achado else 0
-    aditivo = re.match(r"ADIT(\d{2})", chave)
+    aditivo = re.match(r"ADIT(\d{2})", chave or "")
     base = numero * 1000 + (int(aditivo.group(1)) if aditivo else 0) * 10
     return base + (int(sufixo.group(1)) if sufixo else 0)
 
@@ -535,6 +623,7 @@ def processar():
 
     documentos = {}
     descartados = {"sandbox": 0, "nao_e_contrato_de_obra": 0}
+    prefixos_estranhos = {}
 
     for email in bruto["emails"]:
         if email.get("sandbox") and not INCLUIR_SANDBOX:
@@ -542,9 +631,15 @@ def processar():
             continue
 
         nome = extrair_nome_documento(email)
-        if not nome or not PADRAO_CONTRATO.search(sem_acento(nome)):
+        if not nome or not e_documento_da_obra(nome):
             descartados["nao_e_contrato_de_obra"] += 1
             continue
+
+        # E da obra (tem G200). Se a sigla nao se reconhece, guarda para a
+        # conferencia do fim - NAO descarta em silencio, que foi o erro do 039.
+        familia, _versao = familia_do_documento(nome)
+        if familia == "?":
+            prefixos_estranhos.setdefault(ler_prefixo(nome) or "(vazio)", set()).add(nome)
 
         chave_arquivo = chave_documento(nome)
         evento = identificar_evento(email.get("assunto", ""), email.get("corpo", ""))
@@ -751,6 +846,40 @@ def processar():
         erro("Nem o historico congelado nem os e-mails renderam contrato nenhum.")
 
     # =========================================================================
+    # CONFERENCIA DE SIGLA - trava criada em 24/08/2026
+    # =========================================================================
+    #
+    # Documento que tem G200 no nome E da obra. Se a sigla dele nao se parece com
+    # nada conhecido, o painel NAO adivinha e NAO descarta caladinho: para tudo e
+    # mostra o que apareceu, para uma pessoa decidir.
+    #
+    # Foi assim que o "ADT1-LSF-G200-039-26 - VOC (Contencao).pdf" sumiu: ele caiu
+    # no balde de "nao e contrato de obra", que tambem guarda os documentos de RH
+    # legitimos. Um contador com dois significados esconde erro.
+    if prefixos_estranhos:
+        linhas = [
+            "Documento da obra G200 com sigla que eu nao sei ler.",
+            "Nao vou adivinhar nem descartar em silencio.",
+            "",
+        ]
+        for prefixo, nomes in sorted(prefixos_estranhos.items()):
+            linhas.append('  sigla "%s":' % prefixo)
+            for nome in sorted(nomes):
+                linhas.append("     %s" % nome)
+        linhas += [
+            "",
+            "O QUE FAZER: veja o nome do arquivo e decida a familia.",
+            "  - e aditivo?  a sigla deve casar com FAMILIA_ADITIVO (comeca com AD).",
+            "  - e AFE?      deve conter AFE.",
+            "  - e contrato? deve conter CT.",
+            "Se for uma grafia nova de algo que ja existe, ajuste a expressao da",
+            "familia no topo deste script e deixe o exemplo escrito no comentario.",
+            "Se nao for documento de contrato, ai sim ele nao entra - mas registre",
+            "o motivo, porque o proximo que aparecer vai parar aqui de novo.",
+        ]
+        erro("\n".join(linhas))
+
+    # =========================================================================
     # CONFERENCIA CONTRA A CLICKSIGN - trava criada em 21/08/2026
     # =========================================================================
     #
@@ -931,6 +1060,12 @@ def processar():
         quantidade = sum(1 for c in contratos if c["status"] == status)
         if quantidade:
             print("  %-16s %d" % (status + ":", quantidade))
+    aditivos_por_email = [
+        c for c in contratos if c.get("aditivo") and "mail" in (c.get("fonte") or "")
+    ]
+    if aditivos_por_email:
+        print("Aditivos com noticia por e-mail: %d  (%s)"
+              % (len(aditivos_por_email), ", ".join(c["numero"] for c in aditivos_por_email)))
     conferidos = [c for c in contratos if c.get("clicksign_declarou")]
     print("Conferidos contra a Clicksign: %d contratos, todos batendo" % len(conferidos))
     print("-" * 70)
