@@ -209,45 +209,62 @@ def publicar():
             )
         print("Contratos: %d no ar -> %d agora." % (anterior or 0, agora_tem))
 
-    # ---- Guarda-corpo: NAO sobrescrever um painel mais NOVO que o meu ---------
+    # ---- Guarda-corpo: NAO apagar do ar o que outra rodada ja viu ------------
     #
     # POR QUE ISTO EXISTE, EM PORTUGUES SIMPLES:
     #
-    # Em 25/08/2026 a rotina das 11h30 rodou, leu o Outlook, achou o aditivo
-    # ADIT01-045 e publicou 104 contratos as 11h45. As 12h56 eu (Claude) fui
-    # publicar uma mudanca de TITULO de um card e gerei o painel a partir do dump
-    # que estava no disco - de ONTEM. Publiquei 103 contratos por cima dos 104.
-    # O aditivo sumiu do ar, e o Valter viu antes de mim.
+    # Em 25/08/2026 a rotina das 11h30 leu o Outlook, achou o aditivo ADIT01-045 e
+    # publicou 104 contratos as 11h45. As 12h56 eu (Claude) fui publicar uma
+    # mudanca de TITULO de um card, gerei o painel a partir do dump que estava no
+    # disco - de ONTEM - e publiquei 103 contratos por cima dos 104. O aditivo
+    # sumiu do ar, e o Valter viu antes de mim.
     #
-    # O guarda-corpo de queda de 30% nao pegou: 104 -> 103 e queda de 1%.
-    # O que faltava era comparar RELOGIO, nao quantidade.
+    # DUAS MEDIDAS ERRADAS, para nao repetir a tentativa:
+    #   - queda de 30%: 104 -> 103 e 1%, nao dispara.
+    #   - hora de GERACAO do painel: a minha era mais NOVA (gerei agora, com dado
+    #     velho). Comparar quando o HTML foi montado nao diz nada sobre o dado.
     #
-    # Regra: se o painel que esta no ar foi gerado DEPOIS do que estou tentando
-    # publicar, eu estou com dado velho na mao. Paro e mando buscar o novo.
-    def gerado_em_de(conteudo):
-        achado = re.search(rb'name="qpc-gerado-em" content="([^"]+)"', conteudo)
+    # A medida certa e o DADO: qual foi o e-mail mais recente que cada painel
+    # enxergou, e quais contratos cada um lista. Painel novo nunca pode enxergar
+    # menos longe no tempo, nem perder contrato, em relacao ao que ja esta no ar.
+    def ultimo_email_de(conteudo):
+        achado = re.search(rb'"ultimo_email"\s*:\s*"([^"]+)"', conteudo)
         return achado.group(1).decode() if achado else None
 
-    meu = gerado_em_de(html)
-    no_ar = gerado_em_de(base64.b64decode(publicado.get("content", ""))) if publicado else None
-    if meu and no_ar:
-        from datetime import datetime as _dt
-        if _dt.fromisoformat(no_ar) > _dt.fromisoformat(meu):
+    def contratos_de(conteudo):
+        return set(re.findall(rb'"numero"\s*:\s*"([^"]+)"', conteudo))
+
+    if publicado:
+        no_ar_bruto = base64.b64decode(publicado.get("content", ""))
+
+        meu_ultimo = ultimo_email_de(html)
+        ultimo_no_ar = ultimo_email_de(no_ar_bruto)
+        if meu_ultimo and ultimo_no_ar and ultimo_no_ar > meu_ultimo:
             erro(
-                "O painel que esta NO AR e mais novo que este.\n\n"
-                "  no ar:  %s\n"
-                "  o meu:  %s\n\n"
-                "Isso quer dizer que alguma rodada (provavelmente uma tarefa agendada)\n"
-                "leu o Outlook depois de voce, e publicar agora apagaria o que ela viu.\n"
-                "Foi exatamente o que aconteceu em 25/08/2026 com o aditivo ADIT01-045.\n\n"
-                "O QUE FAZER: colete os e-mails de novo (ou baixe o dump mais recente\n"
-                "com  python 05-scripts/06-sincronizar-repositorio.py --puxar),\n"
-                "rode o gerador outra vez e so entao publique.\n"
-                "NAO force a publicacao." % (no_ar, meu)
+                "O painel NO AR enxergou e-mail mais recente do que este.\n\n"
+                "  e-mail mais novo no ar:  %s\n"
+                "  e-mail mais novo no meu: %s\n\n"
+                "Alguma rodada leu o Outlook depois de voce - provavelmente uma tarefa\n"
+                "agendada. Publicar agora apagaria do ar o que ela viu.\n\n"
+                "O QUE FAZER: traga o dado novo antes de publicar.\n"
+                "  python 05-scripts/06-sincronizar-repositorio.py --puxar\n"
+                "  python 05-scripts/03-painel-contratos-clicksign.py\n"
+                "e so entao publique. NAO force." % (ultimo_no_ar, meu_ultimo)
             )
-        print("Frescor: no ar %s -> agora %s. OK." % (no_ar, meu))
-    elif meu and publicado:
-        print("Frescor: o painel no ar e anterior a esta trava (sem carimbo). Seguindo.")
+
+        sumindo = contratos_de(no_ar_bruto) - contratos_de(html)
+        if sumindo:
+            erro(
+                "Estes contratos estao no painel que esta NO AR e nao estao neste:\n\n"
+                "  %s\n\n"
+                "Contrato nao some sozinho. Ou a coleta veio incompleta, ou este painel\n"
+                "foi gerado a partir de um dump mais velho do que o que gerou o painel\n"
+                "publicado. Nos dois casos, publicar perde informacao.\n\n"
+                "O QUE FAZER: python 05-scripts/06-sincronizar-repositorio.py --puxar\n"
+                "depois rode o gerador de novo. NAO force."
+                % ", ".join(sorted(x.decode() for x in sumindo))
+            )
+        print("Frescor: nada some e o dado nao regride. OK.")
 
     from datetime import datetime
     from zoneinfo import ZoneInfo
