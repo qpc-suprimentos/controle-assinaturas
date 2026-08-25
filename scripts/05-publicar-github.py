@@ -37,6 +37,7 @@ COMO RODAR:
 
 import base64
 import hashlib
+import re
 import json
 import os
 import urllib.error
@@ -208,13 +209,73 @@ def publicar():
             )
         print("Contratos: %d no ar -> %d agora." % (anterior or 0, agora_tem))
 
+    # ---- Guarda-corpo: NAO sobrescrever um painel mais NOVO que o meu ---------
+    #
+    # POR QUE ISTO EXISTE, EM PORTUGUES SIMPLES:
+    #
+    # Em 25/08/2026 a rotina das 11h30 rodou, leu o Outlook, achou o aditivo
+    # ADIT01-045 e publicou 104 contratos as 11h45. As 12h56 eu (Claude) fui
+    # publicar uma mudanca de TITULO de um card e gerei o painel a partir do dump
+    # que estava no disco - de ONTEM. Publiquei 103 contratos por cima dos 104.
+    # O aditivo sumiu do ar, e o Valter viu antes de mim.
+    #
+    # O guarda-corpo de queda de 30% nao pegou: 104 -> 103 e queda de 1%.
+    # O que faltava era comparar RELOGIO, nao quantidade.
+    #
+    # Regra: se o painel que esta no ar foi gerado DEPOIS do que estou tentando
+    # publicar, eu estou com dado velho na mao. Paro e mando buscar o novo.
+    def gerado_em_de(conteudo):
+        achado = re.search(rb'name="qpc-gerado-em" content="([^"]+)"', conteudo)
+        return achado.group(1).decode() if achado else None
+
+    meu = gerado_em_de(html)
+    no_ar = gerado_em_de(base64.b64decode(publicado.get("content", ""))) if publicado else None
+    if meu and no_ar:
+        from datetime import datetime as _dt
+        if _dt.fromisoformat(no_ar) > _dt.fromisoformat(meu):
+            erro(
+                "O painel que esta NO AR e mais novo que este.\n\n"
+                "  no ar:  %s\n"
+                "  o meu:  %s\n\n"
+                "Isso quer dizer que alguma rodada (provavelmente uma tarefa agendada)\n"
+                "leu o Outlook depois de voce, e publicar agora apagaria o que ela viu.\n"
+                "Foi exatamente o que aconteceu em 25/08/2026 com o aditivo ADIT01-045.\n\n"
+                "O QUE FAZER: colete os e-mails de novo (ou baixe o dump mais recente\n"
+                "com  python 05-scripts/06-sincronizar-repositorio.py --puxar),\n"
+                "rode o gerador outra vez e so entao publique.\n"
+                "NAO force a publicacao." % (no_ar, meu)
+            )
+        print("Frescor: no ar %s -> agora %s. OK." % (no_ar, meu))
+    elif meu and publicado:
+        print("Frescor: o painel no ar e anterior a esta trava (sem carimbo). Seguindo.")
+
     from datetime import datetime
-    carimbo = datetime.now().strftime("%d/%m/%Y %H:%M")
+    from zoneinfo import ZoneInfo
+    # datetime.now() sem argumento pega o fuso da MAQUINA, que aqui e UTC - e a
+    # mensagem do commit saia 3 horas adiantada, atrapalhando auditoria. Mesma
+    # regra que ja vale no gerador: fuso sempre explicito.
+    carimbo = datetime.now(ZoneInfo("America/Sao_Paulo")).strftime("%d/%m/%Y %H:%M")
     mensagem = "Painel atualizado em %s" % carimbo
 
     print("Publicando em %s ..." % URL_PUBLICA)
     mudou = enviar("index.html", html, token, mensagem)
     enviar("robots.txt", robots, token, mensagem)
+
+    # ---- Guardar no repositorio o dump que gerou ESTE painel ------------------
+    # A tarefa agendada roda na nuvem, num /tmp que morre no fim da sessao. Sem
+    # isto, o que ela leu do Outlook se perde e a proxima pessoa que for gerar o
+    # painel (inclusive o Claude, no computador do Valter) comeca de um dump
+    # velho - que foi como o ADIT01-045 se perdeu em 25/08/2026.
+    pasta_bruta = os.path.join(PASTA_RAIZ, "01-dados-brutos")
+    if os.path.isdir(pasta_bruta):
+        dumps = sorted(
+            f for f in os.listdir(pasta_bruta)
+            if f.startswith("emails-clicksign-") and f.endswith(".json")
+        )
+        if dumps:
+            with open(os.path.join(pasta_bruta, dumps[-1]), "rb") as arquivo:
+                enviar("dados/%s" % dumps[-1], arquivo.read(), token,
+                       "Dump de e-mails que gerou o painel de %s" % carimbo)
 
     print("\n" + "=" * 62)
     print("PAINEL NO AR" if mudou else "PAINEL JA ESTAVA ATUALIZADO")
