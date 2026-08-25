@@ -8,7 +8,7 @@ O QUE ESTE SCRIPT FAZ, EM PORTUGUES SIMPLES:
 Depois que o 03-painel-contratos-clicksign.py gera o HTML, este script manda esse
 arquivo para o GitHub, que o serve como site. O endereco nunca muda:
 
-    https://valterrocha.github.io/g200-7k3f9x2m/
+    https://qpc-suprimentos.github.io/controle-assinaturas/
 
 Quem tiver o link sempre ve a versao mais recente. Nao precisa arrastar nada,
 nao precisa abrir o navegador, nao precisa anexar em e-mail.
@@ -41,10 +41,10 @@ import urllib.request
 
 PASTA_RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-USUARIO = "valterrocha"
-REPOSITORIO = "g200-7k3f9x2m"          # nome neutro de proposito: nao diz "contratos" nem "QPC"
+USUARIO = "qpc-suprimentos"
+REPOSITORIO = "controle-assinaturas"          # nome neutro de proposito: nao diz "contratos" nem "QPC"
 RAMO = "main"
-URL_PUBLICA = "https://valterrocha.github.io/g200-7k3f9x2m/"
+URL_PUBLICA = "https://qpc-suprimentos.github.io/controle-assinaturas/"
 
 # O painel gerado pelo script anterior
 ARQUIVO_PAINEL = os.path.join(PASTA_RAIZ, "03-painel", "painel-contratos.html")
