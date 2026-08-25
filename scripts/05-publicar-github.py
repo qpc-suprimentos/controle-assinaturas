@@ -20,6 +20,13 @@ DUAS ARMADILHAS DESTE AMBIENTE QUE JA CUSTARAM CARO - NAO MEXER SEM LER:
    Por isso o script desliga o proxy explicitamente (ProxyHandler vazio, abaixo).
    Sem isso, nada funciona, por mais correto que o token esteja.
 
+2a. O ENDERECO MUDOU em 25/08/2026. Era valterrocha.github.io/g200-7k3f9x2m/ e o
+   nome cifrado tinha a intencao de esconder o painel. Isso protegia pouco: o
+   repositorio e PUBLICO e aparece listado no perfil do dono, com qualquer nome.
+   Hoje o dono da conta chama-se qpc-suprimentos e o repositorio, controle-assinaturas.
+   A protecao de verdade continua sendo o robots.txt + noindex, que impedem o
+   buscador de indexar. Nao remova nenhum dos dois.
+
 2. Nao adianta tentar Netlify, GitLab, Vercel, Cloudflare, Render, Bitbucket ou
    Codeberg: TODOS estao bloqueados neste ambiente (conexao recusada em ~0,35 s).
    O GitHub e o unico host alcancavel. Ja foi gasta uma sessao inteira nisso.
@@ -42,7 +49,7 @@ import urllib.request
 PASTA_RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 USUARIO = "qpc-suprimentos"
-REPOSITORIO = "controle-assinaturas"          # nome neutro de proposito: nao diz "contratos" nem "QPC"
+REPOSITORIO = "controle-assinaturas"   # renomeado em 25/08/2026 a pedido do Valter
 RAMO = "main"
 URL_PUBLICA = "https://qpc-suprimentos.github.io/controle-assinaturas/"
 
