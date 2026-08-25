@@ -17,6 +17,17 @@ versao boa dos scripts. Este script leva para la:
 
 E APAGA de la o que aposentamos, para que ninguem baixe coisa velha por engano.
 
+TEM UM SEGUNDO MODO, que anda na direcao contraria:
+
+    python 05-scripts/06-sincronizar-repositorio.py --puxar
+
+Esse modo BAIXA para 01-dados-brutos/ o dump de e-mails mais recente que existe
+no repositorio. Serve para o seu computador alcancar o que as tarefas agendadas
+leram na nuvem. Use SEMPRE antes de regerar o painel aqui - foi por pular esse
+passo que o aditivo ADIT01-045 sumiu do ar em 25/08/2026: o painel foi regerado
+a partir de um dump de ontem e publicado por cima do painel da rotina, que era
+mais novo.
+
 ORDEM QUE IMPORTA: rode ESTE script ANTES de mexer nas tarefas programadas.
 Se a tarefa for alterada para procurar um arquivo que ainda nao subiu, ela
 quebra na proxima rodada das 8:30.
@@ -140,5 +151,45 @@ def sincronizar():
     print("\nRepositorio sincronizado. So agora e seguro alterar as tarefas programadas.")
 
 
+def puxar_dump_mais_recente():
+    """
+    Traz do repositorio o dump de e-mails mais novo, para 01-dados-brutos/.
+
+    As tarefas agendadas rodam na nuvem, num /tmp que some no fim da sessao. Elas
+    guardam o dump em dados/ ao publicar (ver 05-publicar-github.py). Este modo e
+    o outro lado dessa ponte.
+    """
+    token = ler_token()
+    lista = chamar("/repos/%s/%s/contents/dados?ref=%s" % (USUARIO, REPOSITORIO, RAMO), token)
+    if not lista:
+        erro("Nao achei a pasta dados/ no repositorio.")
+    dumps = sorted(
+        item["name"] for item in lista
+        if item["name"].startswith("emails-clicksign-") and item["name"].endswith(".json")
+    )
+    if not dumps:
+        print("Nenhum dump de e-mails no repositorio ainda. Nada a puxar.")
+        return
+    nome = dumps[-1]
+    conteudo = chamar("/repos/%s/%s/contents/dados/%s?ref=%s" % (USUARIO, REPOSITORIO, nome, RAMO), token)
+    bruto = base64.b64decode(conteudo["content"])
+
+    destino = os.path.join(PASTA_RAIZ, "01-dados-brutos", nome)
+    if os.path.exists(destino):
+        with open(destino, "rb") as arquivo:
+            if arquivo.read() == bruto:
+                print("Ja esta igual aqui: %s" % nome)
+                return
+    os.makedirs(os.path.dirname(destino), exist_ok=True)
+    with open(destino, "wb") as arquivo:
+        arquivo.write(bruto)
+    print("Baixado: 01-dados-brutos/%s (%d KB)" % (nome, len(bruto) // 1024 or 1))
+    print("Agora rode o gerador antes de publicar.")
+
+
 if __name__ == "__main__":
-    sincronizar()
+    import sys
+    if "--puxar" in sys.argv:
+        puxar_dump_mais_recente()
+    else:
+        sincronizar()
