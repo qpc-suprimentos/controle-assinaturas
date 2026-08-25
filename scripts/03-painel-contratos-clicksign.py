@@ -999,6 +999,13 @@ def processar():
         # Mesma hora, em formato que maquina compara. E o que a trava de frescor
         # do publicador usa para nao sobrescrever um painel mais novo.
         "gerado_em_iso": agora.isoformat(timespec="seconds"),
+        # E-MAIL MAIS RECENTE que este painel enxergou. E o que o publicador usa
+        # para nao deixar um painel gerado de dump velho apagar o que uma rodada
+        # mais nova ja publicou. Ver 05-publicar-github.py.
+        "ultimo_email": max(
+            (e["recebido_em"] for e in bruto["emails"] if e.get("recebido_em")),
+            default="",
+        ),
         "fonte_viva": "e-mails da Clicksign no Outlook (pasta Clicksign) - %s"
                       % os.path.basename(caminho_entrada),
         "historico_congelado": "%s, retrato unico de %s, nao recebe mais atualizacao"
