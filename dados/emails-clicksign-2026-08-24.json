@@ -1,0 +1,204 @@
+{
+  "_leia_me": "Dump bruto dos e-mails da Clicksign lidos no Outlook de valterdias@qpc.com.br. NAO EDITAR A MAO. Gerado pelo comando /painel-contratos. Cada item e um e-mail, com o texto ja limpo de HTML, exatamente como veio. ATENCAO: a busca no Outlook NAO pode usar o parametro 'order' - ele restringe a Caixa de Entrada e estes e-mails estao em outra pasta.",
+  "gerado_em": "2026-08-24T12:30:00Z",
+  "remetente_filtrado": "assinatura@clicksign.com",
+  "janela": {
+    "de": "2026-05-01",
+    "ate": "2026-08-24"
+  },
+  "total_emails_encontrados": 77,
+  "emails": [
+    {
+      "assunto": "Comprovante de assinatura do documento: 1. ADT1-LSF-G200-039-26 - VOC (Contenção).pdf",
+      "recebido_em": "2026-08-24T12:13:08Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA5SpX5AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\nComprovante de assinatura\n1. ADT1-LSF-G200-039-26 - VOC (Contenção).pdf\nLucas Maron Grimaldi Assinou como validador\nluiz**********@lyoncapital.com.br assinará como contratante\nnilt***********@lyoncapital.com.br assinará como contratante\nvoca*******@gmail.com assinará como contratada\nhlue**@qpc.com.br assinará como interveniente anuente\nluca**********@lyoncapital.com.br assinará como testemunha\nemer************@abrgerenciamento.com assinará como validador\nflav******@lyoncapital.com.br assinará como validador\nfabi*********@lyoncapital.com.br assinará como testemunha\nfpam*****@qpc.com.br assinará como testemunha\nData limite para assinatura: 11/11/2026"
+    },
+    {
+      "assunto": "Comprovante de assinatura do documento: 67. CT-LSF-G200-067.26 - LF SERVIÇOS (divi. sanitárias).pdf",
+      "recebido_em": "2026-08-20T17:33:35Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA4AD56AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\nComprovante de assinatura\n67. CT-LSF-G200-067.26 - LF SERVIÇOS (divi. sanitárias).pdf\nfabi*********@lyoncapital.com.br assinará como testemunha\nfpam*****@qpc.com.br assinará como testemunha\nemer************@abrgerenciamento.com assinará como testemunha\nluca**********@lyoncapital.com.br assinará como testemunha\nnilt***********@lyoncapital.com.br assinará como contratante\nluiz**********@lyoncapital.com.br assinará como contratante\nlv.f******@uol.com.br assinará como contratada\nflav******@lyoncapital.com.br assinará como validador\nhlue**@qpc.com.br assinará como interveniente anuente\nLucas Maron Grimaldi Assinou como validador\nData limite para assinatura: 19/09/2026"
+    },
+    {
+      "assunto": "Documento assinado: PJ_QPC - Aditivo Contratual QPC Engenharia_Valter Luis Rocha Dias.pdf",
+      "recebido_em": "2026-08-20T14:53:34Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA4AD55AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Documento assinado e finalizado\nPJ_QPC - Aditivo Contratual QPC Engenharia_Valter Luis Rocha Dias.pdf",
+      "corpo_completo": false,
+      "por_que_corpo_curto": "Documento de RH do proprio Valter, nao e contrato de obra. O corpo completo nao foi lido porque o filtro de contrato de obra descarta este e-mail de qualquer forma. Registrado aqui so para a contagem de descartados ficar honesta."
+    },
+    {
+      "assunto": "Documento assinado: 50. CT-LSF-G200-050.26 - TECNOSONDA (Estaca Hélice) R01.pdf",
+      "recebido_em": "2026-08-19T16:59:10Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAA2tRhAAAA",
+      "corpo": "Documento assinado e finalizado\n50. CT-LSF-G200-050.26 - TECNOSONDA (Estaca Hélice) R01.pdf"
+    },
+    {
+      "assunto": "Comprovante de assinatura do documento: 50. CT-LSF-G200-050.26 - TECNOSONDA (Estaca Hélice) R01.pdf",
+      "recebido_em": "2026-08-19T16:58:05Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAA2tRg_AAA",
+      "corpo": "Comprovante de assinatura\n50. CT-LSF-G200-050.26 - TECNOSONDA (Estaca Hélice) R01.pdf\nLucas Marrucci Assinou como testemunha\nLucas Maron Grimaldi Assinou como validador\nEliana karine Cintra S. Cintra Assinou como contratada\nALAN ESPINHEIRA Assinou como contratada\nFelippe Pamponet Esquivel Assinou como testemunha\nHassan Fair Luedy Assinou como interveniente anuente\nEmerson Leal Assinou como testemunha\nFlávia Lina Doi Utiyama Assinou como validador\nFábio Matheus Assinou como testemunha\nLuiz Guilherme Assinou como contratante\nNilton Bertuchi Assinou como contratante"
+    },
+    {
+      "assunto": "Documento assinado: 84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf",
+      "recebido_em": "2026-08-18T20:30:47Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAA2tRg-AAA",
+      "corpo": "Documento assinado e finalizado\n84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf"
+    },
+    {
+      "assunto": "Seu documento foi finalizado - QPC",
+      "recebido_em": "2026-08-18T20:29:06Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAA2tRg9AAA",
+      "corpo": "Processo de assinatura finalizado\nO processo de assinatura do documento 84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf junto a organização QPC foi finalizado com sucesso."
+    },
+    {
+      "assunto": "Comprovante de assinatura do documento: 86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf",
+      "recebido_em": "2026-08-18T12:30:54Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRf0AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Comprovante de assinatura\n86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf\nLuiz Guilherme Assinou como contratante\nFábio Matheus Assinou como testemunha\nFlávia Lina Doi Utiyama Assinou como validador\nLucas Marrucci Assinou como testemunha\nnilt***********@lyoncapital.com.br assinará como contratante\nLucas Maron Grimaldi Assinou como validador\nFelippe Pamponet Esquivel Assinou como testemunha\nHassan Fair Luedy Assinou como interveniente anuente\nEmerson Leal Assinou como testemunha\nMauricio Nunes Assinou como contratada\nData limite para assinatura: 11/09/2026"
+    },
+    {
+      "assunto": "Comprovante de assinatura do documento: 88.CT-LSF-G200-088-26 - MB Terrplenagem (Terraplenagem G300).pdf",
+      "recebido_em": "2026-08-18T11:35:41Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRf1AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Comprovante de assinatura\n88.CT-LSF-G200-088-26 - MB Terrplenagem (Terraplenagem G300).pdf\nLucas Maron Grimaldi Assinou como validador\npinh*@mandrade.com.br assinará como validador\nluca**********@lyoncapital.com.br assinará como testemunha\nhlue**@qpc.com.br assinará como interveniente anuente\nemer************@abrgerenciamento.com assinará como testemunha\nluiz**********@lyoncapital.com.br assinará como contratante\nfpam*****@qpc.com.br assinará como testemunha\nluis***@mandrade.com.br assinará como contratada\nfabi*********@lyoncapital.com.br assinará como testemunha\nflav******@lyoncapital.com.br assinará como validador\nnilt***********@lyoncapital.com.br assinará como contratante\nData limite para assinatura: 29/09/2026"
+    },
+    {
+      "assunto": "Comprovante de assinatura do documento: 86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf",
+      "recebido_em": "2026-08-17T16:59:43Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAAAAAEMAADhd9UuglmpTpPf%2FM65ySTyAAA0t8%2FJAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Comprovante de assinatura\n86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf\nFábio Matheus Assinou como testemunha\nFlávia Lina Doi Utiyama Assinou como validador\nLucas Marrucci Assinou como testemunha\nnilt***********@lyoncapital.com.br assinará como contratante\nLucas Maron Grimaldi Assinou como validador\nFelippe Pamponet Esquivel Assinou como testemunha\nHassan Fair Luedy Assinou como interveniente anuente\nEmerson Leal Assinou como testemunha\nluiz**********@lyoncapital.com.br assinará como contratante\nMauricio Nunes Assinou como contratada\nData limite de assinatura: 11/09/2026"
+    },
+    {
+      "assunto": "Comprovante de assinatura do documento: 84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf",
+      "recebido_em": "2026-08-14T18:47:20Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAAAAAEMAADhd9UuglmpTpPf%2FM65ySTyAAA0AXicAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Comprovante de assinatura\n84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf\nFelippe Pamponet Esquivel Assinou como testemunha\nHassan Fair Luedy Assinou como interveniente anuente\nEmerson Leal Assinou como testemunha\nFábio Matheus Assinou como testemunha\nLuiz Guilherme Assinou como contratante\nFlávia Lina Doi Utiyama Assinou como validador\nLucas Marrucci Assinou como testemunha\nnilt***********@lyoncapital.com.br assinará como contratante\nLucas Maron Grimaldi Assinou como validador\nRicardo Antonio Couri de Almeida Assinou como contratada\nData limite para assinatura: 02/09/2026"
+    },
+    {
+      "assunto": "Comprovante de assinatura do documento: 79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf",
+      "recebido_em": "2026-08-14T18:45:47Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAAAAAEMAADhd9UuglmpTpPf%2FM65ySTyAAA0AXiaAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Comprovante de assinatura\n79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf\nLucas Marrucci Assinou como testemunha\nnilt***********@lyoncapital.com.br assinará como contratante\nEmerson Leal Assinou como testemunha\nFábio Matheus Assinou como testemunha\nFlávia Lina Doi Utiyama Assinou como validador\nHassan fair Luedy Assinou como interveniente anuente\nLucas Maron Grimaldi Assinou como validador\nAntonio Carlos Moreira Silva Assinou como contratada\nFelippe Pamponet Esquivel Assinou como testemunha\nLuiz Guilherme Assinou como contratante\nData limite para assinatura: 29/08/2026"
+    },
+    {
+      "assunto": "Comprovante de assinatura do documento: 81.CT-LSF-G200-081-26 - MB Terrplenagem (Reg. Subleito e Esp.).pdf",
+      "recebido_em": "2026-08-12T13:56:16Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAAAAAEMAADhd9UuglmpTpPf%2FM65ySTyAAAysS8JAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Comprovante de assinatura\n81.CT-LSF-G200-081-26 - MB Terrplenagem (Reg. Subleito e Esp.).pdf\npinh*@mandrade.com.br assinará como validador\nluis***@mandrade.com.br assinará como contratada\nhlue**@qpc.com.br assinará como interveniente anuente\nfpam*****@qpc.com.br assinará como testemunha\nemer************@abrgerenciamento.com assinará como testemunha\nnilt***********@lyoncapital.com.br assinará como contratante\nluiz**********@lyoncapital.com.br assinará como contratante\nluca**********@lyoncapital.com.br assinará como testemunha\nfabi*********@lyoncapital.com.br assinará como testemunha\nflav******@lyoncapital.com.br assinará como validador\nLucas Maron Grimaldi Assinou como validador\nData limite para assinatura: 11/09/2026"
+    },
+    {
+      "assunto": "Comprovante de assinatura do documento: 65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf",
+      "recebido_em": "2026-07-15T18:45:30Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAAAAAEMAADhd9UuglmpTpPf%2FM65ySTyAAAfh%2BftAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Comprovante de assinatura\n65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf\nLucas Maron Grimaldi Assinou como validador\nFlávia Lina Doi Utiyama Assinou como validador\nLucas Marrucci Assinou como testemunha\nLuiz Guilherme Assinou como testemunha\nNilton Bertuchi Assinou como contratante\nEverton Oliveira Pinho Assinou como validador\nLuis Eduardo Cruz de Souza Assinou como contratada\nFelippe Pamponet Esquivel Assinou como testemunha\nHassan Fair Luedy Assinou como interveniente anuente\nEmerson Leal Assinou como testemunha\nFábio Matheus Assinou como contratante"
+    },
+    {
+      "assunto": "Seu documento foi finalizado - QPC",
+      "recebido_em": "2026-07-15T18:45:52Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAAAAAEMAADhd9UuglmpTpPf%2FM65ySTyAAAfh%2BfuAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Processo de assinatura finalizado\nO processo de assinatura do documento 65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf junto a organização QPC foi finalizado com sucesso.\nPara ver o documento acesse a Clicksign: https://app.clicksign.com/accounts/221493/folders/29777014/documents/bff299d5-91b3-4e2c-ab41-02940053b8db."
+    },
+    {
+      "assunto": "Documento assinado: 65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf",
+      "recebido_em": "2026-07-15T18:47:23Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAAAAAEMAADhd9UuglmpTpPf%2FM65ySTyAAAfh%2BfvAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Documento assinado e finalizado\n65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf"
+    },
+    {
+      "assunto": "Seu documento foi finalizado - QPC",
+      "recebido_em": "2026-07-12T19:42:53Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAAAAAEMAADhd9UuglmpTpPf%2FM65ySTyAAAd5EXwAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Processo de assinatura finalizado\nO processo de assinatura do documento 63.CT-LSF-G200-063-26 - INOSERVICE (Controle Tec. Metálica).pdf junto a organização QPC foi finalizado com sucesso."
+    },
+    {
+      "assunto": "Seu documento esta perto de atingir a data limite de assinatura",
+      "recebido_em": "2026-07-09T19:42:32Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAAAAAEMAADhd9UuglmpTpPf%2FM65ySTyAAAcWJTGAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Documento perto da data limite\nEste é um lembrete de que você possui um documento prestes a atingir a data limite de assinatura:\n63.CT-LSF-G200-063-26 - INOSERVICE (Controle Tec. Metálica).pdf\nData limite: 12/07/2026 às 16:42"
+    },
+    {
+      "assunto": "Documento cancelado: 65.CT-LSF-G200-065-26 - MB Terrplenagem (Limpeza Vicinal).pdf",
+      "recebido_em": "2026-07-10T13:41:18Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAAAAAEMAADhd9UuglmpTpPf%2FM65ySTyAAAc0bLyAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Documento cancelado\nO cancelamento inutiliza o documento. Este não pode ser utilizado, no todo ou em parte, como prova.\n65.CT-LSF-G200-065-26 - MB Terrplenagem (Limpeza Vicinal).pdf"
+    },
+    {
+      "assunto": "Comprovante de assinatura do documento: 65.CT-LSF-G200-065-26 - MB Terrplenagem (Limpeza Vicinal).pdf",
+      "recebido_em": "2026-07-08T20:13:53Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAAAAAEMAADhd9UuglmpTpPf%2FM65ySTyAAAXq2gfAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Comprovante de assinatura\n65.CT-LSF-G200-065-26 - MB Terrplenagem (Limpeza Vicinal).pdf\nLucas Maron Grimaldi Assinou como validador\nLuis Eduardo Cruz de Souza Assinou como contratada"
+    },
+    {
+      "assunto": "Comprovante de assinatura do documento: 63.CT-LSF-G200-063-26 - INOSERVICE Controle Tec. Metálica.pdf",
+      "recebido_em": "2026-07-17T11:37:22Z",
+      "sandbox": true,
+      "web_link": "",
+      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\nComprovante de assinatura\n63.CT-LSF-G200-063-26 - INOSERVICE Controle Tec. Metálica.pdf"
+    },
+    {
+      "assunto": "Seu documento foi finalizado - Valter Luis Rocha Dias",
+      "recebido_em": "2026-08-16T11:44:27Z",
+      "sandbox": true,
+      "web_link": "",
+      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\nProcesso de assinatura finalizado\nO processo de assinatura do documento 03-CT-LSFG200-003.26 - DO VAL CQP Fund Infra - Clicksign.pdf junto a organização Valter Luis Rocha Dias foi finalizado com sucesso."
+    },
+    {
+      "assunto": "Seu documento esta perto de atingir a data limite de assinatura",
+      "recebido_em": "2026-08-16T01:00:40Z",
+      "sandbox": true,
+      "web_link": "",
+      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\nDocumento perto da data limite\n03. CT-G200-003.26 - RIOMED- Clicksign 1.pdf\nData limite: 18/08/2026"
+    },
+    {
+      "assunto": "Assinar documento: AFE-LSF-G200-071.26 - VIAPOL Junta JDH.pdf",
+      "recebido_em": "2026-07-17T11:36:23Z",
+      "sandbox": true,
+      "web_link": "",
+      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\nSolicitação de Assinatura de Valter Luis Rocha Dias\nAFE-LSF-G200-071.26 - VIAPOL Junta JDH.pdf"
+    },
+    {
+      "assunto": "Assinar documento: 06-CT-LSFG200-006.26 - REV1 Projeto EPC - Clicksign.pdf",
+      "recebido_em": "2026-07-17T12:02:48Z",
+      "sandbox": true,
+      "web_link": "",
+      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\nSolicitação de Assinatura de Valter Luis Rocha Dias\n06-CT-LSFG200-006.26 - REV1 Projeto EPC - Clicksign.pdf"
+    },
+    {
+      "assunto": "Documento assinado: PJ_QPC - Contrato QPC Engenharia - Valter Luis Rocha Dias.pdf",
+      "recebido_em": "2026-06-05T18:57:36Z",
+      "sandbox": false,
+      "web_link": "",
+      "corpo": "Documento assinado e finalizado\nPJ_QPC - Contrato QPC Engenharia - Valter Luis Rocha Dias.pdf"
+    },
+    {
+      "assunto": "Documento assinado: F.PES.012 - Termo de Consentimento - Valter Luis Rocha Dias Filho.pdf",
+      "recebido_em": "2026-08-14T18:54:38Z",
+      "sandbox": false,
+      "web_link": "",
+      "corpo": "Documento assinado e finalizado\nF.PES.012 - Termo de Consentimento - Valter Luis Rocha Dias Filho.pdf"
+    }
+  ],
+  "pasta_lida": "Clicksign (regra do Outlook joga todos os e-mails da Clicksign nela)"
+}
