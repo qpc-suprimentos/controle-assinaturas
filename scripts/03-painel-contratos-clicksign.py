@@ -996,6 +996,9 @@ def processar():
 
     saida = {
         "gerado_em": agora.strftime("%d/%m/%Y %H:%M"),
+        # Mesma hora, em formato que maquina compara. E o que a trava de frescor
+        # do publicador usa para nao sobrescrever um painel mais novo.
+        "gerado_em_iso": agora.isoformat(timespec="seconds"),
         "fonte_viva": "e-mails da Clicksign no Outlook (pasta Clicksign) - %s"
                       % os.path.basename(caminho_entrada),
         "historico_congelado": "%s, retrato unico de %s, nao recebe mais atualizacao"
@@ -1037,6 +1040,7 @@ def processar():
         .replace("/*PARADO_AQUI*/", str(DIAS_PARA_CONSIDERAR_PARADO))
         .replace("/*ALERTA_PRAZO_AQUI*/", str(DIAS_ALERTA_PRAZO))
         .replace("/*QTD_CONTRATOS*/", str(len(contratos)))
+        .replace("/*GERADO_ISO*/", agora.isoformat(timespec="seconds"))
     )
     with open(ARQUIVO_PAINEL, "w", encoding="utf-8") as arquivo:
         arquivo.write(html)
