@@ -33,8 +33,8 @@ import urllib.error
 import urllib.request
 
 PASTA_RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-USUARIO = "valterrocha"
-REPOSITORIO = "g200-7k3f9x2m"
+USUARIO = "qpc-suprimentos"
+REPOSITORIO = "controle-assinaturas"
 RAMO = "main"
 API = "https://api.github.com"
 
