@@ -142,6 +142,21 @@
   .pend .quem{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .pend .quem small{display:block;color:var(--ink-3);font-size:11px}
   .pend .n{font-weight:700;color:var(--brand);font-variant-numeric:tabular-nums}
+  .pend .quem{flex:1;min-width:0}
+  .pend .nums{display:flex;align-items:baseline;gap:8px;flex:none}
+  .pend .agora{font-weight:700;color:var(--brand);font-variant-numeric:tabular-nums;font-size:15px;min-width:18px;text-align:right}
+  .pend .agora.zero{color:var(--ink-3);font-weight:600;font-size:13px}
+  .pend .fila{color:var(--ink-3);font-size:11px;font-variant-numeric:tabular-nums;min-width:26px;text-align:right}
+  .pend .row.dorme{opacity:.62}
+  .pend .row.dorme:hover{opacity:1}
+  .pend .grupo{display:flex;justify-content:space-between;align-items:baseline;
+    font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--brand);padding:10px 8px 4px}
+  .pend .grupo span{font-size:12px}
+  .pend .grupo.esp{color:var(--ink-3);margin-top:6px;border-top:1px solid var(--line);padding-top:12px}
+  .explicafila{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);
+    font-size:11px;color:var(--ink-3);line-height:1.6}
+  .explicafila b{color:var(--ink-2);font-weight:700}
   .vazio{font-size:12.5px;color:var(--ink-3);padding:8px 2px}
 
   /* ---------- controles e tabela ---------- */
@@ -188,7 +203,11 @@
   .prog span{font-size:12px;color:var(--ink-2);font-variant-numeric:tabular-nums}
   .parado{color:var(--crit-ink);font-weight:650}
   .parado-ok{color:var(--ink-2)}
-  .prazo-alerta{color:var(--crit-ink);font-weight:650}
+  /* Faixas de prazo. O icone e o peso sao a marca principal - a cor sozinha nao
+     separa as faixas para quem tem daltonismo (dE 2,2 deutan entre o ambar e o
+     vermelho, medido no validador de paleta). */
+  .prazo-critico{color:var(--crit-ink);font-weight:700}
+  .prazo-atencao{color:var(--warn-ink);font-weight:500}
   .prazo-ok{color:var(--ink-2)}
   .semdado{color:#c3c8d0}
   .chev{color:var(--ink-3);transition:transform .15s;display:inline-block}
@@ -298,6 +317,7 @@
 const DADOS = /*DADOS_AQUI*/;
 const DIAS_PARADO = /*PARADO_AQUI*/;
 const DIAS_ALERTA_PRAZO = /*ALERTA_PRAZO_AQUI*/;
+const DIAS_ATENCAO_PRAZO = /*ATENCAO_PRAZO_AQUI*/;
 
 const TIPOS = ['AFE','LYON','QPC'];
 /* As quatro cores de status sao reservadas e nunca aparecem sozinhas: cada uma
@@ -322,6 +342,15 @@ function inicial(n){
 }
 function estaParado(c){return c.status==='Em andamento' && c.dias_parado>DIAS_PARADO;}
 function prazoApertado(c){return c.status==='Em andamento' && c.dias_para_limite!==null && c.dias_para_limite<=DIAS_ALERTA_PRAZO;}
+/* Devolve como o prazo deve ser mostrado. Cada faixa tem icone e peso proprios. */
+function faixaPrazo(c){
+  if(c.status!=='Em andamento' || c.dias_para_limite===null) return null;
+  const d=c.dias_para_limite;
+  if(d<0)                    return {classe:'prazo-critico', icone:' ⚠', texto:` (venceu há ${-d} d)`};
+  if(d<=DIAS_ALERTA_PRAZO)   return {classe:'prazo-critico', icone:' ⚠', texto:` (${d} d)`};
+  if(d<=DIAS_ATENCAO_PRAZO)  return {classe:'prazo-atencao', icone:' ◷', texto:` (${d} d)`};
+  return {classe:'prazo-ok', icone:'', texto:` (${d} d)`};
+}
 
 function renderSeg(){
   const opts=['Todos',...TIPOS];
@@ -395,21 +424,39 @@ function renderDonut(){
 }
 function alternaStatus(s){ filtro=(filtro===s)?'Todos':s; renderAll(); }
 
+/* Quem pode assinar HOJE x quem ainda vai chegar a vez.
+   Pedido do Emerson (ABR) em 26/08/2026: o painel contava 6 contratos para ele,
+   mas nenhum tinha chegado na etapa dele. Quem decide isso e o gerador em
+   Python, a partir do fluxo declarado do envelope - aqui so somamos o campo
+   `sua_vez` que ele ja carimbou em cada signatario. */
 function renderPendentes(){
   const base=porTipo().filter(c=>c.status==='Em andamento');
   const mapa={};
   base.forEach(c=>c.signatarios.filter(s=>!s.assinou).forEach(s=>{
-    if(!mapa[s.quem]) mapa[s.quem]={quem:s.quem,email:s.email,papeis:new Set(),n:0};
+    if(!mapa[s.quem]) mapa[s.quem]={quem:s.quem,email:s.email,papeis:new Set(),agora:0,fila:0};
     mapa[s.quem].email=mapa[s.quem].email||s.email;
-    mapa[s.quem].papeis.add(s.papel); mapa[s.quem].n++;
+    mapa[s.quem].papeis.add(s.papel);
+    if(s.sua_vez) mapa[s.quem].agora++; else mapa[s.quem].fila++;
   }));
-  const lista=Object.values(mapa).sort((a,b)=>b.n-a.n||a.quem.localeCompare(b.quem));
+  const todos=Object.values(mapa);
+  /* So quem pode assinar HOJE. Quem ainda nao chegou na etapa dele fica de fora
+     da lista - decisao do Valter em 26/08/2026, depois de ver o prototipo com
+     os dois blocos. A linha de rodape explica quantas ficaram fora, para o
+     numero fechar com o KPI de assinaturas pendentes la em cima. */
+  const lista=todos.filter(p=>p.agora).sort((a,b)=>b.agora-a.agora||a.quem.localeCompare(b.quem));
+  const totalAgora=todos.reduce((a,p)=>a+p.agora,0);
+  const totalFila=todos.reduce((a,p)=>a+p.fila,0);
+
   const el=document.getElementById('pendentes');
-  if(!lista.length){el.innerHTML='<div class="vazio">Nenhuma assinatura pendente neste filtro.</div>';return;}
+  if(!lista.length){el.innerHTML='<div class="vazio">Ninguém pode assinar agora neste filtro.</div>';return;}
   el.innerHTML=lista.map(p=>`
     <div class="row ${pessoaFiltro===p.quem?'active':''}" data-quem="${p.quem.replace(/"/g,'&quot;')}">
-      <div class="quem">${p.quem}<small>${(p.email&&p.email!==p.quem)?p.email:[...p.papeis].join(' · ')}</small></div>
-      <div class="n">${p.n}</div></div>`).join('');
+      <div class="quem">${p.quem}
+        <small>${(p.email&&p.email!==p.quem)?p.email:[...p.papeis].join(' · ')}</small></div>
+      <div class="n">${p.agora}</div></div>`).join('')
+    + (totalFila?`<div class="explicafila">Mostrando quem pode assinar <b>hoje</b>:
+        <b>${totalAgora}</b> das ${totalAgora+totalFila} pendências.
+        As outras ${totalFila} esperam alguém antes na fila do envelope.</div>`:'');
   el.querySelectorAll('.row').forEach(r=>r.onclick=()=>{
     pessoaFiltro=(pessoaFiltro===r.dataset.quem)?null:r.dataset.quem; renderAll();
   });
@@ -423,7 +470,12 @@ function renderChips(){
 
 function dadosFiltrados(){
   let arr=porTipo().filter(c=>filtro==='Todos'||c.status===filtro);
-  if(pessoaFiltro) arr=arr.filter(c=>c.signatarios.some(s=>!s.assinou&&s.quem===pessoaFiltro));
+  /* O card "Assinaturas pendentes" mostra quem pode assinar HOJE. Ao clicar num
+     nome, a tabela tem que mostrar exatamente esses contratos - nao todos em que
+     a pessoa aparece pendente. Antes de 26/08/2026 filtrava por !assinou e o
+     Valter pegou: o card dizia Felippe 1, o filtro trazia 5, sendo que em 4
+     deles a contratada ainda nem tinha assinado. */
+  if(pessoaFiltro) arr=arr.filter(c=>c.signatarios.some(s=>s.sua_vez&&s.quem===pessoaFiltro));
   if(busca){const q=busca.toLowerCase();
     arr=arr.filter(c=>c.nome.toLowerCase().includes(q)||(c.servico||'').toLowerCase().includes(q)||c.signatarios.some(s=>s.quem.toLowerCase().includes(q)));}
   if(soParados) arr=arr.filter(estaParado);
@@ -453,9 +505,10 @@ function renderTabela(){
 
     let colPrazo='<span class="semdado">—</span>';
     if(c.data_limite){
-      const alerta=prazoApertado(c);
-      const resto=c.status==='Em andamento'?` (${c.dias_para_limite} d)`:'';
-      colPrazo=`<span class="${alerta?'prazo-alerta':'prazo-ok'}">${c.data_limite}${resto}${alerta?' ⚠':''}</span>`;
+      const f=faixaPrazo(c);
+      colPrazo=f
+        ? `<span class="${f.classe}">${c.data_limite}${f.texto}${f.icone}</span>`
+        : `<span class="prazo-ok">${c.data_limite}</span>`;
     }
 
     let marco='';
