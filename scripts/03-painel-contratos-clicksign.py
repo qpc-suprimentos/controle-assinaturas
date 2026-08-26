@@ -697,7 +697,10 @@ def processar():
             "da Clicksign nao estao nela. Refaca a busca SEM 'order'. NAO publique."
         )
 
-    documentos = {}
+    # =========================================================================
+    # PASSO 1 - juntar os e-mails crus por nome de arquivo
+    # =========================================================================
+    brutos = {}
     descartados = {"sandbox": 0, "nao_e_contrato_de_obra": 0}
     prefixos_estranhos = {}
 
@@ -717,80 +720,106 @@ def processar():
         if familia == "?":
             prefixos_estranhos.setdefault(ler_prefixo(nome) or "(vazio)", set()).add(nome)
 
-        chave_arquivo = chave_documento(nome)
-        evento = identificar_evento(email.get("assunto", ""), email.get("corpo", ""))
-        recebido = ler_data(email["recebido_em"])
+        corpo = email.get("corpo", "")
+        evento = identificar_evento(email.get("assunto", ""), corpo)
+        achado_prazo = PADRAO_DATA_LIMITE.search(corpo)
+        achado_link = re.search(r"https://app\.clicksign\.com/\S+?(?=[\s.]|$)", corpo)
+        lista = parsear_signatarios(corpo) if evento == "comprovante" else None
 
-        doc = documentos.setdefault(chave_arquivo, {
-            "nome": nome, "eventos": [], "signatarios": [], "data_signatarios": None,
-            "data_limite_em": None, "reaberto_em": None,
-            "data_limite": None, "ultima_movimentacao": recebido,
-            "link_email": email.get("web_link") or "", "link_clicksign": "",
-            "finalizado_em": None, "cancelado_em": None,
+        brutos.setdefault(chave_documento(nome), []).append({
+            "tipo": evento,
+            "em": ler_data(email["recebido_em"]),
+            "nome": nome,
+            "signatarios": lista or None,
+            "data_limite": achado_prazo.group(1) if achado_prazo else None,
+            "web_link": email.get("web_link") or "",
+            "link_clicksign": achado_link.group(0) if achado_link else "",
         })
 
-        doc["eventos"].append({"tipo": evento, "em": recebido})
-        if recebido > doc["ultima_movimentacao"]:
-            doc["ultima_movimentacao"] = recebido
-            if email.get("web_link"):
-                doc["link_email"] = email["web_link"]
-
-        if evento == "comprovante":
-            lista = parsear_signatarios(email.get("corpo", ""))
-            if lista and (doc["data_signatarios"] is None or recebido > doc["data_signatarios"]):
-                doc["signatarios"] = normalizar_signatarios([
-                    {"quem": s["quem"], "papel": s["papel"], "assinou": s["assinou"], "data": None}
-                    for s in lista
-                ])
-                doc["data_signatarios"] = recebido
-
-        if evento == "finalizado" and (doc["finalizado_em"] is None or recebido < doc["finalizado_em"]):
-            doc["finalizado_em"] = recebido
-        if evento == "cancelado":
-            doc["cancelado_em"] = recebido
-
-        # A data limite vale a do e-mail MAIS RECENTE que a informa. A QPC estende
-        # prazo: o contrato 063 tinha limite 12/07 e ganhou 28/08. Antes de
-        # 26/08/2026 aqui era uma atribuicao simples, entao o valor final dependia
-        # da ordem em que os e-mails apareciam no dump - podia ficar o prazo velho.
-        achado_prazo = PADRAO_DATA_LIMITE.search(email.get("corpo", ""))
-        if achado_prazo and (
-            doc.get("data_limite_em") is None or recebido > doc["data_limite_em"]
-        ):
-            doc["data_limite"] = achado_prazo.group(1)
-            doc["data_limite_em"] = recebido
-
-        achado_link = re.search(r"https://app\.clicksign\.com/\S+?(?=[\s.]|$)", email.get("corpo", ""))
-        if achado_link and not doc["link_clicksign"]:
-            doc["link_clicksign"] = achado_link.group(0)
-
-    # ---- Documento que voltou a viver ---------------------------------------
+    # =========================================================================
+    # PASSO 2 - separar em GERACOES do mesmo arquivo
+    # =========================================================================
     #
-    # O QUE ACONTECEU (contrato 063, pego pelo Valter em 26/08/2026):
+    # POR QUE ISTO EXISTE, EM PORTUGUES SIMPLES (correcao do Valter, 26/08/2026):
     #
-    #   09/07  lembrete: data limite 12/07
-    #   12/07  "documento finalizado"  <- na verdade o prazo venceu
-    #   25/08  lembrete: data limite 28/08   <- a QPC esticou o prazo
+    # Um contrato pode ser subido varias vezes na Clicksign, com O MESMO NOME DE
+    # ARQUIVO. Um envelope termina de dois jeitos sem ser assinado:
     #
-    # O envelope e o MESMO. O painel mostrava esse documento como Expirado e sem
-    # prazo nenhum, enquanto a Clicksign mandava lembrete de vencimento para o
-    # Valter. Ele recebia o aviso e o painel nao dizia nada.
+    #   EXPIROU   - estourou o prazo e a Clicksign encerrou sozinha
+    #   CANCELADO - alguem da QPC cancelou na mao
     #
-    # A regra que faltava e a mesma que ele ensinou no contrato cancelado: manda
-    # o E-MAIL MAIS RECENTE. Se depois do encerramento chegou lembrete de prazo
-    # ou comprovante de assinatura, o documento nao esta encerrado - foi reaberto.
-    for doc in documentos.values():
-        encerrou = doc["finalizado_em"] or doc["cancelado_em"]
-        if not encerrou:
-            continue
-        depois = [
-            e for e in doc["eventos"]
-            if e["em"] > encerrou and e["tipo"] in ("prazo", "comprovante", "assinar")
-        ]
-        if depois:
-            doc["reaberto_em"] = max(e["em"] for e in depois)
-            doc["finalizado_em"] = None
-            doc["cancelado_em"] = None
+    # Depois disso sobe um envelope NOVO. O contrato 063 e assim: expirou em
+    # 12/07 e um novo apareceu com limite 28/08. O 088 foi cancelado em 26/08 e
+    # outro vem ai. O 065 nao deu problema so porque mudaram o nome do arquivo.
+    #
+    # Antes, tudo com o mesmo nome virava UM documento so, e eu tinha escrito uma
+    # regra dizendo que evento depois do encerramento "reabria" o documento. O
+    # Valter cortou: "nao e sempre que quando encerra reabre, nao pode tomar isso
+    # como verdade, precisa pegar a informacao mais atualizada sempre". Ele esta
+    # certo - o envelope encerrado continua encerrado; o que veio depois e OUTRO.
+    #
+    # Entao: cada encerramento FECHA uma geracao. O que chega depois abre a
+    # proxima. A ultima geracao e a viva; as anteriores viram linha propria com
+    # etiqueta de encerrado, que e como ele pediu que cancelamento nunca suma.
+    TERMINAIS = ("finalizado", "cancelado")
+
+    documentos = {}
+    for chave_arquivo, eventos in brutos.items():
+        eventos.sort(key=lambda e: e["em"])
+
+        geracoes = [[]]
+        fechada = False
+        for evento in eventos:
+            if fechada and evento["tipo"] in TERMINAIS:
+                # A Clicksign repete o aviso de encerramento (o 065 mandou dois em
+                # 2 minutos). E o mesmo fim, nao um envelope novo.
+                geracoes[-1].append(evento)
+                continue
+            if fechada:
+                geracoes.append([])
+                fechada = False
+            geracoes[-1].append(evento)
+            if evento["tipo"] in TERMINAIS:
+                fechada = True
+        geracoes = [g for g in geracoes if g]
+
+        for numero, eventos_da_geracao in enumerate(geracoes, start=1):
+            doc = {
+                "nome": eventos_da_geracao[-1]["nome"],
+                "eventos": [{"tipo": e["tipo"], "em": e["em"]} for e in eventos_da_geracao],
+                "signatarios": [], "data_signatarios": None,
+                "data_limite": None, "data_limite_em": None,
+                "ultima_movimentacao": max(e["em"] for e in eventos_da_geracao),
+                "link_email": "", "link_clicksign": "",
+                "finalizado_em": None, "cancelado_em": None,
+                "geracao": numero, "geracoes_do_arquivo": len(geracoes),
+            }
+            for evento in eventos_da_geracao:
+                if evento["signatarios"] and (
+                    doc["data_signatarios"] is None or evento["em"] > doc["data_signatarios"]
+                ):
+                    doc["signatarios"] = normalizar_signatarios([
+                        {"quem": s["quem"], "papel": s["papel"], "assinou": s["assinou"], "data": None}
+                        for s in evento["signatarios"]
+                    ])
+                    doc["data_signatarios"] = evento["em"]
+                # A data limite vale a do e-mail mais recente DESTA geracao.
+                if evento["data_limite"] and (
+                    doc["data_limite_em"] is None or evento["em"] > doc["data_limite_em"]
+                ):
+                    doc["data_limite"] = evento["data_limite"]
+                    doc["data_limite_em"] = evento["em"]
+                if evento["tipo"] == "finalizado" and doc["finalizado_em"] is None:
+                    doc["finalizado_em"] = evento["em"]
+                if evento["tipo"] == "cancelado":
+                    doc["cancelado_em"] = evento["em"]
+                if evento["em"] == doc["ultima_movimentacao"] and evento["web_link"]:
+                    doc["link_email"] = evento["web_link"]
+                if evento["link_clicksign"] and not doc["link_clicksign"]:
+                    doc["link_clicksign"] = evento["link_clicksign"]
+
+            chave = chave_arquivo if len(geracoes) == 1 else "%s#g%d" % (chave_arquivo, numero)
+            documentos[chave] = doc
 
     # Um contrato pode ter varios documentos na Clicksign: o 065 foi cancelado
     # como "Limpeza Vicinal" e reemitido como "Limpeza"; o 063 expirou e foi
