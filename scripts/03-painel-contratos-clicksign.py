@@ -76,8 +76,23 @@ PASTA_HISTORICO = os.path.join(PASTA_RAIZ, "03-painel", "historico")
 # 7 dias = uma semana util inteira sem ninguem assinar. Ajuste se seu ciclo for outro.
 DIAS_PARA_CONSIDERAR_PARADO = 7
 
-# Faltando quantos dias para a data limite o contrato entra em alerta de prazo.
-DIAS_ALERTA_PRAZO = 10
+# QUANDO O PRAZO VIRA ALERTA - definido com o Valter em 26/08/2026
+#
+# Ele foi categorico: "a partir de 7 dias tem que ficar em vermelho negrito com o
+# sinal de atencao - isso e inegociavel". A faixa amarela de atencao antes disso
+# ficou a meu criterio; escolhi 15 dias, que da duas semanas de antecedencia.
+#
+# POR QUE NAO SAO SO CORES: rodei o validador de paleta e o amarelo-escuro do
+# alerta e o vermelho do critico ficam com dE 2,2 em daltonismo deutan - quem tem
+# essa condicao le os dois como a mesma cor. Entao cada faixa carrega ICONE e PESO
+# proprios, e a cor so reforca:
+#
+#   vencido        vermelho negrito  ⚠  + a palavra "venceu"
+#   ate 7 dias     vermelho negrito  ⚠
+#   8 a 15 dias    ambar peso normal ◷
+#   mais de 15     tinta comum, sem icone
+DIAS_ALERTA_PRAZO = 7
+DIAS_ATENCAO_PRAZO = 15
 
 # Incluir e-mails do ambiente de teste da Clicksign (SANDBOX)?
 # Decisao do Valter em 17/08/2026: NAO. Sandbox nao tem valor legal.
@@ -403,6 +418,67 @@ PESSOAS = [
 # Hoje esta vazio - o caso do Sergio virou outra coisa, explicada logo abaixo.
 SAIRAM_DA_OBRA = set()
 
+# =============================================================================
+# FLUXO DE ASSINATURA DO ENVELOPE - declarado pela QPC em 26/08/2026
+# =============================================================================
+#
+# POR QUE ISTO EXISTE:
+#
+# O Emerson (ABR) mandou um retorno preciso: o painel mostrava 6 contratos
+# pendentes para ele, mas ele nao tinha pendencia nenhuma de verdade - aqueles
+# contratos ainda nao tinham chegado na etapa dele. Ele pediu para o painel
+# separar "vai precisar de mim um dia" de "esta parado esperando EU assinar".
+#
+# A Clicksign NAO diz isso nos e-mails: o comprovante lista todo mundo do fluxo
+# sem dizer de quem e a vez. Entao o fluxo abaixo foi DECLARADO pela QPC (print
+# do envelope, enviado pelo Valter). Nao e deduzido - se mudar la, muda aqui.
+#
+# Sao 9 ETAPAS e 10 signatarios. A etapa 8 tem duas pessoas assinando junto.
+# A assinatura de cada etapa libera a etapa seguinte.
+#
+# Confirmacoes que o fluxo trouxe:
+#   - o Sergio NAO esta no envelope, o que fecha a decisao de 21/08/2026 de
+#     tira-lo por inteiro (era coluna fantasma da planilha);
+#   - o Lucas Marrucci assina JUNTO com o Luiz, nao antes. Eu tinha deduzido
+#     errado a partir das datas, e era justamente o que explicava parte das
+#     inversoes de data no historico.
+FLUXO_ASSINATURA = [
+    ["Lucas G. QPC"],                     # 1 - validador
+    ["Contratada"],                       # 2 - a contratada do contrato (pode ser mais de uma)
+    ["Felippe QPC"],                      # 3 - testemunha
+    ["Hassan QPC"],                       # 4 - interveniente anuente
+    ["Emerson ABR"],                      # 5 - testemunha
+    ["Fábio LYON"],                       # 6 - testemunha
+    ["Flávia LYON"],                      # 7 - validadora
+    ["Luiz LYON", "Lucas M. LYON"],       # 8 - contratante + testemunha, MESMA ETAPA
+    ["Nilton LYON"],                      # 9 - contratante
+]
+
+# Como reconhecer a contratada: e quem NAO tem e-mail de dominio da casa.
+# Regra dada pelo Valter em 26/08/2026 - vale inclusive quando ha dois
+# fornecedores no mesmo contrato, que acontece (contratos 050, 081 e 088).
+DOMINIOS_DA_CASA = ("qpc.com.br", "lyoncapital.com.br", "abrgerenciamento.com")
+
+ETAPA_DE = {nome: i for i, etapa in enumerate(FLUXO_ASSINATURA) for nome in etapa}
+ETAPA_DA_CONTRATADA = ETAPA_DE["Contratada"]
+
+
+def etapa_do_signatario(quem, email):
+    """
+    Em que etapa do envelope esta pessoa assina.
+
+    Quem esta no FLUXO_ASSINATURA pelo nome, vale o nome. Quem nao esta e tem
+    e-mail de fora da casa e contratada. Quem nao esta e tem e-mail DA CASA e
+    gente nova no fluxo - isso a conferencia la embaixo pega e para a rodada,
+    porque significa que o fluxo mudou e ninguem avisou.
+    """
+    if quem in ETAPA_DE:
+        return ETAPA_DE[quem]
+    endereco = (email or quem or "").lower()
+    if "@" in endereco and endereco.split("@")[-1].strip() in DOMINIOS_DA_CASA:
+        return None                       # interno desconhecido -> conferencia trata
+    return ETAPA_DA_CONTRATADA
+
 # ---------------------------------------------------------------------------
 # COLUNA FANTASMA DA PLANILHA - decisao do Valter em 20/08/2026
 # ---------------------------------------------------------------------------
@@ -647,6 +723,7 @@ def processar():
 
         doc = documentos.setdefault(chave_arquivo, {
             "nome": nome, "eventos": [], "signatarios": [], "data_signatarios": None,
+            "data_limite_em": None, "reaberto_em": None,
             "data_limite": None, "ultima_movimentacao": recebido,
             "link_email": email.get("web_link") or "", "link_clicksign": "",
             "finalizado_em": None, "cancelado_em": None,
@@ -672,13 +749,48 @@ def processar():
         if evento == "cancelado":
             doc["cancelado_em"] = recebido
 
+        # A data limite vale a do e-mail MAIS RECENTE que a informa. A QPC estende
+        # prazo: o contrato 063 tinha limite 12/07 e ganhou 28/08. Antes de
+        # 26/08/2026 aqui era uma atribuicao simples, entao o valor final dependia
+        # da ordem em que os e-mails apareciam no dump - podia ficar o prazo velho.
         achado_prazo = PADRAO_DATA_LIMITE.search(email.get("corpo", ""))
-        if achado_prazo:
+        if achado_prazo and (
+            doc.get("data_limite_em") is None or recebido > doc["data_limite_em"]
+        ):
             doc["data_limite"] = achado_prazo.group(1)
+            doc["data_limite_em"] = recebido
 
         achado_link = re.search(r"https://app\.clicksign\.com/\S+?(?=[\s.]|$)", email.get("corpo", ""))
         if achado_link and not doc["link_clicksign"]:
             doc["link_clicksign"] = achado_link.group(0)
+
+    # ---- Documento que voltou a viver ---------------------------------------
+    #
+    # O QUE ACONTECEU (contrato 063, pego pelo Valter em 26/08/2026):
+    #
+    #   09/07  lembrete: data limite 12/07
+    #   12/07  "documento finalizado"  <- na verdade o prazo venceu
+    #   25/08  lembrete: data limite 28/08   <- a QPC esticou o prazo
+    #
+    # O envelope e o MESMO. O painel mostrava esse documento como Expirado e sem
+    # prazo nenhum, enquanto a Clicksign mandava lembrete de vencimento para o
+    # Valter. Ele recebia o aviso e o painel nao dizia nada.
+    #
+    # A regra que faltava e a mesma que ele ensinou no contrato cancelado: manda
+    # o E-MAIL MAIS RECENTE. Se depois do encerramento chegou lembrete de prazo
+    # ou comprovante de assinatura, o documento nao esta encerrado - foi reaberto.
+    for doc in documentos.values():
+        encerrou = doc["finalizado_em"] or doc["cancelado_em"]
+        if not encerrou:
+            continue
+        depois = [
+            e for e in doc["eventos"]
+            if e["em"] > encerrou and e["tipo"] in ("prazo", "comprovante", "assinar")
+        ]
+        if depois:
+            doc["reaberto_em"] = max(e["em"] for e in depois)
+            doc["finalizado_em"] = None
+            doc["cancelado_em"] = None
 
     # Um contrato pode ter varios documentos na Clicksign: o 065 foi cancelado
     # como "Limpeza Vicinal" e reemitido como "Limpeza"; o 063 expirou e foi
@@ -951,6 +1063,53 @@ def processar():
     # =========================================================================
     # MONTAGEM FINAL
     # =========================================================================
+    # ---- De quem e a vez, contrato por contrato -------------------------------
+    #
+    # A etapa atual do contrato e a MENOR etapa entre quem ainda nao assinou.
+    # Quem esta nessa etapa pode assinar hoje; quem esta depois ainda vai chegar.
+    # Contrato encerrado (finalizado, cancelado, expirado) nao tem "vez".
+    #
+    # Guarda-corpo: pessoa de dominio da casa que nao esta no FLUXO_ASSINATURA
+    # significa que o envelope mudou e o fluxo aqui esta velho. Nao adivinhar.
+    fora_do_fluxo = {}
+    for reg in registros.values():
+        reg["etapa_atual"] = None
+        pendentes_com_etapa = []
+        for assinatura in reg["signatarios"]:
+            etapa = etapa_do_signatario(assinatura["quem"], assinatura.get("email"))
+            assinatura["etapa"] = etapa
+            assinatura["sua_vez"] = False
+            if etapa is None:
+                fora_do_fluxo.setdefault(assinatura["quem"], set()).add(reg["identificacao"])
+            elif not assinatura["assinou"]:
+                pendentes_com_etapa.append(etapa)
+
+        if reg["status"] != "Em andamento" or not pendentes_com_etapa:
+            continue
+        reg["etapa_atual"] = min(pendentes_com_etapa)
+        for assinatura in reg["signatarios"]:
+            if not assinatura["assinou"] and assinatura.get("etapa") == reg["etapa_atual"]:
+                assinatura["sua_vez"] = True
+
+    if fora_do_fluxo:
+        linhas = [
+            "Signatario com e-mail da casa que NAO esta no fluxo de assinatura.",
+            "Isso quer dizer que o envelope da Clicksign mudou e o FLUXO_ASSINATURA",
+            "deste script ficou velho. Sem saber a etapa da pessoa, o painel nao",
+            "consegue dizer de quem e a vez - e chutar seria pior que nao mostrar.",
+            "",
+        ]
+        for quem, onde in sorted(fora_do_fluxo.items()):
+            linhas.append("  %s" % quem)
+            linhas.append("     aparece em: %s" % ", ".join(sorted(onde)[:5]))
+        linhas += [
+            "",
+            "O QUE FAZER: confirme com o Valter em que etapa essa pessoa entrou e",
+            "acrescente o nome em FLUXO_ASSINATURA, no topo deste script.",
+            "Se ela sair do fluxo, tire de la. NAO publique com o fluxo errado.",
+        ]
+        erro("\n".join(linhas))
+
     contratos = []
     for reg in registros.values():
         dias_para_limite = None
@@ -984,6 +1143,7 @@ def processar():
             "assinaturas_total": len(reg["signatarios"]),
             "assinaturas_ok": sum(1 for s in reg["signatarios"] if s["assinou"]),
             "signatarios": reg["signatarios"],
+            "etapa_atual": reg.get("etapa_atual"),
             "signatarios_em": reg.get("signatarios_em"),
             "link_email": reg.get("link_email", ""),
             "link_clicksign": reg.get("link_clicksign", ""),
@@ -1017,6 +1177,7 @@ def processar():
                         % base["data_do_retrato_texto"],
             "nao_se_aplica": "signatario marcado N.A ou - sai da conta: nao aparece como pendente",
             "parado": "contrato Em andamento sem movimentação há mais de %d dias" % DIAS_PARA_CONSIDERAR_PARADO,
+            "prazo": "crítico faltando %d dias ou menos; atenção a partir de %d dias" % (DIAS_ALERTA_PRAZO, DIAS_ATENCAO_PRAZO),
         },
         "descartados": descartados,
         "emails_lidos": len(bruto["emails"]),
@@ -1046,6 +1207,7 @@ def processar():
         html.replace("/*DADOS_AQUI*/", json.dumps(saida, ensure_ascii=False))
         .replace("/*PARADO_AQUI*/", str(DIAS_PARA_CONSIDERAR_PARADO))
         .replace("/*ALERTA_PRAZO_AQUI*/", str(DIAS_ALERTA_PRAZO))
+        .replace("/*ATENCAO_PRAZO_AQUI*/", str(DIAS_ATENCAO_PRAZO))
         .replace("/*QTD_CONTRATOS*/", str(len(contratos)))
         .replace("/*GERADO_ISO*/", agora.isoformat(timespec="seconds"))
     )
