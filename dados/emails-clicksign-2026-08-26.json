@@ -1,9 +1,16 @@
 {
-  "gerado_em": "2026-08-26T11:40:11-03:00",
+  "gerado_em": "2026-08-26T12:05:00-03:00",
   "remetente_filtrado": "assinatura@clicksign.com",
   "pasta_lida": "Clicksign",
-  "total_emails_encontrados": 84,
+  "total_emails_encontrados": 85,
   "emails": [
+    {
+      "assunto": "Comprovante de assinatura do documento: 1. ADT1-LSF-G200-045-26 - TGEO (Sondagem).pdf",
+      "recebido_em": "2026-08-26T14:40:53Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA7iz3fAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\nComprovante de assinatura\n1. ADT1-LSF-G200-045-26 - TGEO (Sondagem).pdf\nnilt***********@lyoncapital.com.br assinará como contratante\nluiz**********@lyoncapital.com.br assinará como contratante\nLucas Maron Grimaldi Assinou como validador\nLuciano Figueiredo Calmon Assinou como contratada\nemer************@abrgerenciamento.com assinará como testemunha\nluca**********@lyoncapital.com.br assinará como testemunha\nfabi*********@lyoncapital.com.br assinará como testemunha\nflav******@lyoncapital.com.br assinará como validador\nHassan Fair Luedy Assinou como interveniente anuente\nFelippe Pamponet Esquivel Assinou como testemunha\nData limite para assinatura: 23/09/2026"
+    },
     {
       "assunto": "Documento cancelado: 88.CT-LSF-G200-088-26 - MB Terrplenagem (Terraplenagem G300).pdf",
       "recebido_em": "2026-08-26T13:31:55Z",
