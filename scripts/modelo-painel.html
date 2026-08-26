@@ -512,7 +512,15 @@ function renderTabela(){
     }
 
     let marco='';
-    if(c.finalizado_em) marco=`<span class="badge b-good">✓ finalizado em ${c.finalizado_em}</span>`;
+    /* A Clicksign manda o MESMO e-mail de "finalizado" quando todos assinaram e
+       quando o prazo venceu. Quem separa os dois e o status, ja calculado no
+       gerador: se sobrou gente sem assinar, o documento nao terminou - expirou.
+       Antes de 26/08/2026 o 063 expirado exibia um selo verde "finalizado em
+       12/07", contradizendo a propria etiqueta de Expirado ao lado. */
+    if(c.finalizado_em && c.status==='Finalizado')
+      marco=`<span class="badge b-good">✓ finalizado em ${c.finalizado_em}</span>`;
+    if(c.finalizado_em && c.status==='Expirado')
+      marco=`<span class="badge b-exp">⏱ prazo venceu em ${c.finalizado_em}</span>`;
     if(c.cancelado_em) marco=`<span class="badge b-neutral">✕ cancelado em ${c.cancelado_em}</span>`;
 
     const bloco=(titulo,lista,ok)=>lista.length?`<div class="detalhe-titulo">${titulo}</div>`+lista.map(s=>`
