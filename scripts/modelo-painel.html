@@ -228,10 +228,61 @@
   .vaziotabela{padding:34px;text-align:center;color:var(--ink-3);font-size:13.5px}
 
   @media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}
+  /* ---------- folha de cobranca por pessoa ---------- */
+  .btpacote{border:0;background:var(--brand);color:#fff;font:inherit;font-size:12.5px;
+    font-weight:600;padding:8px 14px;border-radius:8px;cursor:pointer;white-space:nowrap}
+  .btpacote:hover{filter:brightness(1.12)}
+  .fundopacote{position:fixed;inset:0;background:rgba(8,12,18,.72);z-index:50;
+    overflow:auto;padding:24px 16px;display:flex;justify-content:center;align-items:flex-start}
+  /* Sem esta linha o display:flex acima vence o atributo hidden, e o fundo
+     invisivel fica por cima do painel inteiro engolindo todo clique. Pego no
+     teste automatizado em 28/08/2026 - o painel ficava intocavel. */
+  .fundopacote[hidden]{display:none}
+  .pacote{background:#fff;color:#14181f;width:100%;max-width:820px;border-radius:10px;
+    padding:26px 30px 22px;color-scheme:light;
+    font:14px/1.5 "Segoe UI",system-ui,-apple-system,Arial,sans-serif}
+  .pacote .acoes{display:flex;gap:8px;justify-content:flex-end;margin-bottom:14px}
+  .btimprimir{border:0;background:var(--brand);color:#fff;font:inherit;font-size:12.5px;
+    font-weight:600;padding:8px 14px;border-radius:8px;cursor:pointer}
+  .btfechar{border:1px solid var(--line);background:#fff;color:var(--ink-2);font:inherit;
+    font-size:12.5px;padding:8px 14px;border-radius:8px;cursor:pointer}
+  .pk-topo{display:flex;align-items:center;gap:14px;border-bottom:3px solid var(--brand);
+    padding-bottom:10px;margin-bottom:16px}
+  .pk-topo img{height:34px;filter:invert(1)}
+  .pk-topo .t{flex:1}
+  .pk-topo h2{margin:0;font-size:17px;letter-spacing:.02em;color:var(--brand)}
+  .pk-topo p{margin:2px 0 0;font-size:11.5px;color:var(--ink-3)}
+  .pk-quando{font-size:11px;color:var(--ink-3);text-align:right;white-space:nowrap}
+  .pk-chamada{background:#f2f5fa;border-left:4px solid var(--brand);padding:11px 15px;
+    margin-bottom:15px;border-radius:0 6px 6px 0}
+  .pk-chamada > b{font-size:25px;color:var(--brand);display:block;line-height:1.15;margin-bottom:2px}
+  .pk-chamada span{font-size:13px;color:var(--ink-2)}
+  .pk-fichas{display:grid;grid-template-columns:1fr 1fr;gap:7px;align-items:start}
+  .pk-ficha{border:1px solid var(--line);border-radius:7px;padding:9px 12px;
+    break-inside:avoid;page-break-inside:avoid}
+  .pk-ficha.urgente{border-color:var(--crit-ink);border-left-width:4px}
+  .pk-ficha .n{font-size:11px;font-weight:700;color:var(--brand);letter-spacing:.02em}
+  .pk-ficha .e{font-weight:600;font-size:13px;margin:3px 0 1px;line-height:1.3}
+  .pk-ficha .s{font-size:11px;color:var(--ink-3);line-height:1.35}
+  .pk-ficha .p{margin-top:6px;padding-top:6px;border-top:1px solid #eef1f5;
+    font-size:11.5px;display:flex;justify-content:space-between;gap:8px}
+  .pk-critico{color:var(--crit-ink);font-weight:700}
+  .pk-atencao{color:var(--warn-ink)}
+  .pk-ok,.pk-sem{color:var(--ink-2)}
+  .pk-falta{color:var(--ink-3);white-space:nowrap}
+  .pk-rodape{margin-top:16px;padding-top:9px;border-top:1px solid var(--line);
+    font-size:10.5px;color:var(--ink-3);line-height:1.6}
+
   @media print{
     body{background:#fff;color:#000}body::before{display:none}
     .topo{color:#000}.marca img{filter:invert(1)}
     .tipobar,.controles{display:none}.card{box-shadow:none;border:1px solid var(--line)}
+    /* Com a folha aberta, o papel leva SO a folha - nada do painel. */
+    .fundopacote:not([hidden]) ~ *, body:has(.fundopacote:not([hidden])) .wrap{display:none}
+    .fundopacote{position:static;background:none;padding:0;display:block;overflow:visible}
+    .pacote{max-width:none;padding:0;border-radius:0}
+    .pacote .acoes{display:none}
+    @page{size:A4;margin:14mm 13mm}
   }
 </style>
 </head>
@@ -290,6 +341,7 @@
         </div>
         <div class="chips" id="chips"></div>
         <label class="alternar"><input type="checkbox" id="soParados"> Só parados &gt;<span id="labParado"></span> dias</label>
+        <button class="btpacote" id="btPacote" hidden>Gerar folha de cobrança</button>
       </div>
       <div class="tabela-rola">
       <table class="main">
@@ -311,6 +363,19 @@
     </div>
   </div>
 
+</div>
+
+<!-- Folha de cobrança de uma pessoa. Fica escondida ate o botao ser apertado.
+     E a mesma folha que o 07-pacote-por-pessoa.py gera no computador; aqui ela
+     e montada no navegador, para o Valter nao depender de rodar script. -->
+<div class="fundopacote" id="fundoPacote" hidden>
+  <div class="pacote" id="pacote">
+    <div class="acoes" id="acoesPacote">
+      <button class="btimprimir" id="btImprimir">Salvar em PDF / imprimir</button>
+      <button class="btfechar" id="btFechar">Fechar</button>
+    </div>
+    <div id="folhaPacote"></div>
+  </div>
 </div>
 
 <script>
@@ -561,7 +626,10 @@ function renderTabela(){
 }
 
 
-function renderAll(){renderSeg();renderKPIs();renderDonut();renderPendentes();renderChips();renderTabela();}
+function renderAll(){renderSeg();renderKPIs();renderDonut();renderPendentes();renderChips();renderTabela();
+  const bt=document.getElementById('btPacote');
+  if(bt){ bt.hidden=!pessoaFiltro; if(pessoaFiltro) bt.textContent='Gerar folha de '+pessoaFiltro; }
+}
 
 /* Direcao que faz sentido ao clicar numa coluna pela primeira vez:
    contrato do menor para o maior; parado e movimentacao do mais urgente/recente
@@ -587,6 +655,82 @@ document.getElementById('btnLimpar').onclick=()=>{
   ordem='numero';ordemCresc=true;pintarCabecalhos();
   document.getElementById('busca').value='';document.getElementById('soParados').checked=false;renderAll();
 };
+/* =========================================================================
+   FOLHA DE COBRANÇA DE UMA PESSOA
+   =========================================================================
+   Depois de filtrar por alguém no card "Assinaturas pendentes", o botão monta
+   aqui mesmo a folha com os contratos travados com essa pessoa, pronta para
+   salvar em PDF. É o mesmo desenho do 07-pacote-por-pessoa.py, que faz o mesmo
+   pelo computador — só entram contratos em que É A VEZ dela.                */
+
+/* A empresa, do jeito que dá para ler. Contrato vindo do histórico traz a razão
+   social depois do travessão; o que veio só do e-mail traz o nome do arquivo,
+   e aí tiramos o código da frente. */
+function empresaDe(c){
+  if(c.nome.includes('—')) return c.nome.split('—').pop().trim();
+  return c.nome.replace(/^\s*\d{0,3}\s*[.\-]?\s*[A-Za-z0-9.\-]*G200[-.\s]*\d{2,3}[-.\d]*\s*[-–]\s*/,'').trim() || c.nome;
+}
+function prazoDaFicha(c){
+  if(!c.data_limite) return ['pk-sem','sem prazo definido'];
+  const d=c.dias_para_limite;
+  if(d===null||d===undefined) return ['pk-sem',c.data_limite];
+  if(d<0)                   return ['pk-critico',`${c.data_limite} · venceu há ${-d} d ⚠`];
+  if(d<=DIAS_ALERTA_PRAZO)  return ['pk-critico',`${c.data_limite} · faltam ${d} d ⚠`];
+  if(d<=DIAS_ATENCAO_PRAZO) return ['pk-atencao',`${c.data_limite} · faltam ${d} d ◷`];
+  return ['pk-ok',`${c.data_limite} · faltam ${d} d`];
+}
+
+function montarPacote(pessoa){
+  const lista=DADOS.contratos
+    .filter(c=>c.status==='Em andamento' && c.signatarios.some(s=>s.quem===pessoa&&s.sua_vez))
+    .sort((a,b)=>{
+      const pa=a.dias_para_limite, pb=b.dias_para_limite;
+      if((pa===null)!==(pb===null)) return pa===null?1:-1;   // sem prazo vai ao fim
+      if(pa!==null && pa!==pb) return pa-pb;                  // vence antes vem antes
+      return (b.dias_parado||0)-(a.dias_parado||0);           // parado há mais tempo primeiro
+    });
+  const urgentes=lista.filter(c=>c.dias_para_limite!==null&&c.dias_para_limite<=DIAS_ALERTA_PRAZO).length;
+  const email=(lista.flatMap(c=>c.signatarios).find(s=>s.quem===pessoa&&s.email)||{}).email;
+  const logo=document.querySelector('.marca img').src;
+
+  const fichas=lista.map(c=>{
+    const [classe,texto]=prazoDaFicha(c);
+    return `<div class="pk-ficha ${classe==='pk-critico'?'urgente':''}">
+      <div class="n">${c.numero}</div>
+      <div class="e">${empresaDe(c)}</div>
+      ${c.servico?`<div class="s">${c.servico}</div>`:''}
+      <div class="p"><span class="${classe}">${texto}</span>
+        <span class="pk-falta">${c.assinaturas_ok} de ${c.assinaturas_total} assinadas</span></div>
+    </div>`;}).join('');
+
+  document.getElementById('folhaPacote').innerHTML=`
+    <div class="pk-topo">
+      <img src="${logo}" alt="QPC Engenharia">
+      <div class="t"><h2>Assinaturas pendentes com ${pessoa}</h2>
+        <p>Obra LSF G200 · ${email||'Clicksign'}</p></div>
+      <div class="pk-quando">Posição de<br><b>${DADOS.gerado_em}</b></div>
+    </div>
+    <div class="pk-chamada"><b>${lista.length} ${lista.length===1?'contrato':'contratos'}</b>
+      <span>${lista.length===1?'aguarda':'aguardam'} <b>apenas a sua assinatura</b> para
+      ${lista.length===1?'ser concluído':'serem concluídos'}${urgentes?` — <span class="pk-critico">${urgentes} ${urgentes===1?'vence':'vencem'} em até ${DIAS_ALERTA_PRAZO} dias</span>`:''}.</span></div>
+    <div class="pk-fichas">${fichas}</div>
+    <div class="pk-rodape">Lista tirada dos e-mails da Clicksign em ${DADOS.gerado_em}.
+      Só entram contratos em que a assinatura <b>já chegou na sua vez</b> — os que ainda
+      dependem de alguém antes no fluxo ficam de fora.<br>
+      Painel completo e sempre atualizado: qpc-suprimentos.github.io/controle-assinaturas</div>`;
+  document.getElementById('fundoPacote').hidden=false;
+}
+
+document.getElementById('btPacote').onclick=()=>{ if(pessoaFiltro) montarPacote(pessoaFiltro); };
+document.getElementById('btImprimir').onclick=()=>window.print();
+document.getElementById('btFechar').onclick=()=>{document.getElementById('fundoPacote').hidden=true;};
+document.getElementById('fundoPacote').onclick=e=>{
+  if(e.target.id==='fundoPacote') document.getElementById('fundoPacote').hidden=true;
+};
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape') document.getElementById('fundoPacote').hidden=true;
+});
+
 document.getElementById('updated').textContent=DADOS.gerado_em;
 document.getElementById('labParado').textContent=DIAS_PARADO;
 pintarCabecalhos();
