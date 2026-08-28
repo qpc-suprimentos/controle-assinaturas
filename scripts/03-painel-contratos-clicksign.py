@@ -815,6 +815,9 @@ def processar():
     # sobrar no fim para a rodada: confirmacao que nao encaixa em lugar nenhum e
     # erro de digitacao, e erro de digitacao silencioso e o pior tipo.
     confirmacoes_usadas = set()
+    # ...e para quais eu ao menos ACHEI o contrato. Separado de proposito: ver o
+    # bloco de desfechos logo abaixo do laco.
+    confirmacoes_com_contrato = set()
     for chave_arquivo, eventos in brutos.items():
         eventos.sort(key=lambda e: e["em"])
 
@@ -874,35 +877,66 @@ def processar():
             # e-mail que trouxe a data, e so na geracao viva. Ver o comentario
             # de CONFIRMADO_NA_CLICKSIGN la em cima.
             geracao_viva = eventos_da_geracao[-1]["tipo"] not in TERMINAIS
-            if geracao_viva:
-                for aviso in CONFIRMADO_NA_CLICKSIGN:
-                    if aviso["campo"] != "data_limite":
-                        continue
-                    if chave_do_contrato(doc["nome"]) != aviso["contrato"]:
-                        continue
-                    quando = ler_data(aviso["informado_em"])
-                    if doc["data_limite_em"] is None or quando > doc["data_limite_em"]:
-                        doc["data_limite"] = aviso["valor"]
-                        doc["data_limite_em"] = quando
-                        doc["data_limite_fonte"] = "confirmado na Clicksign por %s em %s" % (
-                            aviso["quem"], quando.strftime("%d/%m/%Y"))
-                        confirmacoes_usadas.add(aviso["contrato"])
+            for aviso in CONFIRMADO_NA_CLICKSIGN:
+                if aviso["campo"] != "data_limite":
+                    continue
+                if chave_do_contrato(doc["nome"]) != aviso["contrato"]:
+                    continue
+                # Achei o contrato. Isso ja basta para NAO ser erro de digitacao,
+                # mesmo que o envelope tenha encerrado e a confirmacao nao valha
+                # mais nada.
+                confirmacoes_com_contrato.add(aviso["contrato"])
+                if not geracao_viva:
+                    continue
+                quando = ler_data(aviso["informado_em"])
+                if doc["data_limite_em"] is None or quando > doc["data_limite_em"]:
+                    doc["data_limite"] = aviso["valor"]
+                    doc["data_limite_em"] = quando
+                    doc["data_limite_fonte"] = "confirmado na Clicksign por %s em %s" % (
+                        aviso["quem"], quando.strftime("%d/%m/%Y"))
+                    confirmacoes_usadas.add(aviso["contrato"])
 
             chave = chave_arquivo if len(geracoes) == 1 else "%s#g%d" % (chave_arquivo, numero)
             documentos[chave] = doc
 
-    perdidas = [a for a in CONFIRMADO_NA_CLICKSIGN
-                if a["contrato"] not in confirmacoes_usadas]
-    if perdidas:
+    # DOIS DESFECHOS DIFERENTES, e a diferenca importa muito:
+    #
+    #   contrato nao existe em lugar nenhum  -> ERRO, para a rodada.
+    #       So pode ser numero digitado errado. Confirmacao apontando para o
+    #       vazio nao ajuda ninguem e some sem barulho se eu deixar passar.
+    #
+    #   contrato existe, mas o envelope encerrou -> AVISO, a rodada segue.
+    #       Isso e a vida normal: o contrato foi assinado ou cancelado, e a
+    #       confirmacao simplesmente terminou de valer.
+    #
+    # A primeira versao disto (28/08/2026) parava a rodada nos DOIS casos. Era
+    # uma bomba-relogio: o CT-079 esta em 9/10 e vai finalizar a qualquer dia -
+    # e no dia seguinte as tarefas das 11h30 e 18h30 iam quebrar em serie, com
+    # o painel congelando no ar, por causa de uma linha que so precisava ser
+    # apagada. Trava boa avisa; trava que derruba o servico por um bilhete
+    # vencido e defeito.
+    sem_contrato = [a for a in CONFIRMADO_NA_CLICKSIGN
+                    if a["contrato"] not in confirmacoes_com_contrato]
+    if sem_contrato:
         erro(
-            "Ha confirmacao em CONFIRMADO_NA_CLICKSIGN que nao encontrou contrato vivo:\n"
+            "Ha confirmacao em CONFIRMADO_NA_CLICKSIGN apontando para contrato que\n"
+            "nao existe no painel:\n"
             + "\n".join("  %s (%s = %s), informado por %s"
-                        % (a["contrato"], a["campo"], a["valor"], a["quem"]) for a in perdidas)
-            + "\n\nOu o numero do contrato esta errado, ou aquele envelope ja foi\n"
-              "encerrado (finalizado/cancelado) e nao aceita mais mudanca de prazo.\n"
+                        % (a["contrato"], a["campo"], a["valor"], a["quem"]) for a in sem_contrato)
+            + "\n\nQuase certamente e o numero do contrato digitado errado.\n"
               "Confira na Clicksign e corrija a linha em 03-painel-contratos-clicksign.py.\n"
               "Nao vou publicar um painel carregando uma confirmacao que nao valeu."
         )
+
+    for aviso in CONFIRMADO_NA_CLICKSIGN:
+        if aviso["contrato"] in confirmacoes_usadas:
+            print("[CONFIRMADO NA CLICKSIGN] %s: %s = %s (contado por %s)"
+                  % (aviso["contrato"], aviso["campo"], aviso["valor"], aviso["quem"]))
+        elif aviso["contrato"] in confirmacoes_com_contrato:
+            print("[AVISO] A confirmacao de %s (%s = %s) nao vale mais: o envelope\n"
+                  "        encerrou, ou um e-mail mais novo ja trouxe a data. Pode\n"
+                  "        apagar essa linha de CONFIRMADO_NA_CLICKSIGN."
+                  % (aviso["contrato"], aviso["campo"], aviso["valor"]))
 
     # Um contrato pode ter varios documentos na Clicksign: o 065 foi cancelado
     # como "Limpeza Vicinal" e reemitido como "Limpeza"; o 063 expirou e foi
