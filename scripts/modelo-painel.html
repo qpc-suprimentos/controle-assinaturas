@@ -341,7 +341,9 @@
         </div>
         <div class="chips" id="chips"></div>
         <label class="alternar"><input type="checkbox" id="soParados"> Só parados &gt;<span id="labParado"></span> dias</label>
-        <button class="btpacote" id="btPacote" hidden>Gerar folha de cobrança</button>
+        <!-- Este texto nunca aparece: o botao so fica visivel com pessoa
+             filtrada, e ai o renderAll() troca por "Gerar compilado — {pessoa}". -->
+        <button class="btpacote" id="btPacote" hidden>Gerar compilado</button>
       </div>
       <div class="tabela-rola">
       <table class="main">
@@ -632,7 +634,12 @@ function renderTabela(){
 
 function renderAll(){renderSeg();renderKPIs();renderDonut();renderPendentes();renderChips();renderTabela();
   const bt=document.getElementById('btPacote');
-  if(bt){ bt.hidden=!pessoaFiltro; if(pessoaFiltro) bt.textContent='Gerar folha de '+pessoaFiltro; }
+  /* O NOME fica no botao de proposito. Esta folha sai da empresa (vai para o
+     Nilton, para a diretoria), e o card tem cinco nomes parecidos - dois deles
+     e-mails quase iguais da M.Andrade. O nome aqui e a ultima conferencia antes
+     de gerar, e continua visivel quando o card sai da tela ao rolar. Texto
+     escolhido pelo Valter em 28/08/2026: "compilado" e a palavra dele. */
+  if(bt){ bt.hidden=!pessoaFiltro; if(pessoaFiltro) bt.textContent='Gerar compilado — '+pessoaFiltro; }
 }
 
 /* Direcao que faz sentido ao clicar numa coluna pela primeira vez:
