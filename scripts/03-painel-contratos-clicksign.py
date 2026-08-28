@@ -94,6 +94,53 @@ DIAS_PARA_CONSIDERAR_PARADO = 7
 DIAS_ALERTA_PRAZO = 7
 DIAS_ATENCAO_PRAZO = 15
 
+# =============================================================================
+# O QUE O VALTER CONFIRMOU OLHANDO A CLICKSIGN COM OS PROPRIOS OLHOS
+# =============================================================================
+#
+# POR QUE ISTO EXISTE:
+#
+# O painel se alimenta de e-mail. So que nem toda mudanca na Clicksign gera
+# e-mail: quando alguem ESTENDE a data limite de um envelope, a Clicksign nao
+# avisa ninguem. O painel continuaria mostrando o prazo velho ate o proximo
+# lembrete de vencimento chegar - ou seja, justamente enquanto ele estivesse
+# gritando "vence amanha" sem ser verdade.
+#
+# Aconteceu em 28/08/2026: o CT-079 (AM, motores dos portoes) vencia em 29/08,
+# o Valter esticou para 07/09 dentro da Clicksign e mandou o print da aba
+# Configuracoes. O painel dizia "faltam 1 d" em vermelho, e estava errado.
+#
+# ISTO NAO E INVENTAR DADO. E dado de primeira mao, com evidencia, anotado com
+# data e autor - a mesma coisa que o e-mail e, so que o mensageiro foi outro.
+# O que NAO pode entrar aqui e palpite, memoria ou "acho que era".
+#
+# COMO SE COMPORTA:
+#
+#   - vale so para a geracao VIVA do contrato (envelope encerrado nao muda);
+#   - so vence o e-mail se for MAIS RECENTE que ele. Se amanha a Clicksign
+#     mandar um lembrete com outra data, o e-mail passa a valer, porque a regra
+#     do Valter e "pegar a informacao mais atualizada sempre";
+#   - contrato que nao existe no painel PARA a rodada. Confirmacao apontando
+#     para o vazio e erro de digitacao, e erro de digitacao tem que doer;
+#   - o painel mostra de onde veio a data, para ninguem estranhar um prazo que
+#     nenhum e-mail anunciou.
+#
+# COMO ACRESCENTAR: uma linha nova aqui, com a data em que ele contou e a
+# evidencia. Nunca editar um dump em 01-dados-brutos - aquilo e o que a
+# Clicksign disse, e nao se reescreve o que outro disse.
+CONFIRMADO_NA_CLICKSIGN = [
+    {
+        "contrato": "CT-079",
+        "campo": "data_limite",
+        "valor": "07/09/2026",
+        "informado_em": "2026-08-28T14:00:00Z",
+        "quem": "Valter",
+        "evidencia": "print da aba Configuracoes do documento "
+                     "'79.CT-LSFG200-079.26 - AM (Motores dos Portoes)': "
+                     "'Seg, 7 de set de 2026 as 20:20'",
+    },
+]
+
 # Incluir e-mails do ambiente de teste da Clicksign (SANDBOX)?
 # Decisao do Valter em 17/08/2026: NAO. Sandbox nao tem valor legal.
 INCLUIR_SANDBOX = False
@@ -764,6 +811,10 @@ def processar():
     TERMINAIS = ("finalizado", "cancelado")
 
     documentos = {}
+    # Quais confirmacoes do Valter realmente encontraram um contrato vivo. O que
+    # sobrar no fim para a rodada: confirmacao que nao encaixa em lugar nenhum e
+    # erro de digitacao, e erro de digitacao silencioso e o pior tipo.
+    confirmacoes_usadas = set()
     for chave_arquivo, eventos in brutos.items():
         eventos.sort(key=lambda e: e["em"])
 
@@ -788,7 +839,7 @@ def processar():
                 "nome": eventos_da_geracao[-1]["nome"],
                 "eventos": [{"tipo": e["tipo"], "em": e["em"]} for e in eventos_da_geracao],
                 "signatarios": [], "data_signatarios": None,
-                "data_limite": None, "data_limite_em": None,
+                "data_limite": None, "data_limite_em": None, "data_limite_fonte": None,
                 "ultima_movimentacao": max(e["em"] for e in eventos_da_geracao),
                 "link_email": "", "link_clicksign": "",
                 "finalizado_em": None, "cancelado_em": None,
@@ -818,8 +869,40 @@ def processar():
                 if evento["link_clicksign"] and not doc["link_clicksign"]:
                     doc["link_clicksign"] = evento["link_clicksign"]
 
+            # O que o Valter confirmou olhando a Clicksign entra AQUI, na mesma
+            # linha do tempo dos e-mails: so vale se for mais recente que o
+            # e-mail que trouxe a data, e so na geracao viva. Ver o comentario
+            # de CONFIRMADO_NA_CLICKSIGN la em cima.
+            geracao_viva = eventos_da_geracao[-1]["tipo"] not in TERMINAIS
+            if geracao_viva:
+                for aviso in CONFIRMADO_NA_CLICKSIGN:
+                    if aviso["campo"] != "data_limite":
+                        continue
+                    if chave_do_contrato(doc["nome"]) != aviso["contrato"]:
+                        continue
+                    quando = ler_data(aviso["informado_em"])
+                    if doc["data_limite_em"] is None or quando > doc["data_limite_em"]:
+                        doc["data_limite"] = aviso["valor"]
+                        doc["data_limite_em"] = quando
+                        doc["data_limite_fonte"] = "confirmado na Clicksign por %s em %s" % (
+                            aviso["quem"], quando.strftime("%d/%m/%Y"))
+                        confirmacoes_usadas.add(aviso["contrato"])
+
             chave = chave_arquivo if len(geracoes) == 1 else "%s#g%d" % (chave_arquivo, numero)
             documentos[chave] = doc
+
+    perdidas = [a for a in CONFIRMADO_NA_CLICKSIGN
+                if a["contrato"] not in confirmacoes_usadas]
+    if perdidas:
+        erro(
+            "Ha confirmacao em CONFIRMADO_NA_CLICKSIGN que nao encontrou contrato vivo:\n"
+            + "\n".join("  %s (%s = %s), informado por %s"
+                        % (a["contrato"], a["campo"], a["valor"], a["quem"]) for a in perdidas)
+            + "\n\nOu o numero do contrato esta errado, ou aquele envelope ja foi\n"
+              "encerrado (finalizado/cancelado) e nao aceita mais mudanca de prazo.\n"
+              "Confira na Clicksign e corrija a linha em 03-painel-contratos-clicksign.py.\n"
+              "Nao vou publicar um painel carregando uma confirmacao que nao valeu."
+        )
 
     # Um contrato pode ter varios documentos na Clicksign: o 065 foi cancelado
     # como "Limpeza Vicinal" e reemitido como "Limpeza"; o 063 expirou e foi
@@ -918,6 +1001,7 @@ def processar():
                 "aditivo": chave.startswith("ADIT"),
                 "dias_parado": dias_entre(doc["ultima_movimentacao"], agora),
                 "data_limite": doc["data_limite"],
+                "data_limite_fonte": doc.get("data_limite_fonte"),
                 "finalizado_em": doc["finalizado_em"].strftime("%d/%m/%Y") if doc["finalizado_em"] else None,
                 "cancelado_em": doc["cancelado_em"].strftime("%d/%m/%Y") if doc["cancelado_em"] else None,
                 "link_email": doc["link_email"],
@@ -1165,6 +1249,10 @@ def processar():
             "atualizado_em_texto": reg["data_fonte"].strftime("%d/%m/%Y"),
             "dias_parado": reg["dias_parado"] if reg["dias_parado"] is not None else 0,
             "data_limite": reg.get("data_limite"),
+            # De onde veio a data. Vazio = veio de e-mail da Clicksign, o normal.
+            # Preenchido = o Valter conferiu na tela da Clicksign e contou, caso
+            # em que o painel precisa dizer isso a quem ler.
+            "data_limite_fonte": reg.get("data_limite_fonte"),
             "dias_para_limite": dias_para_limite,
             "finalizado_em": reg.get("finalizado_em"),
             "cancelado_em": reg.get("cancelado_em"),
