@@ -517,7 +517,11 @@ function renderPendentes(){
   el.innerHTML=lista.map(p=>`
     <div class="row ${pessoaFiltro===p.quem?'active':''}" data-quem="${p.quem.replace(/"/g,'&quot;')}">
       <div class="quem">${p.quem}
-        <small>${(p.email&&p.email!==p.quem)?p.email:[...p.papeis].join(' · ')}</small></div>
+        <!-- Mostrava p.email aqui. Nao era o e-mail da pessoa: a Clicksign manda
+             mascarado e o gerador corta no asterisco so para ter chave de
+             comparacao, virando "nilt@lyoncapital.com.br" - um endereco que nao
+             existe. Trocado pelo papel no envelope, que e dado real. 28/08/2026. -->
+        <small>${[...p.papeis].filter(x=>!/^signat[aá]rio$/i.test(x)).join(' · ')}</small></div>
       <div class="n">${p.agora}</div></div>`).join('')
     + (totalFila?`<div class="explicafila">Mostrando quem pode assinar <b>hoje</b>:
         <b>${totalAgora}</b> das ${totalAgora+totalFila} pendências.
@@ -690,7 +694,17 @@ function montarPacote(pessoa){
       return (b.dias_parado||0)-(a.dias_parado||0);           // parado há mais tempo primeiro
     });
   const urgentes=lista.filter(c=>c.dias_para_limite!==null&&c.dias_para_limite<=DIAS_ALERTA_PRAZO).length;
-  const email=(lista.flatMap(c=>c.signatarios).find(s=>s.quem===pessoa&&s.email)||{}).email;
+  /* NAO mostre o campo "email" daqui na folha. Ele nao e o e-mail da pessoa: a
+     Clicksign manda o endereco mascarado ("nilt***********@lyoncapital.com.br")
+     e o gerador corta no primeiro asterisco so para ter uma CHAVE de comparacao.
+     Impresso, "nilt@lyoncapital.com.br" parece um endereco de verdade e nao e -
+     seria dado inventado numa folha que vai para a diretoria. Mostramos o papel
+     que a pessoa exerce no envelope, que e informacao real e util. 28/08/2026. */
+  /* "signatario" e o rotulo generico que a Clicksign usa quando o envelope nao
+     nomeia o papel. Nao diz nada a quem le - fica de fora. */
+  const papeis=[...new Set(lista.flatMap(c=>c.signatarios)
+    .filter(s=>s.quem===pessoa&&s.papel&&!/^signat[aá]rio$/i.test(s.papel))
+    .map(s=>s.papel))].join(' · ');
   const logo=document.querySelector('.marca img').src;
 
   const fichas=lista.map(c=>{
@@ -707,7 +721,7 @@ function montarPacote(pessoa){
     <div class="pk-topo">
       <img src="${logo}" alt="QPC Engenharia">
       <div class="t"><h2>Assinaturas pendentes com ${pessoa}</h2>
-        <p>Obra LSF G200 · ${email||'Clicksign'}</p></div>
+        <p>Obra LSF G200${papeis?' · assina como '+papeis:''}</p></div>
       <div class="pk-quando">Posição de<br><b>${DADOS.gerado_em}</b></div>
     </div>
     <div class="pk-chamada"><b>${lista.length} ${lista.length===1?'contrato':'contratos'}</b>
