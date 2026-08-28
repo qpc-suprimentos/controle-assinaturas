@@ -1,43 +1,113 @@
 {
-  "gerado_em": "2026-08-28T14:40:00-03:00",
+  "gerado_em": "2026-08-28T21:35:00Z",
   "remetente_filtrado": "assinatura@clicksign.com",
   "pasta_lida": "Clicksign",
-  "total_emails_encontrados": 102,
+  "total_emails_encontrados": 112,
   "emails": [
+    {
+      "assunto": "Comprovante de assinatura do documento: 1. ADT1-LSF-G200-045-26 - TGEO ( Sondagem ).pdf",
+      "recebido_em": "2026-08-28T19:29:57Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA8pR6tAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Comprovante de assinatura\n1. ADT1-LSF-G200-045-26 - TGEO ( Sondagem ).pdf\nLuciano Figueiredo Calmon Assinou como contratada\nFelippe Pamponet Esquivel Assinou como testemunha\nHassan Fair Luedy Assinou como interveniente anuente\nluiz**********@lyoncapital.com.br assinará como contratante\nEmerson Leal Assinou como testemunha\nFábio Matheus Assinou como testemunha\nFlávia Lina Doi Utiyama Assinou como validador\nLucas Marrucci Assinou como testemunha\nnilt***********@lyoncapital.com.br assinará como contratante\nLucas Maron Grimaldi Assinou como validador\nData limite para assinatura: 03/10/2026"
+    },
+    {
+      "assunto": "Comprovante de assinatura do documento: 67. CT-LSF-G200-067.26 - LF SERVIÇOS (divi. sanitárias).pdf",
+      "recebido_em": "2026-08-28T19:29:56Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA8pR6sAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Comprovante de assinatura\n67. CT-LSF-G200-067.26 - LF SERVIÇOS (divi. sanitárias).pdf\nFelippe Pamponet Esquivel Assinou como testemunha\nEmerson Leal Assinou como testemunha\nLucas Marrucci Assinou como testemunha\nnilt***********@lyoncapital.com.br assinará como contratante\nluiz**********@lyoncapital.com.br assinará como contratante\nHassan Fair Luedy Assinou como interveniente anuente\nFlávia Lina Doi Utiyama Assinou como validador\nLucas Maron Grimaldi Assinou como validador\nLuciano Valerio Costa Fonseca Assinou como contratada\nFábio Matheus Assinou como testemunha\nData limite para assinatura: 19/09/2026"
+    },
+    {
+      "assunto": "Comprovante de assinatura do documento: 67. CT-LSF-G200-067.26 - LF SERVIÇOS (divi. sanitárias).pdf",
+      "recebido_em": "2026-08-28T19:15:43Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA8pR6rAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n67. CT-LSF-G200-067.26 - LF SERVIÇOS (divi. sanitárias).pdf\r\nFelippe Pamponet Esquivel Assinou como testemunha\r\nEmerson"
+    },
+    {
+      "assunto": "Comprovante de assinatura do documento: 1. ADT1-LSF-G200-045-26 - TGEO ( Sondagem ).pdf",
+      "recebido_em": "2026-08-28T19:14:40Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA8pR6qAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n1. ADT1-LSF-G200-045-26 - TGEO ( Sondagem ).pdf\r\nLuciano Figueiredo Calmon Assinou como contratada\r\nFelippe Pamponet Es"
+    },
+    {
+      "assunto": "Comprovante de assinatura do documento: 67. CT-LSF-G200-067.26 - LF SERVIÇOS (divi. sanitárias).pdf",
+      "recebido_em": "2026-08-28T18:58:52Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA8pR6pAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n67. CT-LSF-G200-067.26 - LF SERVIÇOS (divi. sanitárias).pdf\r\nFelippe Pamponet Esquivel Assinou como testemunha\r\nEmerson"
+    },
+    {
+      "assunto": "Comprovante de assinatura do documento: 1. ADT1-LSF-G200-045-26 - TGEO ( Sondagem ).pdf",
+      "recebido_em": "2026-08-28T18:58:28Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA8pR6oAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n1. ADT1-LSF-G200-045-26 - TGEO ( Sondagem ).pdf\r\nLuciano Figueiredo Calmon Assinou como contratada\r\nFelippe Pamponet Es"
+    },
+    {
+      "assunto": "Comprovante de assinatura do documento: 1. ADT1-LSF-G200-045-26 - TGEO ( Sondagem ).pdf",
+      "recebido_em": "2026-08-28T18:23:52Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA8pR6nAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n1. ADT1-LSF-G200-045-26 - TGEO ( Sondagem ).pdf\r\nLuciano Figueiredo Calmon Assinou como contratada\r\nFelippe Pamponet Es"
+    },
+    {
+      "assunto": "Comprovante de assinatura do documento: 67. CT-LSF-G200-067.26 - LF SERVIÇOS (divi. sanitárias).pdf",
+      "recebido_em": "2026-08-28T18:23:50Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA8pR6mAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n67. CT-LSF-G200-067.26 - LF SERVIÇOS (divi. sanitárias).pdf\r\nfabi*********@lyoncapital.com.br assinará como testemunha"
+    },
+    {
+      "assunto": "Comprovante de assinatura do documento: 81.CT-LSF-G200-081-26 - MB Terrplenagem (Reg. Subleito e Esp.).pdf",
+      "recebido_em": "2026-08-28T17:27:06Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA8pR6lAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Comprovante de assinatura\n81.CT-LSF-G200-081-26 - MB Terrplenagem (Reg. Subleito e Esp.).pdf\nluiz**********@lyoncapital.com.br assinará como contratante\npinh*@mandrade.com.br assinará como validador\nluca**********@lyoncapital.com.br assinará como testemunha\nflav******@lyoncapital.com.br assinará como validador\nemer************@abrgerenciamento.com assinará como testemunha\nfpam*****@qpc.com.br assinará como testemunha\nhlue**@qpc.com.br assinará como interveniente anuente\nluis***@mandrade.com.br assinará como contratada\nnilt***********@lyoncapital.com.br assinará como contratante\nfabi*********@lyoncapital.com.br assinará como testemunha\nLucas Maron Grimaldi Assinou como validador\nData limite para assinatura: 27/09/2026"
+    },
+    {
+      "assunto": "Comprovante de assinatura do documento: 1. ADT1-LSF-G200-054-26 - VOC (Sinaleiro).pdf",
+      "recebido_em": "2026-08-28T17:20:30Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA8pR6kAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Comprovante de assinatura\n1. ADT1-LSF-G200-054-26 - VOC (Sinaleiro).pdf\nfpam*****@qpc.com.br assinará como testemunha\nluca**********@lyoncapital.com.br assinará como testemunha\nhlue**@qpc.com.br assinará como interveniente anuente\nluiz**********@lyoncapital.com.br assinará como contratante\nemer************@abrgerenciamento.com assinará como testemunha\nvoca*******@gmail.com assinará como contratada\nflav******@lyoncapital.com.br assinará como validador\nnilt***********@lyoncapital.com.br assinará como contratante\nfabi*********@lyoncapital.com.br assinará como testemunha\nLucas Maron Grimaldi Assinou como validador\nData limite para assinatura: 23/10/2026"
+    },
     {
       "assunto": "Documento cancelado: 81.CT-LSF-G200-081-26 - MB Terrplenagem (Reg. Subleito e Esp.).pdf",
       "recebido_em": "2026-08-28T13:53:24Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA8pR6jAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Documento cancelado\nO cancelamento inutiliza o documento. Este não pode ser utilizado, no todo ou em parte, como prova.\n\n81.CT-LSF-G200-081-26 - MB Terrplenagem (Reg. Subleito e Esp.).pdf"
+      "corpo": "Documento cancelado\r\nO cancelamento inutiliza o documento. Este não pode ser utilizado, no todo ou em parte, como prova.\r\n\r\n81.CT-LSF-G200-081-26 - MB Terrplenagem (Reg. Subleito e Esp.).pdf\r\n\r\n\r\nDúvidas sobre armazenamento de documentos?\r\nConsulte no"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 67. CT-LSF-G200-067.26 - LF SERVIÇOS (divi. sanitárias).pdf",
       "recebido_em": "2026-08-28T13:37:30Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA8pR6iAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura\n67. CT-LSF-G200-067.26 - LF SERVIÇOS (divi. sanitárias).pdf\nfabi*********@lyoncapital.com.br assinará como testemunha\nFelippe Pamponet Esquivel Assinou como testemunha\nemer************@abrgerenciamento.com assinará como testemunha\nluca**********@lyoncapital.com.br assinará como testemunha\nnilt***********@lyoncapital.com.br assinará como contratante\nluiz**********@lyoncapital.com.br assinará como contratante\nflav******@lyoncapital.com.br assinará como validador\nHassan Fair Luedy Assinou como interveniente anuente\nLucas Maron Grimaldi Assinou como validador\nLuciano Valerio Costa Fonseca Assinou como contratada\nData limite para assinatura: 19/09/2026"
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n67. CT-LSF-G200-067.26 - LF SERVIÇOS (divi. sanitárias).pdf\r\nfabi*********@lyoncapital.com.br assinará como testemunha"
     },
     {
       "assunto": "Seu documento foi finalizado - QPC",
       "recebido_em": "2026-08-28T11:59:08Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA8pR6hAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Processo de assinatura finalizado\n\nO processo de assinatura do documento F.SUP.006 - Checklist de Serviços Esporádicos - LOCONTAINERS_comp..pdf junto a organização QPC foi finalizado com sucesso. (não é documento G200 - fora do escopo)"
+      "corpo": "Processo de assinatura finalizado\r\n\r\nO processo de assinatura do documento F.SUP.006 - Checklist de Serviços Esporádicos - LOCONTAINERS_comp..pdf junto a organização QPC foi finalizado com sucesso.\r\n\r\nF.SUP.006 - Checklist de Serviços Esporádicos - LOCONT"
     },
     {
       "assunto": "Comprovante de assinatura do documento: F.SUP.006 - Checklist de Serviços Esporádicos - LOCONTAINERS_comp..pdf",
       "recebido_em": "2026-08-28T11:58:40Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA8pR6gAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura\nF.SUP.006 - Checklist de Serviços Esporádicos - LOCONTAINERS_comp..pdf\nJorge Washington da Silva Assinou\nAlex Souza D... (não é documento G200 - fora do escopo)"
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\nF.SUP.006 - Checklist de Serviços Esporádicos - LOCONTAINERS_comp..pdf\r\nJorge Washington da Silva Assinou\r\nAlex Souza D"
     },
     {
       "assunto": "Comprovante de assinatura do documento: F.SUP.006 - Checklist de Serviços Esporádicos - LOCONTAINERS_comp..pdf",
       "recebido_em": "2026-08-28T01:26:05Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA71DyuAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura\nF.SUP.006 - Checklist de Serviços Esporádicos - LOCONTAINERS_comp..pdf\nalex****@qpc.com.br assinará\nJorge Washington ... (não é documento G200 - fora do escopo)"
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\nF.SUP.006 - Checklist de Serviços Esporádicos - LOCONTAINERS_comp..pdf\r\nalex****@qpc.com.br assinará\r\nJorge Washington "
     },
     {
       "assunto": "Comprovante de assinatura do documento: 91. CT-LSF-G200-091.26 - FF CERQUEIRA (PRAD).pdf",
@@ -51,28 +121,28 @@
       "recebido_em": "2026-08-27T19:35:32Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA71DysAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura\nF.SUP.006 - Checklist de Serviços Esporádicos - LOCONTAINERS_comp..pdf\nalex****@qpc.com.br assinará\njorg**@qpc.com.br... (não é documento G200 - fora do escopo)"
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\nF.SUP.006 - Checklist de Serviços Esporádicos - LOCONTAINERS_comp..pdf\r\nalex****@qpc.com.br assinará\r\njorg**@qpc.com.br"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 91. CT-LSF-G200-091.26 - FF CERQUEIRA (PRAD).pdf",
       "recebido_em": "2026-08-27T18:59:38Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA71DyrAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n91. CT-LSF-G200-091.26 - FF CERQUEIRA (PRAD).pdf\nluca**********@lyoncapital.com.br assinará como testemunha\nluiz*****..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n91. CT-LSF-G200-091.26 - FF CERQUEIRA (PRAD).pdf\r\nluca**********@lyoncapital.com.br assinará como testemunha\r\nluiz*****"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 91. CT-LSF-G200-091.26 - FF CERQUEIRA (PRAD).pdf",
       "recebido_em": "2026-08-27T18:15:41Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA71DyqAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n91. CT-LSF-G200-091.26 - FF CERQUEIRA (PRAD).pdf\nluca**********@lyoncapital.com.br assinará como testemunha\nluiz*****..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n91. CT-LSF-G200-091.26 - FF CERQUEIRA (PRAD).pdf\r\nluca**********@lyoncapital.com.br assinará como testemunha\r\nluiz*****"
     },
     {
       "assunto": "Documento cancelado: 1. ADT1-LSF-G200-045-26 - TGEO (Sondagem).pdf",
       "recebido_em": "2026-08-27T12:49:44Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA71DypAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Documento cancelado\nO cancelamento inutiliza o documento. Este não pode ser utilizado, no todo ou em parte, como prova.\n\n1. ADT1-LSF-G200-045-26 - TGEO (Sondagem).pdf"
+      "corpo": "Documento cancelado\r\nO cancelamento inutiliza o documento. Este não pode ser utilizado, no todo ou em parte, como prova.\r\n\r\n1. ADT1-LSF-G200-045-26 - TGEO (Sondagem).pdf\r\n\r\n\r\nDúvidas sobre armazenamento de documentos?\r\nConsulte nossa página de ajuda"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 88.CT-LSF-G200-088-26 - MB Terrplenagem (Terraplenagem G300).pdf",
@@ -86,28 +156,28 @@
       "recebido_em": "2026-08-26T18:28:21Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA7iz3lAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Documento perto da data limite\n\nEste é um lembrete de que você possui um documento prestes a atingir a data limite de assinatura:\n\n79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf\nData limite: 29/08/2026 às 15:17"
+      "corpo": "Documento perto da data limite\r\n\r\nEste é um lembrete de que você possui um documento prestes a atingir a data limite de assinatura:\r\n\r\n79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf\r\nData limite: 29/08/2026 às 15:17\r\n\r\nApós a data limite, não será ma"
     },
     {
       "assunto": "Documento: 79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf, está perto de atingir a data limite de assinatura",
       "recebido_em": "2026-08-26T18:28:21Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA7iz3kAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Documento perto da data limite\n\nEste é um lembrete de que o documento abaixo está prestes a atingir a data limite de assinatura:\n\n79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf\n\nData limite: 29/08/2026 às 15:17"
+      "corpo": "Documento perto da data limite\r\n\r\nEste é um lembrete de que o documento abaixo está prestes a atingir a data limite de assinatura:\r\n\r\n79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf\r\n\r\n\r\nData limite: 29/08/2026 às 15:17\r\nApós a data limite, não se"
     },
     {
       "assunto": "Documento assinado: 63.CT-LSF-G200-063-26 - INOSERVICE (Controle Tec. Metálica).pdf",
       "recebido_em": "2026-08-26T17:55:12Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA7iz3jAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Documento assinado e finalizado\n63.CT-LSF-G200-063-26 - INOSERVICE (Controle Tec. Metálica).pdf"
+      "corpo": "Documento assinado e finalizado\r\n63.CT-LSF-G200-063-26 - INOSERVICE (Controle Tec. Metálica).pdf\r\n\r\nDúvidas sobre armazenamento de documentos?\r\nConsulte nossa página de ajuda\r\n\r\nNão compartilhe este e-mail\r\n\r\nPara sua segurança, não encaminhe este e-m"
     },
     {
       "assunto": "Seu documento foi finalizado - QPC",
       "recebido_em": "2026-08-26T17:53:16Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA7iz3iAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Processo de assinatura finalizado\n\nO processo de assinatura do documento 63.CT-LSF-G200-063-26 - INOSERVICE (Controle Tec. Metálica).pdf junto a organização QPC foi finalizado com sucesso."
+      "corpo": "Processo de assinatura finalizado\r\n\r\nO processo de assinatura do documento 63.CT-LSF-G200-063-26 - INOSERVICE (Controle Tec. Metálica).pdf junto a organização QPC foi finalizado com sucesso.\r\n\r\n63.CT-LSF-G200-063-26 - INOSERVICE (Controle Tec. Metálica).p"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 63.CT-LSF-G200-063-26 - INOSERVICE (Controle Tec. Metálica).pdf",
@@ -121,63 +191,63 @@
       "recebido_em": "2026-08-26T17:52:19Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA7iz3gAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n67. CT-LSF-G200-067.26 - LF SERVIÇOS (divi. sanitárias).pdf\nfabi*********@lyoncapital.com.br assinará como testemunha..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n67. CT-LSF-G200-067.26 - LF SERVIÇOS (divi. sanitárias).pdf\r\nfabi*********@lyoncapital.com.br assinará como testemunha"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 1. ADT1-LSF-G200-045-26 - TGEO (Sondagem).pdf",
       "recebido_em": "2026-08-26T14:40:53Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA7iz3fAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura\n1. ADT1-LSF-G200-045-26 - TGEO (Sondagem).pdf\nnilt***********@lyoncapital.com.br assinará como contratante\nluiz**********@lyoncapital.com.br assinará como contratante\nLucas Maron Grimaldi Assinou como validador\nLuciano Figueiredo Calmon Assinou como contratada\nemer************@abrgerenciamento.com assinará como testemunha\nluca**********@lyoncapital.com.br assinará como testemunha\nfabi*********@lyoncapital.com.br assinará como testemunha\nflav******@lyoncapital.com.br assinará como validador\nHassan Fair Luedy Assinou como interveniente anuente\nFelippe Pamponet Esquivel Assinou como testemunha\nData limite para assinatura: 23/09/2026"
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n1. ADT1-LSF-G200-045-26 - TGEO (Sondagem).pdf\r\nnilt***********@lyoncapital.com.br assinará como contratante\r\nluiz******"
     },
     {
       "assunto": "Documento cancelado: 88.CT-LSF-G200-088-26 - MB Terrplenagem (Terraplenagem G300).pdf",
       "recebido_em": "2026-08-26T13:31:55Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA7iz3eAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Documento cancelado\nO cancelamento inutiliza o documento. Este não pode ser utilizado, no todo ou em parte, como prova.\n\n88.CT-LSF-G200-088-26 - MB Terrplenagem (Terraplenagem G300).pdf"
+      "corpo": "Documento cancelado\r\nO cancelamento inutiliza o documento. Este não pode ser utilizado, no todo ou em parte, como prova.\r\n\r\n88.CT-LSF-G200-088-26 - MB Terrplenagem (Terraplenagem G300).pdf\r\n\r\n\r\nDúvidas sobre armazenamento de documentos?\r\nConsulte noss"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 1. ADT1-LSF-G200-045-26 - TGEO (Sondagem).pdf",
       "recebido_em": "2026-08-26T13:04:01Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA7iz3dAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n1. ADT1-LSF-G200-045-26 - TGEO (Sondagem).pdf\nfpam*****@qpc.com.br assinará como testemunha\nnilt***********@lyoncapit..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n1. ADT1-LSF-G200-045-26 - TGEO (Sondagem).pdf\r\nfpam*****@qpc.com.br assinará como testemunha\r\nnilt***********@lyoncapit"
     },
     {
       "assunto": "Documento: 63.CT-LSF-G200-063-26 - INOSERVICE (Controle Tec. Metálica).pdf, está perto de atingir a data limite de assinatura",
       "recebido_em": "2026-08-25T21:33:52Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA6pI%2F4AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Documento perto da data limite\n\nEste é um lembrete de que o documento abaixo está prestes a atingir a data limite de assinatura:\n\n63.CT-LSF-G200-063-26 - INOSERVICE (Controle Tec. Metálica).pdf\n\nData limite: 28/08/2026 às 18:31"
+      "corpo": "Documento perto da data limite\r\n\r\nEste é um lembrete de que o documento abaixo está prestes a atingir a data limite de assinatura:\r\n\r\n63.CT-LSF-G200-063-26 - INOSERVICE (Controle Tec. Metálica).pdf\r\n\r\n\r\nData limite: 28/08/2026 às 18:31\r\nApós a data li"
     },
     {
       "assunto": "Seu documento está perto de atingir a data limite de assinatura",
       "recebido_em": "2026-08-25T21:33:01Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA6pI%2F3AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Documento perto da data limite\n\nEste é um lembrete de que você possui um documento prestes a atingir a data limite de assinatura:\n\n63.CT-LSF-G200-063-26 - INOSERVICE (Controle Tec. Metálica).pdf\nData limite: 28/08/2026 às 18:31"
+      "corpo": "Documento perto da data limite\r\n\r\nEste é um lembrete de que você possui um documento prestes a atingir a data limite de assinatura:\r\n\r\n63.CT-LSF-G200-063-26 - INOSERVICE (Controle Tec. Metálica).pdf\r\nData limite: 28/08/2026 às 18:31\r\n\r\nApós a data limite,"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 67. CT-LSF-G200-067.26 - LF SERVIÇOS (divi. sanitárias).pdf",
       "recebido_em": "2026-08-25T18:43:53Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA6pI%2F2AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n67. CT-LSF-G200-067.26 - LF SERVIÇOS (divi. sanitárias).pdf\nfabi*********@lyoncapital.com.br assinará como testemunha..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n67. CT-LSF-G200-067.26 - LF SERVIÇOS (divi. sanitárias).pdf\r\nfabi*********@lyoncapital.com.br assinará como testemunha"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 1. ADT1-LSF-G200-045-26 - TGEO (Sondagem).pdf",
       "recebido_em": "2026-08-25T13:34:14Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA6pI%2F1AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n1. ADT1-LSF-G200-045-26 - TGEO (Sondagem).pdf\nfpam*****@qpc.com.br assinará como testemunha\nnilt***********@lyoncapit..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n1. ADT1-LSF-G200-045-26 - TGEO (Sondagem).pdf\r\nfpam*****@qpc.com.br assinará como testemunha\r\nnilt***********@lyoncapit"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 1. ADT1-LSF-G200-045-26 - TGEO (Sondagem).pdf",
       "recebido_em": "2026-08-25T12:32:24Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA6pI%2F0AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n1. ADT1-LSF-G200-045-26 - TGEO (Sondagem).pdf\nfpam*****@qpc.com.br assinará como testemunha\nnilt***********@lyoncapit..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n1. ADT1-LSF-G200-045-26 - TGEO (Sondagem).pdf\r\nfpam*****@qpc.com.br assinará como testemunha\r\nnilt***********@lyoncapit"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 1. ADT1-LSF-G200-039-26 - VOC (Contenção).pdf",
@@ -191,21 +261,21 @@
       "recebido_em": "2026-08-20T17:33:35Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA4AD56AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n67. CT-LSF-G200-067.26 - LF SERVIÇOS (divi. sanitárias).pdf\nfabi*********@lyoncapital.com.br assinará como testemunha..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n67. CT-LSF-G200-067.26 - LF SERVIÇOS (divi. sanitárias).pdf\r\nfabi*********@lyoncapital.com.br assinará como testemunha"
     },
     {
       "assunto": "Documento assinado: PJ_QPC - Aditivo Contratual QPC Engenharia_Valter Luis Rocha Dias.pdf",
       "recebido_em": "2026-08-20T14:53:34Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA4AD55AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Documento assinado e finalizado (aditivo contratual PJ pessoal do Valter - não é documento da obra G200)"
+      "corpo": "Seu documento assinado está em anexo, lembre-se de baixá-lo.\r\n\r\nDocumento assinado e finalizado\r\nDocumento\r\n\r\nPJ_QPC - Aditivo Contratual QPC Engenharia_Valter Luis Rocha Dias.pdf\r\n\r\n________________________________\r\nAssinaturas\r\n\r\nSIMONE CERQUEIRA "
     },
     {
       "assunto": "Documento assinado: 50. CT-LSF-G200-050.26 - TECNOSONDA (Estaca Hélice) R01.pdf",
       "recebido_em": "2026-08-19T16:59:10Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRhAAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Documento assinado e finalizado\n50. CT-LSF-G200-050.26 - TECNOSONDA (Estaca Hélice) R01.pdf"
+      "corpo": "Documento assinado e finalizado\r\n50. CT-LSF-G200-050.26 - TECNOSONDA (Estaca Hélice) R01.pdf\r\n\r\nDúvidas sobre armazenamento de documentos?\r\nConsulte nossa página de ajuda\r\n\r\nNão compartilhe este e-mail\r\n\r\nPara sua segurança, não encaminhe este e-mail "
     },
     {
       "assunto": "Comprovante de assinatura do documento: 50. CT-LSF-G200-050.26 - TECNOSONDA (Estaca Hélice) R01.pdf",
@@ -219,14 +289,14 @@
       "recebido_em": "2026-08-18T20:30:47Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRg%2BAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Documento assinado e finalizado\n84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf"
+      "corpo": "Documento assinado e finalizado\r\n84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf\r\n\r\nDúvidas sobre armazenamento de documentos?\r\nConsulte nossa página de ajuda\r\n\r\nNão compartilhe este e-mail\r\n\r\nPara sua segurança, não encaminhe e"
     },
     {
       "assunto": "Seu documento foi finalizado - QPC",
       "recebido_em": "2026-08-18T20:29:06Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRg9AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Processo de assinatura finalizado\n\nO processo de assinatura do documento 84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf junto a organização QPC foi finalizado com sucesso."
+      "corpo": "Processo de assinatura finalizado\r\n\r\nO processo de assinatura do documento 84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf junto a organização QPC foi finalizado com sucesso.\r\n\r\n84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Car"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf",
@@ -247,76 +317,76 @@
       "recebido_em": "2026-08-18T11:35:41Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRf1AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior/geração anterior - retrato vencido)\n88.CT-LSF-G200-088-26 - MB Terrplenagem (Terraplenagem G300).pdf\nLucas Maron Grimaldi Assinou como validador\npinh*@ma..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n88.CT-LSF-G200-088-26 - MB Terrplenagem (Terraplenagem G300).pdf\r\nLucas Maron Grimaldi Assinou como validador\r\npinh*@ma"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf",
       "recebido_em": "2026-08-17T16:59:43Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRf2AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf\nFábio Matheus Assinou como testemunha\nFlávia Lina Doi Utiy..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf\r\nFábio Matheus Assinou como testemunha\r\nFlávia Lina Doi Utiy"
     },
     {
       "assunto": "Seu documento foi finalizado - Valter Luis Rocha Dias",
       "recebido_em": "2026-08-16T11:44:27Z",
       "sandbox": true,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRf3AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\n\nProcesso de assinatura finalizado\n\nO processo de assinatura do documento 03-CT-LSFG200-003.26 - DO VAL CQP Fund Infra - Clicksign.pdf junto a organização Valter Luis Rocha Dias foi finalizado com sucesso."
+      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\r\n\r\nProcesso de assinatura finalizado\r\n\r\nO processo de assinatura do documento 03-CT-LSFG200-003.26 - DO VAL CQP Fund Infra - Clicksign.pdf junto a organização Valter Luis Rocha Dias foi finalizado com"
     },
     {
       "assunto": "Seu documento está perto de atingir a data limite de assinatura",
       "recebido_em": "2026-08-16T01:00:40Z",
       "sandbox": true,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRf4AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\n\nDocumento perto da data limite\n\nEste é um lembrete de que você possui um documento prestes a atingir a data limite de assinatura:\n\n03. CT-G200-003.26 - RIOMED- Clicksign 1.pdf\nData limite: 18/..."
+      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\r\n\r\nDocumento perto da data limite\r\n\r\nEste é um lembrete de que você possui um documento prestes a atingir a data limite de assinatura:\r\n\r\n03. CT-G200-003.26 - RIOMED- Clicksign 1.pdf\r\nData limite: 18/"
     },
     {
       "assunto": "Documento assinado: 63.CT-LSF-G200-063-26 - INOSERVICE Controle Tec. Metálica.pdf",
       "recebido_em": "2026-08-15T20:02:58Z",
       "sandbox": true,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRf5AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\n\nSeu documento assinado está em anexo. Documento assinado e finalizado\n63.CT-LSF-G200-063-26 - INOSERVICE Controle Tec. Metálica.pdf"
+      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\r\n\r\n\r\nSeu documento assinado está em anexo, lembre-se de baixá-lo.\r\n\r\nDocumento assinado e finalizado\r\nDocumento\r\n\r\n63.CT-LSF-G200-063-26 - INOSERVICE Controle Tec. Metálica.pdf\r\n\r\n__________________"
     },
     {
       "assunto": "Seu documento foi finalizado - Valter Luis Rocha Dias",
       "recebido_em": "2026-08-15T20:01:00Z",
       "sandbox": true,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRf6AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\n\nProcesso de assinatura finalizado\n\nO processo de assinatura do documento 63.CT-LSF-G200-063-26 - INOSERVICE Controle Tec. Metálica.pdf junto a organização Valter Luis Rocha Dias foi finalizado com sucesso."
+      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\r\n\r\nProcesso de assinatura finalizado\r\n\r\nO processo de assinatura do documento 63.CT-LSF-G200-063-26 - INOSERVICE Controle Tec. Metálica.pdf junto a organização Valter Luis Rocha Dias foi finalizado co"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf",
       "recebido_em": "2026-08-14T19:38:48Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRf7AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf\nFábio Matheus Assinou como testemunha\nFlávia Lina Doi Utiy..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf\r\nFábio Matheus Assinou como testemunha\r\nFlávia Lina Doi Utiy"
     },
     {
       "assunto": "Documento assinado: F.PES.012 - Termo de Consentimento - Valter Luis Rocha Dias Filho.pdf",
       "recebido_em": "2026-08-14T18:54:38Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRf8AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Documento assinado e finalizado (F.PES.012 - documento de RH, não é documento da obra G200)"
+      "corpo": "Seu documento assinado está em anexo, lembre-se de baixá-lo.\r\n\r\nDocumento assinado e finalizado\r\nDocumento\r\n\r\nF.PES.012 - Termo de Consentimento - Valter Luis Rocha Dias Filho.pdf\r\n\r\n________________________________\r\nAssinaturas\r\n\r\nValter Luis Rocha"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf",
       "recebido_em": "2026-08-14T18:48:19Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRf9AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf\nFábio Matheus Assinou como testemunha\nflav******@lyoncapit..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf\r\nFábio Matheus Assinou como testemunha\r\nflav******@lyoncapit"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf",
       "recebido_em": "2026-08-14T18:47:20Z",
       "sandbox": false,
-      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRf%2BAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf\nFelippe Pamponet Esquivel Assinou como testemun..."
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRf_AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf\r\nFelippe Pamponet Esquivel Assinou como testemun"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf",
       "recebido_em": "2026-08-14T18:45:47Z",
       "sandbox": false,
-      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRf%2FAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRf%2BAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
       "corpo": "Comprovante de assinatura\n79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf\nLucas Marrucci Assinou como testemunha\nnilt***********@lyoncapital.com.br assinará como contratante\nEmerson Leal Assinou como testemunha\nFábio Matheus Assinou como testemunha\nFlávia Lina Doi Utiyama Assinou como validador\nHassan fair Luedy Assinou como interveniente anuente\nLucas Maron Grimaldi Assinou como validador\nAntonio Carlos Moreira Silva Assinou como contratada\nFelippe Pamponet Esquivel Assinou como testemunha\nLuiz Guilherme Assinou como contratante\nData limite para assinatura: 29/08/2026"
     },
     {
@@ -324,245 +394,245 @@
       "recebido_em": "2026-08-14T18:41:13Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgAAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Solicitação de Assinatura de QPC (F.PES.012, documento de RH - não é documento da obra G200)"
+      "corpo": "Solicitação de Assinatura de QPC\r\n\r\nOlá!\r\n\r\nSegue em anexo, o documento o Termo de Consentimento para Uso de Dados Pessoais, referente às ações de endomarketing e divulgações institucionais da empresa, para assinatura.\r\n\r\nFacilite sua assinatura, assi"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf",
       "recebido_em": "2026-08-14T18:31:07Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgBAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf\nflav******@lyoncapital.com.br assinará como validador\nnilt..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf\r\nflav******@lyoncapital.com.br assinará como validador\r\nnilt"
     },
     {
       "assunto": "Seu documento está perto de atingir a data limite de assinatura",
       "recebido_em": "2026-08-13T11:42:45Z",
       "sandbox": true,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgCAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\n\nDocumento perto da data limite\n\nEste é um lembrete de que você possui um documento prestes a atingir a data limite de assinatura:\n\n03-CT-LSFG200-003.26 - DO VAL CQP Fund Infra - Clicksign.pdf"
+      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\r\n\r\nDocumento perto da data limite\r\n\r\nEste é um lembrete de que você possui um documento prestes a atingir a data limite de assinatura:\r\n\r\n03-CT-LSFG200-003.26 - DO VAL CQP Fund Infra - Clicksign.pdf"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf",
       "recebido_em": "2026-08-13T09:14:43Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgDAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf\nflav******@lyoncapital.com.br assinará como validador\nnilt..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf\r\nflav******@lyoncapital.com.br assinará como validador\r\nnilt"
     },
     {
       "assunto": "Seu documento está perto de atingir a data limite de assinatura",
       "recebido_em": "2026-08-12T19:57:43Z",
       "sandbox": true,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgEAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\n\nDocumento perto da data limite\n\nEste é um lembrete de que você possui um documento prestes a atingir a data limite de assinatura:\n\n63.CT-LSF-G200-063-26 - INOSERVICE Controle Tec. Metálica.pdf"
+      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\r\n\r\nDocumento perto da data limite\r\n\r\nEste é um lembrete de que você possui um documento prestes a atingir a data limite de assinatura:\r\n\r\n63.CT-LSF-G200-063-26 - INOSERVICE Controle Tec. Metálica.pdf"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf",
       "recebido_em": "2026-08-12T17:10:08Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgFAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf\nflav******@lyoncapital.com.br assinará como validador\nnilt..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf\r\nflav******@lyoncapital.com.br assinará como validador\r\nnilt"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf",
       "recebido_em": "2026-08-12T16:48:04Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgGAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf\nflav******@lyoncapital.com.br assinará como validador\nnilt..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf\r\nflav******@lyoncapital.com.br assinará como validador\r\nnilt"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 81.CT-LSF-G200-081-26 - MB Terrplenagem (Reg. Subleito e Esp.).pdf",
       "recebido_em": "2026-08-12T13:56:16Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgHAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura\n81.CT-LSF-G200-081-26 - MB Terrplenagem (Reg. Subleito e Esp.).pdf\npinh*@mandrade.com.br assinará como validador\nluis***@mandrade.com.br assinará como contratada\nhlue**@qpc.com.br assinará como interveniente anuente\nfpam*****@qpc.com.br assinará como testemunha\nemer************@abrgerenciamento.com assinará como testemunha\nnilt***********@lyoncapital.com.br assinará como contratante\nluiz**********@lyoncapital.com.br assinará como contratante\nluca**********@lyoncapital.com.br assinará como testemunha\nfabi*********@lyoncapital.com.br assinará como testemunha\nflav******@lyoncapital.com.br assinará como validador\nLucas Maron Grimaldi Assinou como validador\nData limite para assinatura: 11/09/2026"
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n81.CT-LSF-G200-081-26 - MB Terrplenagem (Reg. Subleito e Esp.).pdf\r\npinh*@mandrade.com.br assinará como validador\r\nluis"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf",
       "recebido_em": "2026-08-12T13:01:54Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgIAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf\nFelippe Pamponet Esquivel Assinou como testemun..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf\r\nFelippe Pamponet Esquivel Assinou como testemun"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf",
       "recebido_em": "2026-08-12T12:59:15Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgJAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf\nFelippe Pamponet Esquivel Assinou como testemun..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf\r\nFelippe Pamponet Esquivel Assinou como testemun"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf",
       "recebido_em": "2026-08-12T12:33:43Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgKAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf\nflav******@lyoncapital.com.br assinará como validador\nnilt..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n86.CT-LSF-G200-086.26 - BLINDADUS (Esquadria Blindada).pdf\r\nflav******@lyoncapital.com.br assinará como validador\r\nnilt"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf",
       "recebido_em": "2026-08-11T15:04:14Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgLAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf\nFelippe Pamponet Esquivel Assinou como testemun..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf\r\nFelippe Pamponet Esquivel Assinou como testemun"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf",
       "recebido_em": "2026-08-11T13:23:09Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgMAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf\nFelippe Pamponet Esquivel Assinou como testemun..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf\r\nFelippe Pamponet Esquivel Assinou como testemun"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf",
       "recebido_em": "2026-08-10T13:17:08Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgNAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf\nLucas Marrucci Assinou como testemunha\nluiz**********@lyoncapital..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf\r\nLucas Marrucci Assinou como testemunha\r\nluiz**********@lyoncapital"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf",
       "recebido_em": "2026-08-07T19:35:27Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgOAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf\nluiz**********@lyoncapital.com.br assinará como contratante\nnilt*..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf\r\nluiz**********@lyoncapital.com.br assinará como contratante\r\nnilt*"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf",
       "recebido_em": "2026-08-07T11:50:40Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgPAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf\nflav******@lyoncapital.com.br assinará como validador\nluiz*******..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf\r\nflav******@lyoncapital.com.br assinará como validador\r\nluiz*******"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf",
       "recebido_em": "2026-08-07T11:10:16Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgQAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf\nfabi*********@lyoncapital.com.br assinará como testemunha\nflav***..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf\r\nfabi*********@lyoncapital.com.br assinará como testemunha\r\nflav***"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf",
       "recebido_em": "2026-08-04T20:59:59Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgRAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf\nfabi*********@lyoncapital.com.br assinará como testemunha\nemer***..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf\r\nfabi*********@lyoncapital.com.br assinará como testemunha\r\nemer***"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf",
       "recebido_em": "2026-08-04T20:58:34Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgSAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf\nFelippe Pamponet Esquivel Assinou como testemun..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf\r\nFelippe Pamponet Esquivel Assinou como testemun"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf",
       "recebido_em": "2026-08-04T20:28:19Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgTAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf\nFelippe Pamponet Esquivel Assinou como testemun..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf\r\nFelippe Pamponet Esquivel Assinou como testemun"
     },
     {
       "assunto": "Comprovante de assinatura do documento: PJ_QPC - Aditivo Contratual QPC Engenharia_Valter Luis Rocha Dias.pdf",
       "recebido_em": "2026-08-03T17:59:24Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgUAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (aditivo contratual PJ pessoal do Valter - não é documento da obra G200)"
+      "corpo": "O documento será enviado após todos assinarem.\r\n\r\nComprovante de assinatura\r\nDocumentos assinados\r\n\r\nPJ_QPC - Aditivo Contratual QPC Engenharia_Valter Luis Rocha Dias.pdf\r\n\r\n________________________________\r\nDados da assinatura\r\n\r\nNome: Valter Luis "
     },
     {
       "assunto": "Assinar documento: PJ_QPC - Aditivo Contratual QPC Engenharia_Valter Luis Rocha Dias...",
       "recebido_em": "2026-08-03T17:51:41Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgVAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Solicitação de Assinatura de QPC (aditivo contratual PJ pessoal do Valter - não é documento da obra G200)"
+      "corpo": "Solicitação de Assinatura de QPC\r\n\r\nFacilite sua assinatura, assine em até 4 horas e o token será validado automaticamente.\r\n\r\nVisualizar para assinar\r\n________________________________\r\nDocumento\r\n\r\nPJ_QPC - Aditivo Contratual QPC Engenharia_Valter Lu"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf",
       "recebido_em": "2026-08-03T14:55:02Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgWAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf\nemer************@abrgerenciamento.com assinará ..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf\r\nemer************@abrgerenciamento.com assinará "
     },
     {
       "assunto": "Comprovante de assinatura do documento: 84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf",
       "recebido_em": "2026-08-03T14:37:43Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgXAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf\nrica***@geonordeste.com.br assinará como contra..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n84.CT-LSFG200-084.26 - GEONORDESTE (PCE - Prova de Carga Estática).pdf\r\nrica***@geonordeste.com.br assinará como contra"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf",
       "recebido_em": "2026-07-30T20:14:41Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgYAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf\nfabi*********@lyoncapital.com.br assinará como testemunha\nhlue**@..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf\r\nfabi*********@lyoncapital.com.br assinará como testemunha\r\nhlue**@"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf",
       "recebido_em": "2026-07-30T20:03:11Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgZAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf\nfabi*********@lyoncapital.com.br assinará como testemunha\nhlue**@..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf\r\nfabi*********@lyoncapital.com.br assinará como testemunha\r\nhlue**@"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf",
       "recebido_em": "2026-07-30T19:23:46Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgaAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf\nfabi*********@lyoncapital.com.br assinará como testemunha\nhlue**@..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n79.CT-LSFG200-079.26 - AM (Motores dos Portões).pdf\r\nfabi*********@lyoncapital.com.br assinará como testemunha\r\nhlue**@"
     },
     {
       "assunto": "Assinar documento: 06-CT-LSFG200-006.26 - REV1 Projeto EPC - Clicksign.pdf",
       "recebido_em": "2026-07-17T12:02:48Z",
       "sandbox": true,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgcAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\n\nSolicitação de Assinatura de Valter Luis Rocha Dias"
+      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\r\n\r\nSolicitação de Assinatura de Valter Luis Rocha Dias\r\n\r\nFacilite sua assinatura, assine em até 4 horas e o token será validado automaticamente.\r\n\r\nVisualizar para assinar\r\n________________________"
     },
     {
       "assunto": "Token: XLFFHM. Código para confirmar a assinatura",
       "recebido_em": "2026-07-17T11:39:53Z",
       "sandbox": true,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgdAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\n\nToken de verificação de assinatura (não relevante para o painel)"
+      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\r\n\r\nToken de verificação de assinatura\r\n\r\nUse o código abaixo para confirmar sua assinatura. Para sua segurança ele é válido por apenas 4 horas.\r\n\r\nXLFFHM\r\n\r\n⚠️ Não compartilhe este token com outras "
     },
     {
       "assunto": "Token: XLFFHM. Código para confirmar a assinatura",
       "recebido_em": "2026-07-17T11:39:52Z",
       "sandbox": true,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgeAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\n\nToken de verificação de assinatura (não relevante para o painel)"
+      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\r\n\r\nToken de verificação de assinatura\r\n\r\nUse o código abaixo para confirmar sua assinatura. Para sua segurança ele é válido por apenas 4 horas.\r\n\r\nRJLZVW\r\n\r\n⚠️ Não compartilhe este token com outras "
     },
     {
       "assunto": "Comprovante de assinatura do documento: 63.CT-LSF-G200-063-26 - INOSERVICE Controle Tec. Metálica.pdf",
       "recebido_em": "2026-07-17T11:37:22Z",
       "sandbox": true,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgfAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\n\nO documento será enviado após todos assinarem.\n\nComprovante de assinatura\nDocumentos assinados\n\n63.CT-LSF-G200-063-26 - INOSERVICE Controle Tec. Metálica.pdf"
+      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\r\n\r\n\r\nO documento será enviado após todos assinarem.\r\n\r\nComprovante de assinatura\r\nDocumentos assinados\r\n\r\n63.CT-LSF-G200-063-26 - INOSERVICE Controle Tec. Metálica.pdf\r\n\r\n___________________________"
     },
     {
       "assunto": "Assinar documento: AFE-LSF-G200-071.26 - VIAPOL Junta JDH.pdf",
       "recebido_em": "2026-07-17T11:36:23Z",
       "sandbox": true,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRggAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\n\nSolicitação de Assinatura de Valter Luis Rocha Dias"
+      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\r\n\r\nSolicitação de Assinatura de Valter Luis Rocha Dias\r\n\r\nFacilite sua assinatura, assine em até 4 horas e o token será validado automaticamente.\r\n\r\nVisualizar para assinar\r\n\r\n⚠️ Você tem outros doc"
     },
     {
       "assunto": "Assinar documento: 63.CT-LSF-G200-063-26 - INOSERVICE Controle Tec. Metálica.pdf",
       "recebido_em": "2026-07-17T11:32:55Z",
       "sandbox": true,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRghAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\n\nSolicitação de Assinatura de Valter Luis Rocha Dias"
+      "corpo": "E-mail enviado pelo ambiente SANDBOX - Sem valor legal\r\n\r\nSolicitação de Assinatura de Valter Luis Rocha Dias\r\n\r\nFacilite sua assinatura, assine em até 4 horas e o token será validado automaticamente.\r\n\r\nVisualizar para assinar\r\n________________________"
     },
     {
       "assunto": "Documento assinado: 65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf",
       "recebido_em": "2026-07-15T18:47:23Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgjAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Documento assinado e finalizado\n65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf"
+      "corpo": "Documento assinado e finalizado\r\n65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf\r\n\r\nDúvidas sobre armazenamento de documentos?\r\nConsulte nossa página de ajuda\r\n\r\nNão compartilhe este e-mail\r\n\r\nPara sua segurança, não encaminhe este e-mail para "
     },
     {
       "assunto": "Seu documento foi finalizado - QPC",
       "recebido_em": "2026-07-15T18:45:52Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgkAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Processo de assinatura finalizado\n\nO processo de assinatura do documento 65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf junto a organização QPC foi finalizado com sucesso."
+      "corpo": "Processo de assinatura finalizado\r\n\r\nO processo de assinatura do documento 65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf junto a organização QPC foi finalizado com sucesso.\r\n\r\n65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf\r\n\r\nIr para docu"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf",
@@ -576,147 +646,147 @@
       "recebido_em": "2026-07-14T13:09:45Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgmAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf\nLucas Maron Grimaldi Assinou como validador\nFlávia Lina Doi Ut..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf\r\nLucas Maron Grimaldi Assinou como validador\r\nFlávia Lina Doi Ut"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf",
       "recebido_em": "2026-07-14T12:50:13Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgnAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf\nLucas Maron Grimaldi Assinou como validador\nFlávia Lina Doi Ut..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf\r\nLucas Maron Grimaldi Assinou como validador\r\nFlávia Lina Doi Ut"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf",
       "recebido_em": "2026-07-14T12:13:33Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgoAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf\nLucas Maron Grimaldi Assinou como validador\nFlávia Lina Doi Ut..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf\r\nLucas Maron Grimaldi Assinou como validador\r\nFlávia Lina Doi Ut"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf",
       "recebido_em": "2026-07-13T17:17:41Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgpAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf\nLucas Maron Grimaldi Assinou como validador\nflav******@lyoncap..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf\r\nLucas Maron Grimaldi Assinou como validador\r\nflav******@lyoncap"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf",
       "recebido_em": "2026-07-13T13:07:10Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgqAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf\nLucas Maron Grimaldi Assinou como validador\nfabi*********@lyon..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf\r\nLucas Maron Grimaldi Assinou como validador\r\nfabi*********@lyon"
     },
     {
       "assunto": "Seu documento foi finalizado - QPC",
       "recebido_em": "2026-07-12T19:42:53Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgrAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Processo de assinatura finalizado\n\nO processo de assinatura do documento 63.CT-LSF-G200-063-26 - INOSERVICE (Controle Tec. Metálica).pdf junto a organização QPC foi finalizado com sucesso."
+      "corpo": "Processo de assinatura finalizado\r\n\r\nO processo de assinatura do documento 63.CT-LSF-G200-063-26 - INOSERVICE (Controle Tec. Metálica).pdf junto a organização QPC foi finalizado com sucesso.\r\n\r\n63.CT-LSF-G200-063-26 - INOSERVICE (Controle Tec. Metálica).p"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf",
       "recebido_em": "2026-07-11T20:26:47Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgsAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf\nLucas Maron Grimaldi Assinou como validador\nemer************@a..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf\r\nLucas Maron Grimaldi Assinou como validador\r\nemer************@a"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf",
       "recebido_em": "2026-07-11T20:24:57Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgtAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf\nLucas Maron Grimaldi Assinou como validador\nhlue**@qpc.com.br ..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf\r\nLucas Maron Grimaldi Assinou como validador\r\nhlue**@qpc.com.br "
     },
     {
       "assunto": "Comprovante de assinatura do documento: 65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf",
       "recebido_em": "2026-07-11T18:24:39Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRguAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf\nLucas Maron Grimaldi Assinou como validador\nfpam*****@qpc.com...."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf\r\nLucas Maron Grimaldi Assinou como validador\r\nfpam*****@qpc.com."
     },
     {
       "assunto": "Comprovante de assinatura do documento: 65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf",
       "recebido_em": "2026-07-11T14:32:31Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgvAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf\nLucas Maron Grimaldi Assinou como validador\nluis***@mandrade.c..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf\r\nLucas Maron Grimaldi Assinou como validador\r\nluis***@mandrade.c"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf",
       "recebido_em": "2026-07-10T19:56:02Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgwAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf\nluiz**********@lyoncapital.com.br assinará como testemunha\nman..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n65.CT-LSF-G200-065-26 - MB Terraplenagem (Limpeza).pdf\r\nluiz**********@lyoncapital.com.br assinará como testemunha\r\nman"
     },
     {
       "assunto": "Documento cancelado: 65.CT-LSF-G200-065-26 - MB Terrplenagem (Limpeza Vicinal).pdf",
       "recebido_em": "2026-07-10T13:41:18Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgxAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Documento cancelado\nO cancelamento inutiliza o documento. Este não pode ser utilizado, no todo ou em parte, como prova.\n\n65.CT-LSF-G200-065-26 - MB Terrplenagem (Limpeza Vicinal).pdf"
+      "corpo": "Documento cancelado\r\nO cancelamento inutiliza o documento. Este não pode ser utilizado, no todo ou em parte, como prova.\r\n\r\n65.CT-LSF-G200-065-26 - MB Terrplenagem (Limpeza Vicinal).pdf\r\n\r\n\r\nDúvidas sobre armazenamento de documentos?\r\nConsulte nossa p"
     },
     {
-      "assunto": "Seu documento está perto de atingir a data limite de assinatura",
+      "assunto": "Documento perto da data limite: 63.CT-LSF-G200-063-26 - INOSERVICE (Controle Tec. Metálica).pdf",
       "recebido_em": "2026-07-09T19:42:32Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgyAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Documento perto da data limite\n\nEste é um lembrete de que você possui um documento prestes a atingir a data limite de assinatura:\n\n63.CT-LSF-G200-063-26 - INOSERVICE (Controle Tec. Metálica).pdf\nData limite: 12/07/2026 às 16:42"
+      "corpo": "Documento perto da data limite\r\n\r\nEste é um lembrete de que você possui um documento prestes a atingir a data limite de assinatura:\r\n\r\n63.CT-LSF-G200-063-26 - INOSERVICE (Controle Tec. Metálica).pdf\r\nData limite: 12/07/2026 às 16:42\r\n\r\nApós a data limite,"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 65.CT-LSF-G200-065-26 - MB Terrplenagem (Limpeza Vicinal).pdf",
       "recebido_em": "2026-07-08T20:13:53Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRgzAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura\n65.CT-LSF-G200-065-26 - MB Terrplenagem (Limpeza Vicinal).pdf\nLucas Maron Grimaldi Assinou como validador\nLuis Eduardo Cruz de Souza Assinou como contratada\nhlue**@qpc.com.br assinará como interveniente anuente\nemer************@abrgerenciamento.com assinará como testemunha\nfabi*********@lyoncapital.com.br assinará como contratante\nflav******@lyoncapital.com.br assinará como validador\nluca**********@lyoncapital.com.br assinará como testemunha\nluiz**********@lyoncapital.com.br assinará como testemunha\nnilt***********@lyoncapital.com.br assinará como contratante\nFelippe Pamponet Esquivel Assinou como testemunha\nEverton Oliveira Pinho Assinou como validador\nData limite para assinatura: 26/08/2026"
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n65.CT-LSF-G200-065-26 - MB Terrplenagem (Limpeza Vicinal).pdf\r\nLucas Maron Grimaldi Assinou como validador\r\nLuis Eduard"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 65.CT-LSF-G200-065-26 - MB Terrplenagem (Limpeza Vicinal).pdf",
       "recebido_em": "2026-07-08T19:38:26Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRg0AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n65.CT-LSF-G200-065-26 - MB Terrplenagem (Limpeza Vicinal).pdf\nLucas Maron Grimaldi Assinou como validador\nLuis Eduard..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n65.CT-LSF-G200-065-26 - MB Terrplenagem (Limpeza Vicinal).pdf\r\nLucas Maron Grimaldi Assinou como validador\r\nLuis Eduard"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 65.CT-LSF-G200-065-26 - MB Terrplenagem (Limpeza Vicinal).pdf",
       "recebido_em": "2026-07-08T19:28:13Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRg1AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n65.CT-LSF-G200-065-26 - MB Terrplenagem (Limpeza Vicinal).pdf\nLucas Maron Grimaldi Assinou como validador\nluis***@man..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n65.CT-LSF-G200-065-26 - MB Terrplenagem (Limpeza Vicinal).pdf\r\nLucas Maron Grimaldi Assinou como validador\r\nluis***@man"
     },
     {
       "assunto": "Comprovante de assinatura do documento: 65.CT-LSF-G200-065-26 - MB Terrplenagem (Limpeza Vicinal).pdf",
       "recebido_em": "2026-07-06T16:34:32Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRg2AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (versão anterior - retrato vencido)\n65.CT-LSF-G200-065-26 - MB Terrplenagem (Limpeza Vicinal).pdf\nnilt***********@lyoncapital.com.br assinará como contrat..."
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\r\n\r\nComprovante de assinatura\r\n65.CT-LSF-G200-065-26 - MB Terrplenagem (Limpeza Vicinal).pdf\r\nnilt***********@lyoncapital.com.br assinará como contrat"
     },
     {
       "assunto": "Documento assinado: PJ_QPC - Contrato QPC Engenharia - Valter Luis Rocha Dias.pdf",
       "recebido_em": "2026-06-05T18:57:36Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRg4AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Documento assinado e finalizado (contrato PJ pessoal do Valter - não é documento da obra G200)"
+      "corpo": "Seu documento assinado está em anexo, lembre-se de baixá-lo.\r\n\r\nDocumento assinado e finalizado\r\nDocumento\r\n\r\nPJ_QPC - Contrato QPC Engenharia - Valter Luis Rocha Dias.pdf\r\n\r\n________________________________\r\nAssinaturas\r\n\r\nLívia Ribeiro de Azevedo "
     },
     {
       "assunto": "Comprovante de assinatura do documento: PJ_QPC - Contrato QPC Engenharia - Valter Luis Rocha Dias.pdf",
       "recebido_em": "2026-06-01T21:20:44Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRg5AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Comprovante de assinatura (contrato PJ pessoal do Valter - não é documento da obra G200)"
+      "corpo": "O documento será enviado após todos assinarem.\r\n\r\nComprovante de assinatura\r\nDocumentos assinados\r\n\r\nPJ_QPC - Contrato QPC Engenharia - Valter Luis Rocha Dias.pdf\r\n\r\n________________________________\r\nDados da assinatura\r\n\r\nNome: Valter Luis Rocha Di"
     },
     {
       "assunto": "Token: RJLZVW. Código para confirmar a assinatura",
       "recebido_em": "2026-06-01T21:20:26Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRg6AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Token de verificação de assinatura (não relevante para o painel)"
+      "corpo": "Token de verificação de assinatura\r\n\r\nUse o código abaixo para confirmar sua assinatura. Para sua segurança ele é válido por apenas 4 horas.\r\n\r\nRJLZVW\r\n\r\n⚠️ Não compartilhe este token com outras pessoas.\r\n\r\nNão compartilhe este e-mail\r\n\r\nPara sua segu"
     },
     {
       "assunto": "Assinar documento: PJ_QPC - Contrato QPC Engenharia - Valter Luis Rocha Dias...",
       "recebido_em": "2026-06-01T17:12:33Z",
       "sandbox": false,
       "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAAA2tRg7AAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-      "corpo": "Solicitação de Assinatura de QPC (contrato PJ pessoal do Valter - não é documento da obra G200)"
+      "corpo": "Solicitação de Assinatura de QPC\r\n\r\nContrato QPC Engenharia - Valter Luis Rocha Dias\r\n\r\nFacilite sua assinatura, assine em até 4 horas e o token será validado automaticamente.\r\n\r\nVisualizar para assinar\r\n________________________________\r\nDocumento"
     }
   ]
 }
