@@ -209,6 +209,10 @@
   .prazo-critico{color:var(--crit-ink);font-weight:700}
   .prazo-atencao{color:var(--warn-ink);font-weight:500}
   .prazo-ok{color:var(--ink-2)}
+  /* Marca discreta de prazo conferido na tela da Clicksign, nao anunciado por
+     e-mail. Discreta de proposito: e uma nota de rodape, nao um alerta - a cor
+     da faixa de prazo continua sendo o que salta aos olhos. */
+  .prazoconfirmado{color:var(--ink-3);cursor:help;font-size:11px}
   .semdado{color:#c3c8d0}
   .chev{color:var(--ink-3);transition:transform .15s;display:inline-block}
   tr.main.open .chev{transform:rotate(90deg);color:var(--brand)}
@@ -580,6 +584,14 @@ function renderTabela(){
       colPrazo=f
         ? `<span class="${f.classe}">${c.data_limite}${f.texto}${f.icone}</span>`
         : `<span class="prazo-ok">${c.data_limite}</span>`;
+      /* Quase todo prazo vem de e-mail da Clicksign. Quando a Clicksign ESTENDE
+         a data ela nao avisa ninguem, entao existem prazos que o Valter conferiu
+         na tela e nos contou. Sem esta marca, alguem compara o painel com a
+         caixa de e-mail, nao acha o anuncio da data nova e acha que o painel
+         inventou. A marca diz de onde veio. 28/08/2026. */
+      if(c.data_limite_fonte){
+        colPrazo+=` <span class="prazoconfirmado" title="${c.data_limite_fonte}">✎</span>`;
+      }
     }
 
     let marco='';
