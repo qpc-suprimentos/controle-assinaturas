@@ -282,10 +282,34 @@ PADRAO_DATA_LIMITE = re.compile(
 
 # Como cada assunto de e-mail se traduz em evento de contrato.
 # A ordem importa: o primeiro que casar vence.
+#
+# "assinado" E "finalizado" SAO COISAS DIFERENTES - descoberto em 11/09/2026.
+#
+# Ate aqui os dois assuntos caiam no mesmo evento, e isso fazia contrato
+# concluido aparecer como Expirado. O CT-063 e a prova, porque ele viveu os dois
+# desfechos com o mesmo nome de arquivo:
+#
+#   12/07 19:42  "Seu documento foi finalizado"      <- esta geracao EXPIROU
+#                (nenhum "Documento assinado" veio depois nessa geracao)
+#   26/08 17:53  "Seu documento foi finalizado"      <- esta foi assinada
+#   26/08 17:55  "Documento assinado: 63...pdf"         e o PDF chegou 2 min depois
+#
+# A leitura: "Documento assinado:" e o e-mail que ENTREGA o PDF assinado. Ele so
+# existe quando todo mundo assinou - prazo estourado nao gera PDF para entregar.
+# Ja "foi finalizado" quer dizer so que o processo acabou, de um jeito ou de
+# outro, e continua ambiguo.
+#
+# Confirmado em todos os 18 documentos do dump: os que concluiram tem
+# "Documento assinado:"; os cancelados so tem "Documento cancelado"; e a geracao
+# que expirou tem so "foi finalizado".
+#
+# A mudanca e ADITIVA de proposito: "foi finalizado" mantem a regra antiga
+# (pendencia na lista = Expirado), entao nada do que ja funcionava regride.
 EVENTOS = [
     ("cancelado", re.compile(r"documento cancelado", re.IGNORECASE)),
     ("recusado", re.compile(r"documento recusado|recusou a assinatura", re.IGNORECASE)),
-    ("finalizado", re.compile(r"foi finalizado|documento assinado:", re.IGNORECASE)),
+    ("assinado", re.compile(r"documento assinado:", re.IGNORECASE)),
+    ("finalizado", re.compile(r"foi finalizado", re.IGNORECASE)),
     ("comprovante", re.compile(r"comprovante de assinatura", re.IGNORECASE)),
     ("prazo", re.compile(r"perto de atingir a data limite", re.IGNORECASE)),
     ("solicitacao", re.compile(r"assinar documento:|solicita", re.IGNORECASE)),
@@ -808,7 +832,7 @@ def processar():
     # Entao: cada encerramento FECHA uma geracao. O que chega depois abre a
     # proxima. A ultima geracao e a viva; as anteriores viram linha propria com
     # etiqueta de encerrado, que e como ele pediu que cancelamento nunca suma.
-    TERMINAIS = ("finalizado", "cancelado")
+    TERMINAIS = ("finalizado", "assinado", "cancelado")
 
     documentos = {}
     # Quais confirmacoes do Valter realmente encontraram um contrato vivo. O que
@@ -843,6 +867,7 @@ def processar():
                 "eventos": [{"tipo": e["tipo"], "em": e["em"]} for e in eventos_da_geracao],
                 "signatarios": [], "data_signatarios": None,
                 "data_limite": None, "data_limite_em": None, "data_limite_fonte": None,
+                "assinatura_completa": False,
                 "ultima_movimentacao": max(e["em"] for e in eventos_da_geracao),
                 "link_email": "", "link_clicksign": "",
                 "finalizado_em": None, "cancelado_em": None,
@@ -863,7 +888,12 @@ def processar():
                 ):
                     doc["data_limite"] = evento["data_limite"]
                     doc["data_limite_em"] = evento["em"]
-                if evento["tipo"] == "finalizado" and doc["finalizado_em"] is None:
+                # A Clicksign AFIRMOU que este documento foi assinado por todos:
+                # mandou o PDF assinado. Guardamos isso separado do "finalizado"
+                # ambiguo, porque e ele que desfaz o falso Expirado.
+                if evento["tipo"] == "assinado":
+                    doc["assinatura_completa"] = True
+                if evento["tipo"] in ("finalizado", "assinado") and doc["finalizado_em"] is None:
                     doc["finalizado_em"] = evento["em"]
                 if evento["tipo"] == "cancelado":
                     doc["cancelado_em"] = evento["em"]
@@ -949,6 +979,54 @@ def processar():
         por_contrato.setdefault(chave, []).append(doc)
 
     # =========================================================================
+    # LEMBRETE DE PRAZO SOLTO NAO E UM CONTRATO - 11/09/2026
+    # =========================================================================
+    #
+    # A identidade do documento e o NOME DO ARQUIVO, e isso e de proposito (o 065
+    # foi cancelado e reemitido com outro nome). So que o MESMO envelope as vezes
+    # chega com nomes diferentes, porque alguem renomeou o arquivo:
+    #
+    #   "83. CT-LSF-G200-083.26 - TM HIDRO (Hidrossemeadura CC).pdf"
+    #   "83. CT-LSF-G200-083.26 - TM HIDRO (Hidrossemeadura CC) - Clicksign.pdf"
+    #
+    # Os lembretes de prazo vieram com o primeiro nome; o comprovante e o PDF
+    # assinado, com o segundo. Resultado: o painel mostrava o 083 DUAS vezes -
+    # uma linha "Finalizado 10/10" e outra "Em andamento, 0 de 0 assinaturas,
+    # vencido ha 4 dias". A segunda e um fantasma, e um fantasma vermelho, que e
+    # o pior tipo: manda cobrar contrato que ja esta pronto.
+    #
+    # Um documento feito SO de lembrete de prazo nao diz nada sobre assinatura -
+    # nao tem lista de signatario e nao tem encerramento. Ele nao sustenta uma
+    # linha propria. O que ele tem de valioso e a DATA LIMITE, e essa nos
+    # aproveitamos: passa para o documento de verdade do mesmo contrato.
+    #
+    # Se o contrato SO tem esse fragmento, ele fica - ai e um contrato novo, do
+    # qual so recebemos o lembrete ainda. Perder isso seria esconder contrato.
+    def e_fragmento(doc):
+        return (not doc["signatarios"]
+                and doc["finalizado_em"] is None
+                and doc["cancelado_em"] is None)
+
+    fantasmas = 0
+    for chave, docs in por_contrato.items():
+        reais = [d for d in docs if not e_fragmento(d)]
+        frags = [d for d in docs if e_fragmento(d)]
+        if not reais or not frags:
+            continue
+        vivo = max(reais, key=lambda d: d["ultima_movimentacao"])
+        for f in frags:
+            if f["data_limite"] and (
+                vivo["data_limite_em"] is None or f["data_limite_em"] > vivo["data_limite_em"]
+            ):
+                vivo["data_limite"] = f["data_limite"]
+                vivo["data_limite_em"] = f["data_limite_em"]
+            fantasmas += 1
+        por_contrato[chave] = reais
+    if fantasmas:
+        print("[LIMPEZA] %d lembrete(s) de prazo com nome de arquivo diferente "
+              "foram absorvidos pelo documento real do contrato." % fantasmas)
+
+    # =========================================================================
     # FUSAO DAS DUAS FONTES - por PESSOA, nao por lista inteira
     # =========================================================================
     #
@@ -978,7 +1056,8 @@ def processar():
             juntos.append(s)
         return normalizar_signatarios(juntos + list(do_email))
 
-    def situacao_do_documento(assinaturas, encerrou_em, cancelado, recusado, historico_concluiu):
+    def situacao_do_documento(assinaturas, encerrou_em, cancelado, recusado, historico_concluiu,
+                              assinatura_completa=False):
         """
         Decide o status DEPOIS que as duas listas ja foram fundidas.
 
@@ -994,6 +1073,15 @@ def processar():
         if assinaturas and not pendentes:
             return "Finalizado"
         if historico_concluiu and not pendentes:
+            return "Finalizado"
+        # A Clicksign entregou o PDF assinado deste documento. Isso so acontece
+        # quando todo mundo assinou. Se a nossa lista ainda mostra alguem
+        # devendo, e porque o ultimo comprovante que coletamos e mais velho que
+        # a ultima assinatura - a lista esta atrasada, o documento nao expirou.
+        # Sem esta linha, 8 contratos concluidos em 08 e 09/09/2026 apareceram
+        # como Expirado e deixavam o Nilton devendo assinatura em contrato que
+        # ja estava pronto.
+        if assinatura_completa:
             return "Finalizado"
         if encerrou_em and pendentes:
             # A Clicksign encerra por prazo vencido e manda o mesmo e-mail de
@@ -1078,7 +1166,8 @@ def processar():
 
             registro["signatarios"] = assinaturas
             registro["status"] = situacao_do_documento(
-                assinaturas, encerrou_em, doc["cancelado_em"], recusado, historico_concluiu
+                assinaturas, encerrou_em, doc["cancelado_em"], recusado, historico_concluiu,
+                doc.get("assinatura_completa", False)
             )
             if registro["status"] == "Finalizado":
                 for s in assinaturas:
