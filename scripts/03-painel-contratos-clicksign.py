@@ -478,7 +478,10 @@ PESSOAS = [
     {"nome": "Flávia LYON",   "email": "flav@lyoncapital.com.br",      "apelidos": ["Flavia Lina Doi Utiyama"]},
     {"nome": "Lucas M. LYON", "email": "luca@lyoncapital.com.br",      "apelidos": ["Lucas Marrucci"]},
     {"nome": "Hassan QPC",    "email": "hlue@qpc.com.br",              "apelidos": ["Hassan Fair Luedy"]},
-    {"nome": "Felippe QPC",   "email": "fpam@qpc.com.br",              "apelidos": ["Felippe Pamponet Esquivel"]},
+    # "Felippe Pamponet" sem o Esquivel: a Clicksign escreveu assim no
+    # comprovante do CT-062 (08/09/2026). Sem este apelido ele virava uma
+    # segunda pessoa e o contrato aparecia com 11 signatarios em vez de 10.
+    {"nome": "Felippe QPC",   "email": "fpam@qpc.com.br",              "apelidos": ["Felippe Pamponet Esquivel", "Felippe Pamponet"]},
     {"nome": "Emerson ABR",   "email": "emer@abrgerenciamento.com",    "apelidos": ["Emerson Leal"]},
     {"nome": "Lucas G. QPC",  "email": None,                           "apelidos": ["Lucas Maron Grimaldi"]},
     {"nome": "Sergio QPC",    "email": None,                           "apelidos": []},
@@ -885,21 +888,65 @@ def processar():
                 "eventos": [{"tipo": e["tipo"], "em": e["em"]} for e in eventos_da_geracao],
                 "signatarios": [], "data_signatarios": None,
                 "data_limite": None, "data_limite_em": None, "data_limite_fonte": None,
-                "assinatura_completa": False,
+                "assinatura_completa": False, "clicksign_declarou": None,
                 "ultima_movimentacao": max(e["em"] for e in eventos_da_geracao),
                 "link_email": "", "link_clicksign": "",
                 "finalizado_em": None, "cancelado_em": None,
                 "geracao": numero, "geracoes_do_arquivo": len(geracoes),
             }
+            # =================================================================
+            # QUEM E O FLUXO x QUEM JA ASSINOU - sao duas perguntas diferentes
+            # =================================================================
+            #
+            # Eu tratava as duas como uma so, pegando a lista do comprovante
+            # mais recente. Dois casos reais de 08/09/2026 mostraram que nao da:
+            #
+            # 1) COMPROVANTE DE UMA LINHA. O CT-083 e o ADIT01-046 receberam um
+            #    envelope avulso (nome de arquivo terminando em " - Clicksign.pdf")
+            #    disparado so para o Nilton assinar. O comprovante dele tem UMA
+            #    linha. Tomando isso como "o fluxo", um contrato de 10 pessoas
+            #    virava de 1 - e a trava acusava o painel de inventar 9.
+            #
+            # 2) FORNECEDOR TROCA DE NOME AO ASSINAR. A Clicksign mostra e-mail
+            #    mascarado para quem ainda nao assinou e o NOME COMPLETO depois
+            #    que assina. No CT-088, "pinh*@mandrade.com.br" virou "Everton
+            #    Oliveira Pinho". Somando as duas listas, a mesma pessoa contava
+            #    duas vezes.
+            #
+            # Entao:
+            #   COMPOSICAO do fluxo -> vem do MAIOR comprovante da geracao (o
+            #       mais recente ganha o empate). E o unico que retrata o
+            #       envelope inteiro.
+            #   ASSINATURAS        -> acumulam de TODOS os comprovantes, porque
+            #       assinatura nao se desfaz. Assim a assinatura que so aparece
+            #       num recibo avulso nao se perde.
+            maior_comprovante = None
+            ja_assinaram = set()
             for evento in eventos_da_geracao:
-                if evento["signatarios"] and (
-                    doc["data_signatarios"] is None or evento["em"] > doc["data_signatarios"]
-                ):
-                    doc["signatarios"] = normalizar_signatarios([
-                        {"quem": s["quem"], "papel": s["papel"], "assinou": s["assinou"], "data": None}
-                        for s in evento["signatarios"]
-                    ])
-                    doc["data_signatarios"] = evento["em"]
+                if not evento["signatarios"]:
+                    continue
+                for s in evento["signatarios"]:
+                    if s["assinou"]:
+                        ja_assinaram.add(chave_pessoa(s["quem"]))
+                if (maior_comprovante is None
+                        or len(evento["signatarios"]) >= len(maior_comprovante["signatarios"])):
+                    maior_comprovante = evento
+
+            if maior_comprovante:
+                doc["signatarios"] = normalizar_signatarios([
+                    {"quem": s["quem"], "papel": s["papel"],
+                     "assinou": s["assinou"] or chave_pessoa(s["quem"]) in ja_assinaram,
+                     "data": None}
+                    for s in maior_comprovante["signatarios"]
+                ])
+                doc["data_signatarios"] = maior_comprovante["em"]
+                # UM signatario so nao e um fluxo - e recibo de assinatura
+                # individual. Nao serve de referencia para conferir o historico,
+                # entao nem vira declaracao.
+                if len(maior_comprovante["signatarios"]) >= 2:
+                    doc["clicksign_declarou"] = len(maior_comprovante["signatarios"])
+
+            for evento in eventos_da_geracao:
                 # A data limite vale a do e-mail mais recente DESTA geracao.
                 if evento["data_limite"] and (
                     doc["data_limite_em"] is None or evento["em"] > doc["data_limite_em"]
@@ -1092,15 +1139,36 @@ def processar():
             return "Finalizado"
         if historico_concluiu and not pendentes:
             return "Finalizado"
-        # A Clicksign entregou o PDF assinado deste documento. Isso so acontece
-        # quando todo mundo assinou. Se a nossa lista ainda mostra alguem
-        # devendo, e porque o ultimo comprovante que coletamos e mais velho que
-        # a ultima assinatura - a lista esta atrasada, o documento nao expirou.
-        # Sem esta linha, 8 contratos concluidos em 08 e 09/09/2026 apareceram
-        # como Expirado e deixavam o Nilton devendo assinatura em contrato que
-        # ja estava pronto.
-        if assinatura_completa:
-            return "Finalizado"
+        # ATENCAO - AQUI EU ERREI FEIO EM 11/09/2026, E O ERRO VOLTOU NO MESMO DIA.
+        #
+        # Eu tinha escrito aqui: "chegou 'Documento assinado:', logo todos
+        # assinaram -> Finalizado". A justificativa parecia solida: esse e o
+        # e-mail que entrega o PDF assinado, e prazo estourado nao geraria PDF.
+        #
+        # ERRADO. O CT-079 provou:
+        #
+        #   14/08 18:45  ultimo comprovante: 9 de 10, o Nilton faltando
+        #   26/08, 04/09 lembretes de "perto da data limite"
+        #   07/09 20:20  PRAZO (o Valter tinha estendido ate aqui)
+        #   07/09 20:22  "Documento assinado: 79...pdf"  <- DOIS MINUTOS DEPOIS
+        #
+        # A Clicksign encerra o envelope no prazo e entrega o PDF com as
+        # assinaturas que conseguiu. "Documento assinado" NAO prova assinatura
+        # completa - prova so que o processo acabou.
+        #
+        # E o estrago nao foi so o rotulo: logo abaixo, todo "Finalizado" marca
+        # TODOS os signatarios como tendo assinado. Ou seja, eu inventei a
+        # assinatura do Nilton num contrato que ele nunca assinou. E o pior tipo
+        # de erro que este projeto pode cometer.
+        #
+        # A REGRA, dada pelo Valter em 11/09/2026:
+        #   "O documento so e valido com todas as assinaturas feitas, mesmo ele
+        #    sendo finalizado. Ai podemos classificar ele como expirado."
+        #
+        # Entao: QUEM MANDA E A LISTA DE SIGNATARIOS, sempre. Encerrou com
+        # alguem devendo = Expirado, sem exame de qual e-mail chegou. O
+        # parametro abaixo fica so registrado no JSON de auditoria, para quem
+        # for investigar saber que o e-mail de "assinado" existiu.
         if encerrou_em and pendentes:
             # A Clicksign encerra por prazo vencido e manda o mesmo e-mail de
             # "finalizado". Com pendencia na lista, isso e prazo estourado.
@@ -1157,9 +1225,16 @@ def processar():
                 # So existe quando um "Comprovante de assinatura" foi lido - e o
                 # comprovante lista TODO MUNDO do fluxo, tenha assinado ou nao.
                 # E a nossa unica referencia externa para conferir o historico.
-                "clicksign_declarou": (
-                    len(doc["signatarios"]) if doc["data_signatarios"] else None
-                ),
+                # O MAIOR fluxo que a Clicksign mostrou para QUALQUER documento
+                # deste contrato. Nao pode ser so o deste documento: o CT-083 e
+                # o ADIT01-046 tiveram um envelope avulso, com nome de arquivo
+                # proprio (" - Clicksign.pdf") e UM signatario so, disparado so
+                # para o Nilton assinar. Olhando so aquele envelope, a Clicksign
+                # "declarou 1" e a trava acusava um contrato de 10 pessoas de
+                # estar inventando 9.
+                "clicksign_declarou": max(
+                    [d.get("clicksign_declarou") or 0 for d in docs] or [0]
+                ) or None,
             }
 
             if e_o_vigente and do_historico is not None:
