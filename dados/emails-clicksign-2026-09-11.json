@@ -1,12 +1,12 @@
 {
-  "gerado_em": "2026-09-11T14:15:00Z",
+  "gerado_em": "2026-09-11T21:35:07Z",
   "remetente_filtrado": "assinatura@clicksign.com",
   "pasta_lida": "Clicksign",
   "janela": {
     "de": "2026-05-11",
     "ate": "2026-09-08"
   },
-  "total_emails_encontrados": 196,
+  "total_emails_encontrados": 201,
   "emails": [
     {
       "assunto": "Assinar documento: PJ_QPC - Contrato QPC Engenharia - Valter Luis Rocha Dias...",
@@ -1379,6 +1379,41 @@
       "sandbox": false,
       "web_link": "",
       "corpo": "Comprovante de assinatura\n88.CT-LSF-G200-088-26 - MB Terrplenagem (Terraplenagem G300).pdf\nfpam*****@qpc.com.br assinará como testemunha\nhlue**@qpc.com.br assinará como interveniente anuente\nflav******@lyoncapital.com.br assinará como validador\nemer************@abrgerenciamento.com assinará como testemunha\nfabi*********@lyoncapital.com.br assinará como testemunha\nluiz**********@lyoncapital.com.br assinará como contratante\nnilt***********@lyoncapital.com.br assinará como contratante\nluis***@mandrade.com.br assinará como contratada\nluca**********@lyoncapital.com.br assinará como testemunha\nLucas Maron Grimaldi Assinou como validador\nEverton Oliveira Pinho Assinou como validador\nData limite para assinatura: 01/11/2026"
+    },
+    {
+      "assunto": "Acompanhar assinatura: 81.CT-LSF-G200-081-26 - MB Terrplenagem (Reg. Subleito e Esp.).pdf",
+      "recebido_em": "2026-09-11T14:10:44Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAABGAN%2FiAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Acompanhamento de assinatura de QPC\n81.CT-LSF-G200-081-26 - MB Terrplenagem (Reg. Subleito e Esp.).pdf\nluca**********@lyoncapital.com.br assinará como testemunha\nluis***@mandrade.com.br assinará como contratada\nhlue**@qpc.com.br assinará como inte"
+    },
+    {
+      "assunto": "Comprovante de assinatura do documento: 81.CT-LSF-G200-081-26 - MB Terrplenagem (Reg. Subleito e Esp.).pdf",
+      "recebido_em": "2026-09-11T14:12:32Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAABGAN%2FjAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\n\nComprovante de assinatura\n81.CT-LSF-G200-081-26 - MB Terrplenagem (Reg. Subleito e Esp.).pdf\nLucas Maron Grimaldi Assinou como validador\nluca**********@lyoncapital.com.br assinará como testemunha\nluis***@mandrade.com.br assinará como contratada\nhlue**@qpc.com.br assinará como interveniente anuente\nfpam*****@qpc.com.br assinará como testemunha\nnilt***********@lyoncapital.com.br assinará como contratante\nflav******@lyoncapital.com.br assinará como validador\nemer************@abrgerenciamento.com assinará como testemunha\npinh*@mandrade.com.br assinará como validador\nfabi*********@lyoncapital.com.br assinará como testemunha\nluiz**********@lyoncapital.com.br assinará como contratante\nData limite para assinatura: 11/10/2026"
+    },
+    {
+      "assunto": "Comprovante de assinatura do documento: 88.CT-LSF-G200-088-26 - MB Terrplenagem (Terraplenagem G300).pdf",
+      "recebido_em": "2026-09-11T16:46:03Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAABGAN%2FkAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\n\nComprovante de assinatura\n88.CT-LSF-G200-088-26 - MB Terrplenagem (Terraplenagem G300).pdf\nfpam*****@qpc.com.br assinará como testemunha\nhlue**"
+    },
+    {
+      "assunto": "Comprovante de assinatura do documento: 88.CT-LSF-G200-088-26 - MB Terrplenagem (Terraplenagem G300).pdf",
+      "recebido_em": "2026-09-11T17:01:33Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAABGAN%2FlAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\n\nComprovante de assinatura\n88.CT-LSF-G200-088-26 - MB Terrplenagem (Terraplenagem G300).pdf\nFelippe Pamponet Esquivel Assinou como testemunha\nhl"
+    },
+    {
+      "assunto": "Comprovante de assinatura do documento: 88.CT-LSF-G200-088-26 - MB Terrplenagem (Terraplenagem G300).pdf",
+      "recebido_em": "2026-09-11T17:44:16Z",
+      "sandbox": false,
+      "web_link": "https://outlook.office365.com/owa/?ItemID=AAMkAGQ2MTUwNDM3LTdlOTMtNDEyZi1hMzcyLTY2NDNmM2NmMGVkMwBGAAAAAAA2aRgxbYphTZNt%2F22jOtacBwDhd9UuglmpTpPf%2FM65ySTyAAA2tO%2B7AADhd9UuglmpTpPf%2FM65ySTyAABGAN%2FmAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+      "corpo": "Seu documento ainda está em processo de assinatura. Quando for finalizado, você receberá ele por e-mail\n\nComprovante de assinatura\n88.CT-LSF-G200-088-26 - MB Terrplenagem (Terraplenagem G300).pdf\nFelippe Pamponet Esquivel Assinou como testemunha\nHassan Fair Luedy Assinou como interveniente anuente\nflav******@lyoncapital.com.br assinará como validador\nemer************@abrgerenciamento.com assinará como testemunha\nfabi*********@lyoncapital.com.br assinará como testemunha\nluiz**********@lyoncapital.com.br assinará como contratante\nnilt***********@lyoncapital.com.br assinará como contratante\nluca**********@lyoncapital.com.br assinará como testemunha\nLucas Maron Grimaldi Assinou como validador\nEverton Oliveira Pinho Assinou como validador\nLuis Eduardo Cruz de Souza Assinou como contratada\nData limite para assinatura: 01/11/2026"
     }
   ]
 }
