@@ -196,6 +196,10 @@
   .b-crit{background:var(--crit-soft);color:var(--crit-ink)}
   .b-neutral{background:var(--neutral-soft);color:var(--neutral-ink)}
   .b-exp{background:var(--exp-soft);color:var(--exp-ink)}
+  /* Documento que encerrou sem todas as assinaturas: nao vale. Peso e cor de
+     alerta de verdade, porque a consequencia e juridica, nao cosmetica. */
+  .b-invalido{background:var(--crit-soft);color:var(--crit-ink);font-weight:700;
+              border:1px solid var(--crit-ink)}
   .prog{display:flex;align-items:center;gap:9px}
   .barra{width:48px;height:6px;border-radius:4px;background:var(--line);overflow:hidden}
   .barra > i{display:block;height:100%;background:var(--brand);border-radius:4px}
@@ -602,8 +606,16 @@ function renderTabela(){
        12/07", contradizendo a propria etiqueta de Expirado ao lado. */
     if(c.finalizado_em && c.status==='Finalizado')
       marco=`<span class="badge b-good">✓ finalizado em ${c.finalizado_em}</span>`;
-    if(c.finalizado_em && c.status==='Expirado')
-      marco=`<span class="badge b-exp">⏱ prazo venceu em ${c.finalizado_em}</span>`;
+    /* Regra do Valter, 11/09/2026: "O documento só é válido com todas as
+       assinaturas feitas, mesmo ele sendo finalizado." Um envelope que encerrou
+       devendo assinatura NAO e so "atrasado" - ele nao vale. O selo precisa
+       dizer isso com todas as letras e nomear quem faltou, senao alguem arquiva
+       um contrato sem validade achando que esta tudo certo. */
+    if(c.status==='Expirado'){
+      const faltaram=c.signatarios.filter(s=>!s.assinou).map(s=>s.quem);
+      const quando=c.finalizado_em?` em ${c.finalizado_em}`:'';
+      marco=`<span class="badge b-invalido">⚠ SEM VALIDADE — encerrou${quando} sem a assinatura de ${faltaram.length?faltaram.join(', '):'todos os signatários'}</span>`;
+    }
     if(c.cancelado_em) marco=`<span class="badge b-neutral">✕ cancelado em ${c.cancelado_em}</span>`;
 
     const bloco=(titulo,lista,ok)=>lista.length?`<div class="detalhe-titulo">${titulo}</div>`+lista.map(s=>`
