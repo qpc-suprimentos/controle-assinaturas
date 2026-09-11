@@ -634,7 +634,11 @@ function renderTabela(){
             <span>${c.assinaturas_ok}/${c.assinaturas_total||'?'}</span></div></td>
         <td>${c.atualizado_em_texto}</td>
         <td>${colPrazo}</td>
-        <td class="${parado?'parado':'parado-ok'}">${c.status==='Em andamento'?c.dias_parado+' d'+(parado?' ⚠':''):'<span class="semdado">—</span>'}</td>
+        <!-- O numero de dias e recalculado a cada geracao a partir da data em
+             que o contrato parou. O title mostra essa data, para dar para
+             conferir a conta sem abrir o JSON - foi um numero congelado que o
+             Valter pegou em 11/09/2026. -->
+        <td class="${parado?'parado':'parado-ok'}" ${c.parado_desde?`title="sem movimento desde ${c.parado_desde}"`:''}>${c.status==='Em andamento'?c.dias_parado+' d'+(parado?' ⚠':''):'<span class="semdado">—</span>'}</td>
         <td><span class="chev">›</span></td>
       </tr>${detalhe}`;
   }).join('');
