@@ -48,7 +48,7 @@ import os
 import re
 import shutil
 import unicodedata
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 
 # =============================================================================
@@ -739,7 +739,25 @@ def processar():
             "signatarios": item["signatarios"],
             "assinaturas_ok": len(assinados),
             "assinaturas_total": len(item["signatarios"]),
-            "dias_parado": item["dias_sem_assinatura"],
+            # PARADO DESDE QUANDO, e nao "ha quantos dias". A diferenca e tudo.
+            #
+            # A planilha trouxe "dias_sem_assinatura": um NUMERO contado em
+            # 17/08/2026. Numero de dias nao envelhece - ele fica congelado para
+            # sempre. Era por isso que o CT-072 mostrava "3 d parado" em 11/09,
+            # quando ja eram 25. O Valter viu e perguntou; ele estava certo.
+            #
+            # Guardamos a DATA em que o contrato parou, reconstruida a partir do
+            # retrato: 17/08 menos os dias que ja estava parado naquele dia. Dai
+            # em diante a contagem e feita na hora de gerar, e cresce sozinha.
+            #
+            # Quando a planilha nao sabia ha quanto tempo estava parado, usamos a
+            # data do retrato: e um piso honesto ("parado pelo menos desde 17/08"),
+            # nunca um numero inventado.
+            "parado_desde": (
+                data_historico - timedelta(days=item["dias_sem_assinatura"])
+                if item.get("dias_sem_assinatura") is not None
+                else data_historico
+            ),
             "data_cadastro": item["data_cadastro"],
             "data_limite": None,
             "finalizado_em": None,
@@ -1121,7 +1139,9 @@ def processar():
                 "chave": chave,
                 "identificacao": doc["nome"].replace(".pdf", ""),
                 "aditivo": chave.startswith("ADIT"),
-                "dias_parado": dias_entre(doc["ultima_movimentacao"], agora),
+                # Data, nunca contagem. Ver o comentario em "parado_desde" na
+                # leitura do historico congelado.
+                "parado_desde": doc["ultima_movimentacao"],
                 "data_limite": doc["data_limite"],
                 "data_limite_fonte": doc.get("data_limite_fonte"),
                 "finalizado_em": doc["finalizado_em"].strftime("%d/%m/%Y") if doc["finalizado_em"] else None,
@@ -1151,7 +1171,7 @@ def processar():
                 # frente. Enquanto o ultimo e-mail deste contrato for anterior ao
                 # retrato, quem sabe mais sobre ele ainda e o retrato.
                 if do_historico["data_fonte"] > doc["ultima_movimentacao"]:
-                    registro["dias_parado"] = do_historico["dias_parado"]
+                    registro["parado_desde"] = do_historico["parado_desde"]
                     registro["data_fonte"] = do_historico["data_fonte"]
                     registro["fonte"] = "histórico + e-mail"
                 else:
@@ -1370,7 +1390,13 @@ def processar():
             "status": reg["status"],
             "atualizado": reg["data_fonte"].strftime("%Y-%m-%dT%H:%M"),
             "atualizado_em_texto": reg["data_fonte"].strftime("%d/%m/%Y"),
-            "dias_parado": reg["dias_parado"] if reg["dias_parado"] is not None else 0,
+            # O UNICO lugar onde "dias parado" vira numero, e sempre agora, a
+            # partir de uma data. Nenhuma contagem de dias e guardada em lugar
+            # nenhum do processo - contagem guardada congela.
+            "dias_parado": (dias_entre(reg["parado_desde"], agora)
+                            if reg.get("parado_desde") else 0),
+            "parado_desde": (reg["parado_desde"].strftime("%d/%m/%Y")
+                             if reg.get("parado_desde") else None),
             "data_limite": reg.get("data_limite"),
             # De onde veio a data. Vazio = veio de e-mail da Clicksign, o normal.
             # Preenchido = o Valter conferiu na tela da Clicksign e contou, caso
