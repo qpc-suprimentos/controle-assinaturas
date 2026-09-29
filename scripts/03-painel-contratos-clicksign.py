@@ -485,6 +485,13 @@ PESSOAS = [
     {"nome": "Emerson ABR",   "email": "emer@abrgerenciamento.com",    "apelidos": ["Emerson Leal"]},
     {"nome": "Lucas G. QPC",  "email": None,                           "apelidos": ["Lucas Maron Grimaldi"]},
     {"nome": "Sergio QPC",    "email": None,                           "apelidos": []},
+    # Contratos que eram "VOC" e passaram a se chamar "RR10": a contratada
+    # nesses casos e a propria QPC, e quem assina por ela e o Rafael. Decisao
+    # e nome confirmados pelo Valter em 29/09/2026, depois que o CT-115 (RR10 -
+    # Pintura) parou o gerador com "e-mail da casa fora do fluxo". Nao expor
+    # isso como "contratada = QPC" em lugar nenhum do painel - ele entra na
+    # mesma etapa que qualquer contratada, so isso.
+    {"nome": "Rafael QPC",    "email": "rafa@qpc.com.br",             "apelidos": ["Rafael de Castro Lima"]},
 ]
 
 # Quem saiu da obra: sai das PENDENCIAS, mas o que ja assinou continua no painel.
@@ -518,7 +525,9 @@ SAIRAM_DA_OBRA = set()
 #     inversoes de data no historico.
 FLUXO_ASSINATURA = [
     ["Lucas G. QPC"],                     # 1 - validador
-    ["Contratada"],                       # 2 - a contratada do contrato (pode ser mais de uma)
+    ["Contratada", "Rafael QPC"],         # 2 - a contratada do contrato (pode ser mais de uma);
+                                           #     nos ex-VOC agora RR10 quem assina por ela e o
+                                           #     Rafael (QPC) - mesma etapa, ver PESSOAS acima
     ["Felippe QPC"],                      # 3 - testemunha
     ["Hassan QPC"],                       # 4 - interveniente anuente
     ["Emerson ABR"],                      # 5 - testemunha
